@@ -10,8 +10,16 @@ set(SOURCE_FILES main.cpp Matrix2d.cpp
         LuxuryCab.cpp LuxuryCab.h Trip.cpp Trip.h Passenger.cpp Passenger.h
         InfoTaxi.cpp InfoTaxi.h TexiCenter.cpp TexiCenter.h 
          GameFlow.cpp GameFlow.h
-         CabBase.h CabBase.cpp PharserInfo.cpp PharserInfo.h Udp.cpp Udp.h server.cpp clientDriver.cpp Socket.cpp Socket.h)
+         CabBase.h CabBase.cpp PharserInfo.cpp PharserInfo.h Udp.cpp Udp.h server.cpp clientDriver.cpp
+        Socket.cpp Socket.h)
+
+set(BOOST_ROOT CACHE PATH "/usr/include/boost/") # or equivalent location
+find_package(Boost 1.58.0 COMPONENTS serialization system) # or equivalent version
+
 add_executable(mission4 ${SOURCE_FILES})
 add_executable(server server.cpp)
 #add_executable(client client.cpp)
+
+target_link_libraries(mission4)
+include_directories()
 

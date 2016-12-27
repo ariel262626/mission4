@@ -23,6 +23,7 @@
 #include <boost/iostreams/stream.hpp>
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
+#include <vector>
 using namespace std;
 using namespace boost::archive;
 std::stringstream ss;
@@ -190,9 +191,21 @@ int main(int argc, char *argv[]) {
 
             }
             case 9: {
+                vector<Node*> path;
+                Point newPosition;
+                path = texiCenter.getTripInIndex(0).getPathOfTrip(*newMap);
+                texiCenter.getDriverInIndex(0)->moveStep(path);
+                newPosition = texiCenter.getDriverInIndex(0)->getLocation();
 
+                //serialize
+                std::string serial_str;
+                boost::iostreams::back_insert_device<std::string> inserter(serial_str);
+                boost::iostreams::stream<boost::iostreams::back_insert_device<std::string> > s(inserter);
+                boost::archive::binary_oarchive oa(s);
+                oa << newPosition;
+                s.flush();
                 //here we sent back the 'go' for move one step
-                udp->sendData("advance");
+                udp->sendData(serial_str);
             }
         }
         // end the program

@@ -76,13 +76,13 @@ int main(int argc, char *argv[]) {
     //for de-serializa we need put buffer to string
     string bufferRecivedAdvance = buffer;
     //make instence of cab
-    Point advance;
+    Point newLocation;
     //de serialize
     boost::iostreams::basic_array_source<char> device2(bufferRecivedAdvance.c_str(), bufferRecivedAdvance.size());
     boost::iostreams::stream<boost::iostreams::basic_array_source<char> > s4(device2);
     boost::archive::binary_iarchive ia2(s3);
-    ia2 >> advance;
-    driver->setLocation(advance);
+    ia2 >> newLocation;
+    driver->setLocation(newLocation);
 
     return 0;
 }
