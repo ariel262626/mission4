@@ -5,12 +5,21 @@
 #ifndef MISSION1_POINT_H
 #define MISSION1_POINT_H
 #include <iostream>
+#include <boost/serialization/access.hpp>
 
 /*
  * class of point-build from 2 integer and have method get and set
  * and overloading for == and print this object.
  */
 class Point {
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned int version)
+    {
+        ar & x;
+        ar & y;
+    }
 private:
     int x, y;
 

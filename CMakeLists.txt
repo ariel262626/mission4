@@ -20,6 +20,6 @@ add_executable(mission4 ${SOURCE_FILES})
 add_executable(server server.cpp)
 #add_executable(client client.cpp)
 
-target_link_libraries(mission4)
-include_directories()
+target_link_libraries(mission4 ${Boost_LIBARIES})
+include_directories(${Boost_INCLUDE_DIR})
 

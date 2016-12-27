@@ -176,7 +176,7 @@ CabBase* TexiCenter::getCabWithId(int id) {
 Driver* TexiCenter::getDriverWithId(int id) {
     Driver* driver;
     for(int k = 0; k < myDriversList.size(); k++) {
-        if(myDriversList.at(k)->getCabId() == id) {
+        if(myDriversList.at(k)->getId() == id) {
             driver = getDriverInIndex(k);
         }
     }
