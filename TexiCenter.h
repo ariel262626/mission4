@@ -117,6 +117,9 @@ public:
      * @return  trip
      */
     Trip getTripInIndex(int i);
-};
+    CabBase* getCabWithId(int i);
+    Driver* getDriverWithId(int id);
+
+    };
 
 #endif //MISSION2_TEXICENTER_H

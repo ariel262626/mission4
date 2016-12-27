@@ -7,7 +7,7 @@
 #include "Matrix2d.h"
 #include "Trip.h"
 
-Trip::Trip(int rideId, int xStart, int yStart, int xEnd, int yEnd, int passengerNumber, double tarrif){
+Trip::Trip(int rideId, int xStart, int yStart, int xEnd, int yEnd, int passengerNumber, double tarrif, int time){
     myRideId = rideId;
     myXstart = xStart;
     myYstart = yStart;
@@ -16,6 +16,7 @@ Trip::Trip(int rideId, int xStart, int yStart, int xEnd, int yEnd, int passenger
     myMetersPassed = 0;
     myPassengerNumber = passengerNumber;
     myTariff = tarrif;
+    myTime = time;
 }
 
 Trip::Trip() {}

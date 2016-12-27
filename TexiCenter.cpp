@@ -162,3 +162,23 @@ CabBase* TexiCenter::getCabInIndex(int i) {
 Trip TexiCenter::getTripInIndex(int i) {
     return myTripList.at(i);
 }
+
+CabBase* TexiCenter::getCabWithId(int id) {
+    CabBase* cabBase;
+    for(int k = 0; k < myStandartCabList.size(); k++) {
+        if(myStandartCabList.at(k)->getCabId() == id) {
+            cabBase = getCabInIndex(k);
+        }
+    }
+    return cabBase;
+}
+
+Driver* TexiCenter::getDriverWithId(int id) {
+    Driver* driver;
+    for(int k = 0; k < myDriversList.size(); k++) {
+        if(myDriversList.at(k)->getCabId() == id) {
+            driver = getDriverInIndex(k);
+        }
+    }
+    return driver;
+}

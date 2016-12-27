@@ -2,6 +2,7 @@
 // Created by ariel on 29/11/16.
 //
 #include <iostream>
+#include <boost/serialization/access.hpp>
 #include "StandartCab.h"
 #include "Trip.h"
 
@@ -10,6 +11,23 @@
 using namespace std;
 
 class Driver {
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned int version)
+    {
+        ar & myId;
+        ar & myAge;
+        ar & myMartialStatus;
+        ar & myExperience;
+        ar & myVehicleId;
+        ar & mySatisfication;
+        ar & myTaxiStandart;
+        ar & myLocation;
+        ar & myTrip;
+        ar & countTrip;
+    }
+
 private:
     int myId;
     int myAge;
@@ -78,7 +96,12 @@ public:
      * @return trip
      */
     int getCountTrips();
-};
+
+    int getMyCabId();
+
+    Trip getMyTrip();
+
+    };
 
 
 #endif //MISSION2_DRIVER_H

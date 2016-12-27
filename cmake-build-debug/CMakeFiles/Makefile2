@@ -60,39 +60,76 @@ CMAKE_SOURCE_DIR = /home/ariel/ClionProjects/mission4
 CMAKE_BINARY_DIR = /home/ariel/ClionProjects/mission4/cmake-build-debug
 
 #=============================================================================
-# Target rules for target CMakeFiles/MISSION3src.dir
+# Target rules for target CMakeFiles/server.dir
 
 # All Build rule for target.
-CMakeFiles/MISSION3src.dir/all:
-	$(MAKE) -f CMakeFiles/MISSION3src.dir/build.make CMakeFiles/MISSION3src.dir/depend
-	$(MAKE) -f CMakeFiles/MISSION3src.dir/build.make CMakeFiles/MISSION3src.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ariel/ClionProjects/mission4/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17 "Built target MISSION3src"
-.PHONY : CMakeFiles/MISSION3src.dir/all
+CMakeFiles/server.dir/all:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/depend
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ariel/ClionProjects/mission4/cmake-build-debug/CMakeFiles --progress-num=22,23 "Built target server"
+.PHONY : CMakeFiles/server.dir/all
 
 # Include target in all.
-all: CMakeFiles/MISSION3src.dir/all
+all: CMakeFiles/server.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/MISSION3src.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/ariel/ClionProjects/mission4/cmake-build-debug/CMakeFiles 17
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/MISSION3src.dir/all
+CMakeFiles/server.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ariel/ClionProjects/mission4/cmake-build-debug/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/server.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/ariel/ClionProjects/mission4/cmake-build-debug/CMakeFiles 0
-.PHONY : CMakeFiles/MISSION3src.dir/rule
+.PHONY : CMakeFiles/server.dir/rule
 
 # Convenience name for target.
-MISSION3src: CMakeFiles/MISSION3src.dir/rule
+server: CMakeFiles/server.dir/rule
 
-.PHONY : MISSION3src
-
-# clean rule for target.
-CMakeFiles/MISSION3src.dir/clean:
-	$(MAKE) -f CMakeFiles/MISSION3src.dir/build.make CMakeFiles/MISSION3src.dir/clean
-.PHONY : CMakeFiles/MISSION3src.dir/clean
+.PHONY : server
 
 # clean rule for target.
-clean: CMakeFiles/MISSION3src.dir/clean
+CMakeFiles/server.dir/clean:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/clean
+.PHONY : CMakeFiles/server.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/server.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/mission4.dir
+
+# All Build rule for target.
+CMakeFiles/mission4.dir/all:
+	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/depend
+	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ariel/ClionProjects/mission4/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21 "Built target mission4"
+.PHONY : CMakeFiles/mission4.dir/all
+
+# Include target in all.
+all: CMakeFiles/mission4.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/mission4.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ariel/ClionProjects/mission4/cmake-build-debug/CMakeFiles 21
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/mission4.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ariel/ClionProjects/mission4/cmake-build-debug/CMakeFiles 0
+.PHONY : CMakeFiles/mission4.dir/rule
+
+# Convenience name for target.
+mission4: CMakeFiles/mission4.dir/rule
+
+.PHONY : mission4
+
+# clean rule for target.
+CMakeFiles/mission4.dir/clean:
+	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/clean
+.PHONY : CMakeFiles/mission4.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/mission4.dir/clean
 
 .PHONY : clean
 

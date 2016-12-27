@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
-project(MISSION3src)
+project(mission4)
+
+set(core_sockets Socket.cpp Udp.cpp Tcp.cpp)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(SOURCE_FILES main.cpp Matrix2d.cpp
@@ -8,5 +10,8 @@ set(SOURCE_FILES main.cpp Matrix2d.cpp
         LuxuryCab.cpp LuxuryCab.h Trip.cpp Trip.h Passenger.cpp Passenger.h
         InfoTaxi.cpp InfoTaxi.h TexiCenter.cpp TexiCenter.h 
          GameFlow.cpp GameFlow.h
-         CabBase.h CabBase.cpp PharserInfo.cpp PharserInfo.h)
-add_executable(MISSION3src ${SOURCE_FILES})
+         CabBase.h CabBase.cpp PharserInfo.cpp PharserInfo.h Udp.cpp Udp.h server.cpp clientDriver.cpp Socket.cpp Socket.h)
+add_executable(mission4 ${SOURCE_FILES})
+add_executable(server server.cpp)
+#add_executable(client client.cpp)
+

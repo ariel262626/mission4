@@ -6,6 +6,7 @@
 #define MISSION2_TRIP_H
 
 #include <vector>
+#include <boost/serialization/access.hpp>
 #include "Point.h"
 #include "Node.h"
 #include "Matrix2d.h"
@@ -13,6 +14,21 @@
 using namespace std;
 
 class Trip {
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned int version)
+    {
+        ar & myRideId;
+        ar & myXstart;
+        ar & myYstart;
+        ar & myXend;
+        ar & myYend;
+        ar & myMetersPassed;
+        ar & myPassengerNumber;
+        ar & myTariff;
+        ar & myTime;
+    }
 private:
     int myRideId;
     int myXstart;
@@ -22,9 +38,10 @@ private:
     int myMetersPassed;
     int myPassengerNumber;
     double myTariff;
+    int myTime;
 public:
     //constructors
-    Trip(int rideId, int xStart, int yStart, int xEnd, int yEnd, int passengerNumber, double tarrif);
+    Trip(int rideId, int xStart, int yStart, int xEnd, int yEnd, int passengerNumber, double tarrif, int time);
     Trip();
 
     /**

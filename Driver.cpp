@@ -78,3 +78,11 @@ void Driver::setCountTrips() {
 int Driver::getCountTrips() {
     return countTrip;
 }
+
+int Driver::getMyCabId() {
+    return myVehicleId;
+}
+
+Trip Driver::getMyTrip() {
+    return myTrip;
+}

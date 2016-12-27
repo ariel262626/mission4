@@ -27,6 +27,52 @@
 					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
+			<Target title="server">
+				<Option output="/home/ariel/ClionProjects/mission4/cmake-build-debug/server" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/ariel/ClionProjects/mission4/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 server"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="server/fast">
+				<Option output="/home/ariel/ClionProjects/mission4/cmake-build-debug/server" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/ariel/ClionProjects/mission4/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 server/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
 			<Target title="rebuild_cache">
 				<Option working_dir="/home/ariel/ClionProjects/mission4/cmake-build-debug"/>
 				<Option type="4"/>
@@ -84,7 +130,116 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/ariel/ClionProjects/mission4/Bfs.cpp">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/Bfs.h">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/CabBase.cpp">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/CabBase.h">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/Driver.cpp">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/Driver.h">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/GameFlow.cpp">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/GameFlow.h">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/Grid.cpp">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/Grid.h">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/InfoTaxi.cpp">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/InfoTaxi.h">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/LuxuryCab.cpp">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/LuxuryCab.h">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/Matrix2d.cpp">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/Matrix2d.h">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/Node.cpp">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/Node.h">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/Passenger.cpp">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/Passenger.h">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/PharserInfo.cpp">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/PharserInfo.h">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/Point.cpp">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/Point.h">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/Socket.cpp">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/Socket.h">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/StandartCab.cpp">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/StandartCab.h">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/TexiCenter.cpp">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/TexiCenter.h">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/Trip.cpp">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/Trip.h">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/Udp.cpp">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/Udp.h">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/clientDriver.cpp">
+			<Option target="mission4"/>
+		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/main.cpp">
+			<Option target="mission4"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/server.cpp">
+			<Option target="server"/>
 			<Option target="mission4"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/CMakeLists.txt">

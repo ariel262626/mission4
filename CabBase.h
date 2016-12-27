@@ -5,10 +5,25 @@
 #ifndef MISSION2_CABBASE_H
 #define MISSION2_CABBASE_H
 
+#include <boost/serialization/access.hpp>
 #include "Passenger.h"
 #include "Grid.h"
 
 class CabBase {
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned int version)
+    {
+        ar & myId;
+        ar & myType;
+        ar & myManaufactur;
+        ar & myColor;
+        ar & myTariff;
+        ar & myMap;
+        ar & myPassenger;
+        ar & myKilometers;
+    }
 protected:
     int myId;
     int myType;
