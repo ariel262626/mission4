@@ -111,6 +111,32 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named mission4
+
+# Build rule for target.
+mission4: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 mission4
+.PHONY : mission4
+
+# fast build rule for target.
+mission4/fast:
+	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/build
+.PHONY : mission4/fast
+
+#=============================================================================
+# Target rules for targets named client
+
+# Build rule for target.
+client: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 client
+.PHONY : client
+
+# fast build rule for target.
+client/fast:
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/build
+.PHONY : client/fast
+
+#=============================================================================
 # Target rules for targets named server
 
 # Build rule for target.
@@ -124,17 +150,17 @@ server/fast:
 .PHONY : server/fast
 
 #=============================================================================
-# Target rules for targets named mission4
+# Target rules for targets named sockets
 
 # Build rule for target.
-mission4: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 mission4
-.PHONY : mission4
+sockets: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 sockets
+.PHONY : sockets
 
 # fast build rule for target.
-mission4/fast:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/build
-.PHONY : mission4/fast
+sockets/fast:
+	$(MAKE) -f CMakeFiles/sockets.dir/build.make CMakeFiles/sockets.dir/build
+.PHONY : sockets/fast
 
 Bfs.o: Bfs.cpp.o
 
@@ -467,6 +493,7 @@ Socket.o: Socket.cpp.o
 # target to build an object file
 Socket.cpp.o:
 	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Socket.cpp.o
+	$(MAKE) -f CMakeFiles/sockets.dir/build.make CMakeFiles/sockets.dir/Socket.cpp.o
 .PHONY : Socket.cpp.o
 
 Socket.i: Socket.cpp.i
@@ -476,6 +503,7 @@ Socket.i: Socket.cpp.i
 # target to preprocess a source file
 Socket.cpp.i:
 	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Socket.cpp.i
+	$(MAKE) -f CMakeFiles/sockets.dir/build.make CMakeFiles/sockets.dir/Socket.cpp.i
 .PHONY : Socket.cpp.i
 
 Socket.s: Socket.cpp.s
@@ -485,6 +513,7 @@ Socket.s: Socket.cpp.s
 # target to generate assembly for a file
 Socket.cpp.s:
 	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Socket.cpp.s
+	$(MAKE) -f CMakeFiles/sockets.dir/build.make CMakeFiles/sockets.dir/Socket.cpp.s
 .PHONY : Socket.cpp.s
 
 StandartCab.o: StandartCab.cpp.o
@@ -575,6 +604,7 @@ Udp.o: Udp.cpp.o
 # target to build an object file
 Udp.cpp.o:
 	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Udp.cpp.o
+	$(MAKE) -f CMakeFiles/sockets.dir/build.make CMakeFiles/sockets.dir/Udp.cpp.o
 .PHONY : Udp.cpp.o
 
 Udp.i: Udp.cpp.i
@@ -584,6 +614,7 @@ Udp.i: Udp.cpp.i
 # target to preprocess a source file
 Udp.cpp.i:
 	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Udp.cpp.i
+	$(MAKE) -f CMakeFiles/sockets.dir/build.make CMakeFiles/sockets.dir/Udp.cpp.i
 .PHONY : Udp.cpp.i
 
 Udp.s: Udp.cpp.s
@@ -593,34 +624,35 @@ Udp.s: Udp.cpp.s
 # target to generate assembly for a file
 Udp.cpp.s:
 	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Udp.cpp.s
+	$(MAKE) -f CMakeFiles/sockets.dir/build.make CMakeFiles/sockets.dir/Udp.cpp.s
 .PHONY : Udp.cpp.s
 
-clientDriver.o: clientDriver.cpp.o
+client.o: client.cpp.o
 
-.PHONY : clientDriver.o
+.PHONY : client.o
 
 # target to build an object file
-clientDriver.cpp.o:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/clientDriver.cpp.o
-.PHONY : clientDriver.cpp.o
+client.cpp.o:
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/client.cpp.o
+.PHONY : client.cpp.o
 
-clientDriver.i: clientDriver.cpp.i
+client.i: client.cpp.i
 
-.PHONY : clientDriver.i
+.PHONY : client.i
 
 # target to preprocess a source file
-clientDriver.cpp.i:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/clientDriver.cpp.i
-.PHONY : clientDriver.cpp.i
+client.cpp.i:
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/client.cpp.i
+.PHONY : client.cpp.i
 
-clientDriver.s: clientDriver.cpp.s
+client.s: client.cpp.s
 
-.PHONY : clientDriver.s
+.PHONY : client.s
 
 # target to generate assembly for a file
-clientDriver.cpp.s:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/clientDriver.cpp.s
-.PHONY : clientDriver.cpp.s
+client.cpp.s:
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/client.cpp.s
+.PHONY : client.cpp.s
 
 main.o: main.cpp.o
 
@@ -655,8 +687,8 @@ server.o: server.cpp.o
 
 # target to build an object file
 server.cpp.o:
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server.cpp.o
 	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/server.cpp.o
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server.cpp.o
 .PHONY : server.cpp.o
 
 server.i: server.cpp.i
@@ -665,8 +697,8 @@ server.i: server.cpp.i
 
 # target to preprocess a source file
 server.cpp.i:
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server.cpp.i
 	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/server.cpp.i
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server.cpp.i
 .PHONY : server.cpp.i
 
 server.s: server.cpp.s
@@ -675,8 +707,8 @@ server.s: server.cpp.s
 
 # target to generate assembly for a file
 server.cpp.s:
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server.cpp.s
 	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/server.cpp.s
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server.cpp.s
 .PHONY : server.cpp.s
 
 # Help Target
@@ -686,9 +718,11 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
-	@echo "... server"
 	@echo "... rebuild_cache"
 	@echo "... mission4"
+	@echo "... client"
+	@echo "... server"
+	@echo "... sockets"
 	@echo "... Bfs.o"
 	@echo "... Bfs.i"
 	@echo "... Bfs.s"
@@ -740,9 +774,9 @@ help:
 	@echo "... Udp.o"
 	@echo "... Udp.i"
 	@echo "... Udp.s"
-	@echo "... clientDriver.o"
-	@echo "... clientDriver.i"
-	@echo "... clientDriver.s"
+	@echo "... client.o"
+	@echo "... client.i"
+	@echo "... client.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

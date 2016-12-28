@@ -19,9 +19,9 @@
 
 using namespace std;
 using namespace boost::archive;
-std::stringstream ss;
+//std::stringstream ss;
 
-int main(int argc, char *argv[]) {
+/*int main(int argc, char *argv[]) {
     std::cout << "Hello, from client" << std::endl;
 
     cout << argv[1] << endl;
@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
     /*server wait to get this data (we need to send here driver) than the server give  the driver the rifght
      * texi and returns this texi*/
     //send the driver to server
-    udp->sendData(serial_str);
+   /* udp->sendData(serial_str);
 
     //here the client get the texi fron the server
     udp->reciveData(buffer, sizeof(buffer));
@@ -85,4 +85,4 @@ int main(int argc, char *argv[]) {
     driver->setLocation(newLocation);
 
     return 0;
-}
+}*/

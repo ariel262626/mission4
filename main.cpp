@@ -11,7 +11,7 @@
 
 using namespace std;
 
-int main1(int argc, char** argv) {
+int main(int argc, char** argv) {
     // here we will put the all information
     TexiCenter texiCenter;
     int choose;

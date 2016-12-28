@@ -211,6 +211,9 @@ mission4_BINARY_DIR:STATIC=/home/ariel/ClionProjects/mission4/cmake-build-debug
 //Value Computed by CMake
 mission4_SOURCE_DIR:STATIC=/home/ariel/ClionProjects/mission4
 
+//Dependencies for target
+sockets_LIB_DEPENDS:STATIC=
+
 
 ########################
 # INTERNAL cache entries
