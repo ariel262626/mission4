@@ -130,7 +130,7 @@ int main(int argc, char *argv[]) {
 
                 //sent back the right trip
               //  Driver driver1 = *(texiCenter.getDriverWithId(driverId));
-                Trip trip = driver2->getMyTrip();
+                Trip trip = driver2->getMyTrip();//
                 //serialize
                 //Trip *trip1 = &trip;
                 std::string serial_str1;
