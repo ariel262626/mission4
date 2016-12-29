@@ -25,8 +25,8 @@ find_package(Boost 1.58.0 COMPONENTS serialization system)
 include_directories(${Boost_INCLUDE_DIR})
 
 
-add_executable(server server.cpp ${SOURCE_FILES})
-add_executable(client client.cpp ${SOURCE_FILES})
+add_executable(server server.cpp ${SOURCE_FILES} ClockTime.cpp ClockTime.h)
+add_executable(client client.cpp ${SOURCE_FILES} ClockTime.cpp ClockTime.h)
 
 target_link_libraries(server ${Boost_LIBRARIES})
 target_link_libraries(client ${Boost_LIBRARIES})

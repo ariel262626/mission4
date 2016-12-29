@@ -47,7 +47,7 @@ public:
  * this metod get path and move the cab one step (standart cab), or two step (luxury cab) on the grid
  * @param path: the path trajectory of bfs
  */
-    void moveStep(vector<Node*> path);
+    void moveStep(vector<Node> path, int currentTime);
     /**
      * this method get the point of location which the drive is on the grid. and find the index of this point
      * on the trajectory of bfs.
@@ -55,7 +55,7 @@ public:
      * @param point: point
      * @return index of point in the trajectory
      */
-    int getIndexCurrentLocationPoint(vector<Node*> path, Point point);
+    int getIndexCurrentLocationPoint(vector<Node> path, Point point);
     /**
      * set location of the driver in the grid
      * @param p: point

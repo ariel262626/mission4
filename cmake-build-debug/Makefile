@@ -196,6 +196,36 @@ CabBase.cpp.s:
 	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/CabBase.cpp.s
 .PHONY : CabBase.cpp.s
 
+ClockTime.o: ClockTime.cpp.o
+
+.PHONY : ClockTime.o
+
+# target to build an object file
+ClockTime.cpp.o:
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/ClockTime.cpp.o
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/ClockTime.cpp.o
+.PHONY : ClockTime.cpp.o
+
+ClockTime.i: ClockTime.cpp.i
+
+.PHONY : ClockTime.i
+
+# target to preprocess a source file
+ClockTime.cpp.i:
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/ClockTime.cpp.i
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/ClockTime.cpp.i
+.PHONY : ClockTime.cpp.i
+
+ClockTime.s: ClockTime.cpp.s
+
+.PHONY : ClockTime.s
+
+# target to generate assembly for a file
+ClockTime.cpp.s:
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/ClockTime.cpp.s
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/ClockTime.cpp.s
+.PHONY : ClockTime.cpp.s
+
 Driver.o: Driver.cpp.o
 
 .PHONY : Driver.o
@@ -716,6 +746,9 @@ help:
 	@echo "... CabBase.o"
 	@echo "... CabBase.i"
 	@echo "... CabBase.s"
+	@echo "... ClockTime.o"
+	@echo "... ClockTime.i"
+	@echo "... ClockTime.s"
 	@echo "... Driver.o"
 	@echo "... Driver.i"
 	@echo "... Driver.s"

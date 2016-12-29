@@ -24,17 +24,26 @@ Trip::Trip() {}
 //we have the start point and end point so we calculate all the path with bfs here
 vector<Node*> Trip::getPathOfTrip(Matrix2d map) {
     vector<Node*> listOfNodeInTrip;
-    vector<Node*> listOfNodeInTripClone;
-
-    Node startNode = Node(Point(myXstart, myYstart), false);
+        Node startNode = Node(Point(myXstart, myYstart), false);
         Node endNode = Node(Point(myXend, myYend), true);
         Bfs bfs = Bfs(startNode, endNode, 2, &map);
         //we get all the points of the trip. run the bfs for that
         listOfNodeInTrip = bfs.runBfs(&startNode, &endNode);
-        for(int i = 0; i< listOfNodeInTrip.size();i++){
-            listOfNodeInTripClone.push_back(*listOfNodeInTrip.at(i));
-        }
-        return listOfNodeInTripClone;
+        return listOfNodeInTrip;
+}
+
+vector<Node> Trip::getPathOfTripClone(Matrix2d map) {
+    vector<Node*> listOfNodeInTrip;
+    vector<Node> listOfNodeInTripclone;
+    Node startNode = Node(Point(myXstart, myYstart), false);
+    Node endNode = Node(Point(myXend, myYend), true);
+    Bfs bfs = Bfs(startNode, endNode, 2, &map);
+    //we get all the points of the trip. run the bfs for that
+    listOfNodeInTrip = bfs.runBfs(&startNode, &endNode);
+    for (int i = 0; i < listOfNodeInTrip.size(); ++i) {
+        listOfNodeInTripclone.push_back(*listOfNodeInTrip.at(i));
+    }
+    return listOfNodeInTripclone;
 }
 
 Point Trip::getStartPointOfTrip() {
@@ -63,4 +72,12 @@ void Trip::setMetersPassed(int x) {
 
 void Trip::setPassengersNumber(int x) {
     myPassengerNumber = x;
+}
+
+void Trip::setTime() {
+    myTime++;
+}
+
+int Trip::getTime() {
+    return myTime;
 }

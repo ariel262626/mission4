@@ -50,6 +50,7 @@ public:
      * @return - vector of the path
      */
     vector<Node*> getPathOfTrip(Matrix2d map);
+    vector<Node> getPathOfTripClone(Matrix2d map);
 
     /**
      * get the start point of the trip
@@ -92,6 +93,10 @@ public:
      * @param x - number of passengers
      */
     void setPassengersNumber(int x);
+
+    void setTime();
+
+    int getTime();
 
 };
 

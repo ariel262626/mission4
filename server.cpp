@@ -12,6 +12,7 @@
 #include "Driver.h"
 #include "TexiCenter.h"
 #include "PharserInfo.h"
+#include "ClockTime.h"
 #include <fstream>
 #include <sstream>
 #include <boost/archive/text_oarchive.hpp>
@@ -72,6 +73,8 @@ int main(int argc, char *argv[]) {
     newMap->setobstaclePoint(listObstacle);
     // insert the map to taxi center, because the taxi center is in charge of all the programm actualy
     texiCenter.setMap(*newMap);
+    // create clock for the program
+    ClockTime clock;
     // request from the user mission to enter. we will expect all the time to another mission,
     // therefor we return on it until the user enter 7 (end of mission).
     while (true) {
@@ -197,12 +200,22 @@ int main(int argc, char *argv[]) {
 
             }
             case 9: {
+//                vector<Node*> path;
+//                Point newPosition;
+//                Trip* trip= texiCenter.getTripInIndex(0);
+//                path = trip->getPathOfTrip(*newMap);
+//                Driver* d1 = texiCenter.getDriverInIndex(0);
+//                d1->moveStep(path);
+                //we use clone for not delete the path
+
+                // update the clock for each movement
+                clock.setTime();
                 vector<Node> path;
                 Point newPosition;
-                Trip* trip = texiCenter.getTripInIndex(0);
-                path = trip->getPathOfTrip(*newMap);
+                Trip* trip= texiCenter.getTripInIndex(0);
+                path = trip->getPathOfTripClone(*newMap);
                 Driver* d1 = texiCenter.getDriverInIndex(0);
-                d1->moveStep(path);
+                d1->moveStep(path, clock.getTime());
                 newPosition = texiCenter.getDriverInIndex(0)->getLocation();
 
                 //serialize
