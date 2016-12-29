@@ -129,15 +129,15 @@ int main(int argc, char *argv[]) {
                 udp->sendData(serial_str);
 
                 //sent back the right trip
-                Driver driver1 = *(texiCenter.getDriverWithId(driverId));
-                Trip trip = driver1.getMyTrip();
+              //  Driver driver1 = *(texiCenter.getDriverWithId(driverId));
+                Trip trip = driver2->getMyTrip();
                 //serialize
-                Trip *trip1 = &trip;
+                //Trip *trip1 = &trip;
                 std::string serial_str1;
                 boost::iostreams::back_insert_device<std::string> inserter1(serial_str1);
                 boost::iostreams::stream<boost::iostreams::back_insert_device<std::string> > s1(inserter1);
                 boost::archive::binary_oarchive oa1(s1);
-                oa1 << trip1;
+                oa1 << trip;
                 s.flush();
 
                 //here we sent back the right texi cab

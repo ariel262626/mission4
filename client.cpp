@@ -78,6 +78,9 @@ int main(int argc, char *argv[]) {
     ia >> cabBase;
     cout<<"cabebase recived:"<<endl;
     cout<<cabBase->getCabId()<<endl;
+
+    cout<<"wait for trip"<<endl;
+
     //client get the trip from the server
     udp->reciveData(buffer, sizeof(buffer));
     //for de-serializa we need put buffer to string
