@@ -24,12 +24,17 @@ Trip::Trip() {}
 //we have the start point and end point so we calculate all the path with bfs here
 vector<Node*> Trip::getPathOfTrip(Matrix2d map) {
     vector<Node*> listOfNodeInTrip;
-        Node startNode = Node(Point(myXstart, myYstart), false);
+    vector<Node*> listOfNodeInTripClone;
+
+    Node startNode = Node(Point(myXstart, myYstart), false);
         Node endNode = Node(Point(myXend, myYend), true);
         Bfs bfs = Bfs(startNode, endNode, 2, &map);
         //we get all the points of the trip. run the bfs for that
         listOfNodeInTrip = bfs.runBfs(&startNode, &endNode);
-        return listOfNodeInTrip;
+        for(int i = 0; i< listOfNodeInTrip.size();i++){
+            listOfNodeInTripClone.push_back(*listOfNodeInTrip.at(i));
+        }
+        return listOfNodeInTripClone;
 }
 
 Point Trip::getStartPointOfTrip() {

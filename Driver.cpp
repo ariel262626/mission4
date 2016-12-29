@@ -83,6 +83,10 @@ int Driver::getMyCabId() {
     return myVehicleId;
 }
 
-Trip Driver::getMyTrip() {
-    return myTrip;
+Trip* Driver::getMyTrip() {
+    return &myTrip;
+}
+
+void Driver:: setCab(CabBase newCab){
+    myTaxiStandart = newCab;
 }

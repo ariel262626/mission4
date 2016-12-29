@@ -29,7 +29,7 @@ public:
      * his input
      * @return new trip
      */
-    Trip createNewRide ();
+    Trip* createNewRide ();
     /**
      * this method take the input of the user and create new cab according to
      * his input

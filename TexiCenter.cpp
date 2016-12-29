@@ -6,7 +6,7 @@
 #include "Matrix2d.h"
 
 TexiCenter::TexiCenter(vector<Driver*> driversList, vector<Passenger*> passengresList,
-                       vector<CabBase*> standartCabList, vector<Trip> tripList, Matrix2d map, Bfs bfs) {
+                       vector<CabBase*> standartCabList, vector<Trip*> tripList, Matrix2d map, Bfs bfs) {
     myDriversList = driversList;
     myPassengresList = passengresList;
     myStandartCabList = standartCabList;
@@ -43,7 +43,7 @@ void TexiCenter::startDriving() {
     Driver* freeDriver;
     //run for all trip and find every trip driver
     for(int i = 0; i < tripNumber; i++) {
-        Point startPiontOfTrip = myTripList.at(0).getStartPointOfTrip();
+        Point startPiontOfTrip = myTripList.at(0)->getStartPointOfTrip();
         //initialize
         flag = 0;
         /*find if there is driver at the point of the starting point of the trip
@@ -59,8 +59,11 @@ void TexiCenter::startDriving() {
                     }
                 }
                 flag = 1;
-                freeDriver->setLocation(myTripList.at(0).getEndPointOfTrip());
+                freeDriver->setLocation(myTripList.at(0)->getEndPointOfTrip());
                 freeDriver->setCountTrips();
+
+                // here we need to release to trip from heap
+
                 myTripList.erase(myTripList.begin());
                 break;
             }
@@ -68,7 +71,7 @@ void TexiCenter::startDriving() {
         //if we dont have a driver at the start point of trip
         if(flag != 1) {
             //we get all the point of the trip
-            pathOfNodeInTrip = myTripList.at(0).getPathOfTrip(myMap);
+            pathOfNodeInTrip = myTripList.at(0)->getPathOfTrip(myMap);
             //for now start driving is to get the driver to his end point
             myDriversList.at(i)->setLocation(pathOfNodeInTrip.at(0)->getPointOfnode());
             myDriversList.at(i)->setCountTrips();
@@ -100,7 +103,7 @@ Driver TexiCenter::findDriver(Passenger passenger) {
         //update closest driver
         closestDriver = *(myDriversList[i]);
         //because he is the closest set him this trip
-        closestDriver.setTrip(myTripList.at(i));
+        closestDriver.setTrip(*myTripList.at(i));
     }
     return closestDriver;
 }
@@ -123,7 +126,7 @@ void TexiCenter::addCabToCabsLIst(CabBase* addCab) {
     myStandartCabList.push_back(addCab);
 }
 
-void TexiCenter::addTripToTripLIst(Trip addTrip) {
+void TexiCenter::addTripToTripLIst(Trip* addTrip) {
     myTripList.push_back(addTrip);
 }
 
@@ -139,7 +142,7 @@ void TexiCenter::setBaseCabeList(vector<CabBase*> baseCabList) {
     myStandartCabList.swap(baseCabList);
 }
 
-void TexiCenter::setTripList(vector<Trip> tripsList) {
+void TexiCenter::setTripList(vector<Trip*> tripsList) {
     myTripList.swap(tripsList);
 }
 
@@ -159,7 +162,7 @@ CabBase* TexiCenter::getCabInIndex(int i) {
     return myStandartCabList.at(i);
 }
 
-Trip TexiCenter::getTripInIndex(int i) {
+Trip* TexiCenter::getTripInIndex(int i) {
     return myTripList.at(i);
 }
 

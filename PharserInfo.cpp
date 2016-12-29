@@ -50,7 +50,7 @@ Driver* PharserInfo:: createDriver (){
     return driver;
 }
 
-Trip PharserInfo:: createNewRide (){
+Trip* PharserInfo:: createNewRide (){
 // get from the user: ridr id, start point, end point, number of passengers and tarrif
 // of the cab to create ride
 
@@ -63,7 +63,7 @@ Trip PharserInfo:: createNewRide (){
     double tariff = getOneElementDouble();
     int time = getOneElementInt();
     // create trip with the data of we got from the user
-    Trip trip = Trip(rideId, startX, startY, endX, endY, numPassenger, tariff, time);
+    Trip* trip = new Trip(rideId, startX, startY, endX, endY, numPassenger, tariff, time);
     return trip;
 }
 

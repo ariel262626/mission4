@@ -98,8 +98,9 @@ public:
 
     int getMyCabId();
 
-    Trip getMyTrip();
+    Trip* getMyTrip();
 
+    void setCab(CabBase newCab);
     };
 
 

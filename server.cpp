@@ -94,7 +94,8 @@ int main(int argc, char *argv[]) {
                 //make instence of cab
                 Driver *driver2;
                 //de serialize
-                boost::iostreams::basic_array_source<char> device(bufferRecivedDr.c_str(), bufferRecivedDr.size());
+                boost::iostreams::basic_array_source<char> device(bufferRecivedDr.c_str(),
+                                                                  bufferRecivedDr.size());
                 boost::iostreams::stream<boost::iostreams::basic_array_source<char> > s2(device);
                 boost::archive::binary_iarchive ia(s2);
                 ia >> driver2;
@@ -108,13 +109,12 @@ int main(int argc, char *argv[]) {
                 texiCenter.addDriverToDriverLIst(driver2);
                 // count how much drivers we have
                 countDriver++;
+
                 //find the right texi
                 int cabId = texiCenter.getDriverInIndex(0)->getMyCabId();
                 cout<<"now we get the texi for the driver\n";
                 CabBase* cabBase = texiCenter.getCabWithId(cabId);
-
-                //for serialization create buffer
-                char buffer[1024];
+                texiCenter.getDriverWithId(0)->setCab(*cabBase);
 
                 //serialize
                 std::string serial_str;
@@ -123,14 +123,15 @@ int main(int argc, char *argv[]) {
                 boost::archive::binary_oarchive oa(s);
                 oa << cabBase;
                 s.flush();
-
                 //here we sent back the right texi cab
                 cout<<"//here we sent back the right texi cab\n";
                 udp->sendData(serial_str);
 
+                Trip* trip = texiCenter.getTripInIndex(0);
+               // driver2->setTrip(*trip);
                 //sent back the right trip
               //  Driver driver1 = *(texiCenter.getDriverWithId(driverId));
-                Trip trip = driver2->getMyTrip();//
+               // Trip* trip = driver2->getMyTrip();
                 //serialize
                 //Trip *trip1 = &trip;
                 std::string serial_str1;
@@ -138,9 +139,8 @@ int main(int argc, char *argv[]) {
                 boost::iostreams::stream<boost::iostreams::back_insert_device<std::string> > s1(inserter1);
                 boost::archive::binary_oarchive oa1(s1);
                 oa1 << trip;
-                s.flush();
-
-                //here we sent back the right texi cab
+                s1.flush();
+                //here we sent back the right trip
                 udp->sendData(serial_str1);
 
                 break;
@@ -151,7 +151,7 @@ int main(int argc, char *argv[]) {
                 cin >> insertRide;
                 // use in the pharser class to handle the data
                 PharserInfo pharser = PharserInfo(insertRide);
-                Trip trip = pharser.createNewRide();
+                Trip* trip = pharser.createNewRide();
                 // add trip to taxi center
                 texiCenter.addTripToTripLIst(trip);
                 break;
@@ -197,10 +197,12 @@ int main(int argc, char *argv[]) {
 
             }
             case 9: {
-                vector<Node *> path;
+                vector<Node> path;
                 Point newPosition;
-                path = texiCenter.getTripInIndex(0).getPathOfTrip(*newMap);
-                texiCenter.getDriverInIndex(0)->moveStep(path);
+                Trip* trip = texiCenter.getTripInIndex(0);
+                path = trip->getPathOfTrip(*newMap);
+                Driver* d1 = texiCenter.getDriverInIndex(0);
+                d1->moveStep(path);
                 newPosition = texiCenter.getDriverInIndex(0)->getLocation();
 
                 //serialize

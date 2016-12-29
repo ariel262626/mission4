@@ -67,44 +67,47 @@ int main(int argc, char *argv[]) {
 
     //here the client get the texi fron the server
     udp->reciveData(buffer, sizeof(buffer));
+
     //for de-serializa we need put buffer to string
     string bufferRecivedTexi = bufferToString(buffer, sizeof(buffer));
     //make instence of cab
     CabBase* cabBase;
     //de serialize
-    boost::iostreams::basic_array_source<char> device(bufferRecivedTexi.c_str(), bufferRecivedTexi.size());
+    boost::iostreams::basic_array_source<char> device(bufferRecivedTexi.c_str(),
+                                                      bufferRecivedTexi.size());
     boost::iostreams::stream<boost::iostreams::basic_array_source<char> > s2(device);
     boost::archive::binary_iarchive ia(s2);
     ia >> cabBase;
     cout<<"cabebase recived:"<<endl;
     cout<<cabBase->getCabId()<<endl;
 
-    cout<<"wait for trip"<<endl;
 
+    cout<<"wait for trip"<<endl;
     //client get the trip from the server
     udp->reciveData(buffer, sizeof(buffer));
     //for de-serializa we need put buffer to string
-    string bufferRecivedTrip = buffer;
+    string bufferRecivedTrip = bufferToString(buffer, sizeof(buffer));
     //make instence of cab
     Trip* trip;
     //de serialize
-    boost::iostreams::basic_array_source<char> device1((char *) bufferRecivedTrip.c_str(),
-                                                       (char *) bufferRecivedTrip.size());
+    boost::iostreams::basic_array_source<char> device1(bufferRecivedTrip.c_str(),
+                                                       bufferRecivedTrip.size());
     boost::iostreams::stream<boost::iostreams::basic_array_source<char> > s3(device1);
     boost::archive::binary_iarchive ia1(s3);
     ia1 >> trip;
 
+
     //here the client get the 'go' word from the server and move one step
     udp->reciveData(buffer, sizeof(buffer));
     //for de-serializa we need put buffer to string
-    string bufferRecivedAdvance = buffer;
+    string bufferRecivedAdvance = bufferToString(buffer, sizeof(buffer));
     //make instence of cab
     Point newLocation;
     //de serialize
-    boost::iostreams::basic_array_source<char> device2((char *) bufferRecivedAdvance.c_str(),
-                                                       (char *) bufferRecivedAdvance.size());
+    boost::iostreams::basic_array_source<char> device2(bufferRecivedAdvance.c_str(),
+                                                       bufferRecivedAdvance.size());
     boost::iostreams::stream<boost::iostreams::basic_array_source<char> > s4(device2);
-    boost::archive::binary_iarchive ia2(s3);
+    boost::archive::binary_iarchive ia2(s4);
     ia2 >> newLocation;
     driver->setLocation(newLocation);
     // close socket
