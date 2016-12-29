@@ -12,7 +12,6 @@ using namespace std;
 
 class Driver {
     friend class boost::serialization::access;
-
     template<class Archive>
     void serialize(Archive &ar, const unsigned int version)
     {

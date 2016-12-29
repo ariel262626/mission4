@@ -111,19 +111,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named mission4
-
-# Build rule for target.
-mission4: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 mission4
-.PHONY : mission4
-
-# fast build rule for target.
-mission4/fast:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/build
-.PHONY : mission4/fast
-
-#=============================================================================
 # Target rules for targets named client
 
 # Build rule for target.
@@ -149,26 +136,14 @@ server/fast:
 	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/build
 .PHONY : server/fast
 
-#=============================================================================
-# Target rules for targets named sockets
-
-# Build rule for target.
-sockets: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 sockets
-.PHONY : sockets
-
-# fast build rule for target.
-sockets/fast:
-	$(MAKE) -f CMakeFiles/sockets.dir/build.make CMakeFiles/sockets.dir/build
-.PHONY : sockets/fast
-
 Bfs.o: Bfs.cpp.o
 
 .PHONY : Bfs.o
 
 # target to build an object file
 Bfs.cpp.o:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Bfs.cpp.o
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Bfs.cpp.o
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Bfs.cpp.o
 .PHONY : Bfs.cpp.o
 
 Bfs.i: Bfs.cpp.i
@@ -177,7 +152,8 @@ Bfs.i: Bfs.cpp.i
 
 # target to preprocess a source file
 Bfs.cpp.i:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Bfs.cpp.i
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Bfs.cpp.i
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Bfs.cpp.i
 .PHONY : Bfs.cpp.i
 
 Bfs.s: Bfs.cpp.s
@@ -186,7 +162,8 @@ Bfs.s: Bfs.cpp.s
 
 # target to generate assembly for a file
 Bfs.cpp.s:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Bfs.cpp.s
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Bfs.cpp.s
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Bfs.cpp.s
 .PHONY : Bfs.cpp.s
 
 CabBase.o: CabBase.cpp.o
@@ -195,7 +172,8 @@ CabBase.o: CabBase.cpp.o
 
 # target to build an object file
 CabBase.cpp.o:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/CabBase.cpp.o
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/CabBase.cpp.o
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/CabBase.cpp.o
 .PHONY : CabBase.cpp.o
 
 CabBase.i: CabBase.cpp.i
@@ -204,7 +182,8 @@ CabBase.i: CabBase.cpp.i
 
 # target to preprocess a source file
 CabBase.cpp.i:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/CabBase.cpp.i
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/CabBase.cpp.i
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/CabBase.cpp.i
 .PHONY : CabBase.cpp.i
 
 CabBase.s: CabBase.cpp.s
@@ -213,7 +192,8 @@ CabBase.s: CabBase.cpp.s
 
 # target to generate assembly for a file
 CabBase.cpp.s:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/CabBase.cpp.s
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/CabBase.cpp.s
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/CabBase.cpp.s
 .PHONY : CabBase.cpp.s
 
 Driver.o: Driver.cpp.o
@@ -222,7 +202,8 @@ Driver.o: Driver.cpp.o
 
 # target to build an object file
 Driver.cpp.o:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Driver.cpp.o
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Driver.cpp.o
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Driver.cpp.o
 .PHONY : Driver.cpp.o
 
 Driver.i: Driver.cpp.i
@@ -231,7 +212,8 @@ Driver.i: Driver.cpp.i
 
 # target to preprocess a source file
 Driver.cpp.i:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Driver.cpp.i
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Driver.cpp.i
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Driver.cpp.i
 .PHONY : Driver.cpp.i
 
 Driver.s: Driver.cpp.s
@@ -240,7 +222,8 @@ Driver.s: Driver.cpp.s
 
 # target to generate assembly for a file
 Driver.cpp.s:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Driver.cpp.s
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Driver.cpp.s
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Driver.cpp.s
 .PHONY : Driver.cpp.s
 
 GameFlow.o: GameFlow.cpp.o
@@ -249,7 +232,8 @@ GameFlow.o: GameFlow.cpp.o
 
 # target to build an object file
 GameFlow.cpp.o:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/GameFlow.cpp.o
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/GameFlow.cpp.o
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/GameFlow.cpp.o
 .PHONY : GameFlow.cpp.o
 
 GameFlow.i: GameFlow.cpp.i
@@ -258,7 +242,8 @@ GameFlow.i: GameFlow.cpp.i
 
 # target to preprocess a source file
 GameFlow.cpp.i:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/GameFlow.cpp.i
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/GameFlow.cpp.i
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/GameFlow.cpp.i
 .PHONY : GameFlow.cpp.i
 
 GameFlow.s: GameFlow.cpp.s
@@ -267,7 +252,8 @@ GameFlow.s: GameFlow.cpp.s
 
 # target to generate assembly for a file
 GameFlow.cpp.s:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/GameFlow.cpp.s
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/GameFlow.cpp.s
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/GameFlow.cpp.s
 .PHONY : GameFlow.cpp.s
 
 Grid.o: Grid.cpp.o
@@ -276,7 +262,8 @@ Grid.o: Grid.cpp.o
 
 # target to build an object file
 Grid.cpp.o:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Grid.cpp.o
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Grid.cpp.o
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Grid.cpp.o
 .PHONY : Grid.cpp.o
 
 Grid.i: Grid.cpp.i
@@ -285,7 +272,8 @@ Grid.i: Grid.cpp.i
 
 # target to preprocess a source file
 Grid.cpp.i:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Grid.cpp.i
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Grid.cpp.i
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Grid.cpp.i
 .PHONY : Grid.cpp.i
 
 Grid.s: Grid.cpp.s
@@ -294,7 +282,8 @@ Grid.s: Grid.cpp.s
 
 # target to generate assembly for a file
 Grid.cpp.s:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Grid.cpp.s
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Grid.cpp.s
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Grid.cpp.s
 .PHONY : Grid.cpp.s
 
 InfoTaxi.o: InfoTaxi.cpp.o
@@ -303,7 +292,8 @@ InfoTaxi.o: InfoTaxi.cpp.o
 
 # target to build an object file
 InfoTaxi.cpp.o:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/InfoTaxi.cpp.o
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/InfoTaxi.cpp.o
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/InfoTaxi.cpp.o
 .PHONY : InfoTaxi.cpp.o
 
 InfoTaxi.i: InfoTaxi.cpp.i
@@ -312,7 +302,8 @@ InfoTaxi.i: InfoTaxi.cpp.i
 
 # target to preprocess a source file
 InfoTaxi.cpp.i:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/InfoTaxi.cpp.i
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/InfoTaxi.cpp.i
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/InfoTaxi.cpp.i
 .PHONY : InfoTaxi.cpp.i
 
 InfoTaxi.s: InfoTaxi.cpp.s
@@ -321,7 +312,8 @@ InfoTaxi.s: InfoTaxi.cpp.s
 
 # target to generate assembly for a file
 InfoTaxi.cpp.s:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/InfoTaxi.cpp.s
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/InfoTaxi.cpp.s
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/InfoTaxi.cpp.s
 .PHONY : InfoTaxi.cpp.s
 
 LuxuryCab.o: LuxuryCab.cpp.o
@@ -330,7 +322,8 @@ LuxuryCab.o: LuxuryCab.cpp.o
 
 # target to build an object file
 LuxuryCab.cpp.o:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/LuxuryCab.cpp.o
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/LuxuryCab.cpp.o
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/LuxuryCab.cpp.o
 .PHONY : LuxuryCab.cpp.o
 
 LuxuryCab.i: LuxuryCab.cpp.i
@@ -339,7 +332,8 @@ LuxuryCab.i: LuxuryCab.cpp.i
 
 # target to preprocess a source file
 LuxuryCab.cpp.i:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/LuxuryCab.cpp.i
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/LuxuryCab.cpp.i
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/LuxuryCab.cpp.i
 .PHONY : LuxuryCab.cpp.i
 
 LuxuryCab.s: LuxuryCab.cpp.s
@@ -348,7 +342,8 @@ LuxuryCab.s: LuxuryCab.cpp.s
 
 # target to generate assembly for a file
 LuxuryCab.cpp.s:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/LuxuryCab.cpp.s
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/LuxuryCab.cpp.s
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/LuxuryCab.cpp.s
 .PHONY : LuxuryCab.cpp.s
 
 Matrix2d.o: Matrix2d.cpp.o
@@ -357,7 +352,8 @@ Matrix2d.o: Matrix2d.cpp.o
 
 # target to build an object file
 Matrix2d.cpp.o:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Matrix2d.cpp.o
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Matrix2d.cpp.o
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Matrix2d.cpp.o
 .PHONY : Matrix2d.cpp.o
 
 Matrix2d.i: Matrix2d.cpp.i
@@ -366,7 +362,8 @@ Matrix2d.i: Matrix2d.cpp.i
 
 # target to preprocess a source file
 Matrix2d.cpp.i:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Matrix2d.cpp.i
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Matrix2d.cpp.i
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Matrix2d.cpp.i
 .PHONY : Matrix2d.cpp.i
 
 Matrix2d.s: Matrix2d.cpp.s
@@ -375,7 +372,8 @@ Matrix2d.s: Matrix2d.cpp.s
 
 # target to generate assembly for a file
 Matrix2d.cpp.s:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Matrix2d.cpp.s
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Matrix2d.cpp.s
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Matrix2d.cpp.s
 .PHONY : Matrix2d.cpp.s
 
 Node.o: Node.cpp.o
@@ -384,7 +382,8 @@ Node.o: Node.cpp.o
 
 # target to build an object file
 Node.cpp.o:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Node.cpp.o
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Node.cpp.o
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Node.cpp.o
 .PHONY : Node.cpp.o
 
 Node.i: Node.cpp.i
@@ -393,7 +392,8 @@ Node.i: Node.cpp.i
 
 # target to preprocess a source file
 Node.cpp.i:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Node.cpp.i
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Node.cpp.i
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Node.cpp.i
 .PHONY : Node.cpp.i
 
 Node.s: Node.cpp.s
@@ -402,7 +402,8 @@ Node.s: Node.cpp.s
 
 # target to generate assembly for a file
 Node.cpp.s:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Node.cpp.s
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Node.cpp.s
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Node.cpp.s
 .PHONY : Node.cpp.s
 
 Passenger.o: Passenger.cpp.o
@@ -411,7 +412,8 @@ Passenger.o: Passenger.cpp.o
 
 # target to build an object file
 Passenger.cpp.o:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Passenger.cpp.o
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Passenger.cpp.o
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Passenger.cpp.o
 .PHONY : Passenger.cpp.o
 
 Passenger.i: Passenger.cpp.i
@@ -420,7 +422,8 @@ Passenger.i: Passenger.cpp.i
 
 # target to preprocess a source file
 Passenger.cpp.i:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Passenger.cpp.i
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Passenger.cpp.i
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Passenger.cpp.i
 .PHONY : Passenger.cpp.i
 
 Passenger.s: Passenger.cpp.s
@@ -429,7 +432,8 @@ Passenger.s: Passenger.cpp.s
 
 # target to generate assembly for a file
 Passenger.cpp.s:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Passenger.cpp.s
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Passenger.cpp.s
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Passenger.cpp.s
 .PHONY : Passenger.cpp.s
 
 PharserInfo.o: PharserInfo.cpp.o
@@ -438,7 +442,8 @@ PharserInfo.o: PharserInfo.cpp.o
 
 # target to build an object file
 PharserInfo.cpp.o:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/PharserInfo.cpp.o
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/PharserInfo.cpp.o
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/PharserInfo.cpp.o
 .PHONY : PharserInfo.cpp.o
 
 PharserInfo.i: PharserInfo.cpp.i
@@ -447,7 +452,8 @@ PharserInfo.i: PharserInfo.cpp.i
 
 # target to preprocess a source file
 PharserInfo.cpp.i:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/PharserInfo.cpp.i
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/PharserInfo.cpp.i
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/PharserInfo.cpp.i
 .PHONY : PharserInfo.cpp.i
 
 PharserInfo.s: PharserInfo.cpp.s
@@ -456,7 +462,8 @@ PharserInfo.s: PharserInfo.cpp.s
 
 # target to generate assembly for a file
 PharserInfo.cpp.s:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/PharserInfo.cpp.s
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/PharserInfo.cpp.s
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/PharserInfo.cpp.s
 .PHONY : PharserInfo.cpp.s
 
 Point.o: Point.cpp.o
@@ -465,7 +472,8 @@ Point.o: Point.cpp.o
 
 # target to build an object file
 Point.cpp.o:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Point.cpp.o
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Point.cpp.o
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Point.cpp.o
 .PHONY : Point.cpp.o
 
 Point.i: Point.cpp.i
@@ -474,7 +482,8 @@ Point.i: Point.cpp.i
 
 # target to preprocess a source file
 Point.cpp.i:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Point.cpp.i
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Point.cpp.i
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Point.cpp.i
 .PHONY : Point.cpp.i
 
 Point.s: Point.cpp.s
@@ -483,7 +492,8 @@ Point.s: Point.cpp.s
 
 # target to generate assembly for a file
 Point.cpp.s:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Point.cpp.s
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Point.cpp.s
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Point.cpp.s
 .PHONY : Point.cpp.s
 
 Socket.o: Socket.cpp.o
@@ -492,8 +502,8 @@ Socket.o: Socket.cpp.o
 
 # target to build an object file
 Socket.cpp.o:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Socket.cpp.o
-	$(MAKE) -f CMakeFiles/sockets.dir/build.make CMakeFiles/sockets.dir/Socket.cpp.o
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Socket.cpp.o
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Socket.cpp.o
 .PHONY : Socket.cpp.o
 
 Socket.i: Socket.cpp.i
@@ -502,8 +512,8 @@ Socket.i: Socket.cpp.i
 
 # target to preprocess a source file
 Socket.cpp.i:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Socket.cpp.i
-	$(MAKE) -f CMakeFiles/sockets.dir/build.make CMakeFiles/sockets.dir/Socket.cpp.i
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Socket.cpp.i
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Socket.cpp.i
 .PHONY : Socket.cpp.i
 
 Socket.s: Socket.cpp.s
@@ -512,8 +522,8 @@ Socket.s: Socket.cpp.s
 
 # target to generate assembly for a file
 Socket.cpp.s:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Socket.cpp.s
-	$(MAKE) -f CMakeFiles/sockets.dir/build.make CMakeFiles/sockets.dir/Socket.cpp.s
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Socket.cpp.s
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Socket.cpp.s
 .PHONY : Socket.cpp.s
 
 StandartCab.o: StandartCab.cpp.o
@@ -522,7 +532,8 @@ StandartCab.o: StandartCab.cpp.o
 
 # target to build an object file
 StandartCab.cpp.o:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/StandartCab.cpp.o
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/StandartCab.cpp.o
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/StandartCab.cpp.o
 .PHONY : StandartCab.cpp.o
 
 StandartCab.i: StandartCab.cpp.i
@@ -531,7 +542,8 @@ StandartCab.i: StandartCab.cpp.i
 
 # target to preprocess a source file
 StandartCab.cpp.i:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/StandartCab.cpp.i
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/StandartCab.cpp.i
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/StandartCab.cpp.i
 .PHONY : StandartCab.cpp.i
 
 StandartCab.s: StandartCab.cpp.s
@@ -540,7 +552,8 @@ StandartCab.s: StandartCab.cpp.s
 
 # target to generate assembly for a file
 StandartCab.cpp.s:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/StandartCab.cpp.s
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/StandartCab.cpp.s
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/StandartCab.cpp.s
 .PHONY : StandartCab.cpp.s
 
 TexiCenter.o: TexiCenter.cpp.o
@@ -549,7 +562,8 @@ TexiCenter.o: TexiCenter.cpp.o
 
 # target to build an object file
 TexiCenter.cpp.o:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/TexiCenter.cpp.o
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/TexiCenter.cpp.o
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/TexiCenter.cpp.o
 .PHONY : TexiCenter.cpp.o
 
 TexiCenter.i: TexiCenter.cpp.i
@@ -558,7 +572,8 @@ TexiCenter.i: TexiCenter.cpp.i
 
 # target to preprocess a source file
 TexiCenter.cpp.i:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/TexiCenter.cpp.i
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/TexiCenter.cpp.i
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/TexiCenter.cpp.i
 .PHONY : TexiCenter.cpp.i
 
 TexiCenter.s: TexiCenter.cpp.s
@@ -567,7 +582,8 @@ TexiCenter.s: TexiCenter.cpp.s
 
 # target to generate assembly for a file
 TexiCenter.cpp.s:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/TexiCenter.cpp.s
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/TexiCenter.cpp.s
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/TexiCenter.cpp.s
 .PHONY : TexiCenter.cpp.s
 
 Trip.o: Trip.cpp.o
@@ -576,7 +592,8 @@ Trip.o: Trip.cpp.o
 
 # target to build an object file
 Trip.cpp.o:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Trip.cpp.o
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Trip.cpp.o
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Trip.cpp.o
 .PHONY : Trip.cpp.o
 
 Trip.i: Trip.cpp.i
@@ -585,7 +602,8 @@ Trip.i: Trip.cpp.i
 
 # target to preprocess a source file
 Trip.cpp.i:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Trip.cpp.i
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Trip.cpp.i
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Trip.cpp.i
 .PHONY : Trip.cpp.i
 
 Trip.s: Trip.cpp.s
@@ -594,7 +612,8 @@ Trip.s: Trip.cpp.s
 
 # target to generate assembly for a file
 Trip.cpp.s:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Trip.cpp.s
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Trip.cpp.s
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Trip.cpp.s
 .PHONY : Trip.cpp.s
 
 Udp.o: Udp.cpp.o
@@ -603,8 +622,8 @@ Udp.o: Udp.cpp.o
 
 # target to build an object file
 Udp.cpp.o:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Udp.cpp.o
-	$(MAKE) -f CMakeFiles/sockets.dir/build.make CMakeFiles/sockets.dir/Udp.cpp.o
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Udp.cpp.o
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Udp.cpp.o
 .PHONY : Udp.cpp.o
 
 Udp.i: Udp.cpp.i
@@ -613,8 +632,8 @@ Udp.i: Udp.cpp.i
 
 # target to preprocess a source file
 Udp.cpp.i:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Udp.cpp.i
-	$(MAKE) -f CMakeFiles/sockets.dir/build.make CMakeFiles/sockets.dir/Udp.cpp.i
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Udp.cpp.i
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Udp.cpp.i
 .PHONY : Udp.cpp.i
 
 Udp.s: Udp.cpp.s
@@ -623,8 +642,8 @@ Udp.s: Udp.cpp.s
 
 # target to generate assembly for a file
 Udp.cpp.s:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/Udp.cpp.s
-	$(MAKE) -f CMakeFiles/sockets.dir/build.make CMakeFiles/sockets.dir/Udp.cpp.s
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Udp.cpp.s
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Udp.cpp.s
 .PHONY : Udp.cpp.s
 
 client.o: client.cpp.o
@@ -654,40 +673,12 @@ client.cpp.s:
 	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/client.cpp.s
 .PHONY : client.cpp.s
 
-main.o: main.cpp.o
-
-.PHONY : main.o
-
-# target to build an object file
-main.cpp.o:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/main.cpp.o
-.PHONY : main.cpp.o
-
-main.i: main.cpp.i
-
-.PHONY : main.i
-
-# target to preprocess a source file
-main.cpp.i:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/main.cpp.i
-.PHONY : main.cpp.i
-
-main.s: main.cpp.s
-
-.PHONY : main.s
-
-# target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/main.cpp.s
-.PHONY : main.cpp.s
-
 server.o: server.cpp.o
 
 .PHONY : server.o
 
 # target to build an object file
 server.cpp.o:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/server.cpp.o
 	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server.cpp.o
 .PHONY : server.cpp.o
 
@@ -697,7 +688,6 @@ server.i: server.cpp.i
 
 # target to preprocess a source file
 server.cpp.i:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/server.cpp.i
 	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server.cpp.i
 .PHONY : server.cpp.i
 
@@ -707,7 +697,6 @@ server.s: server.cpp.s
 
 # target to generate assembly for a file
 server.cpp.s:
-	$(MAKE) -f CMakeFiles/mission4.dir/build.make CMakeFiles/mission4.dir/server.cpp.s
 	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server.cpp.s
 .PHONY : server.cpp.s
 
@@ -719,10 +708,8 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... mission4"
 	@echo "... client"
 	@echo "... server"
-	@echo "... sockets"
 	@echo "... Bfs.o"
 	@echo "... Bfs.i"
 	@echo "... Bfs.s"
@@ -777,9 +764,6 @@ help:
 	@echo "... client.o"
 	@echo "... client.i"
 	@echo "... client.s"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
 	@echo "... server.o"
 	@echo "... server.i"
 	@echo "... server.s"

@@ -61,7 +61,7 @@ Trip PharserInfo:: createNewRide (){
     int endY = getOneElementInt();
     int numPassenger = getOneElementInt();
     double tariff = getOneElementDouble();
-    int time;
+    int time = getOneElementInt();
     // create trip with the data of we got from the user
     Trip trip = Trip(rideId, startX, startY, endX, endY, numPassenger, tariff, time);
     return trip;
