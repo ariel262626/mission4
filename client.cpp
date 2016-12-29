@@ -121,7 +121,9 @@ while(true) {
     ia2 >> newLocation;
     driver->setLocation(newLocation);
     //we end the trip so we get back to while to wait for the next trip
-    if (driver->getMyTrip()->getEndPointOfTrip() == driver->getLocation()) {
+    Point p1 = driver->getMyTrip()->getEndPointOfTrip();
+    Point p2 = driver->getLocation();
+    if (p1 == p2) {
         break;
     }
   }
