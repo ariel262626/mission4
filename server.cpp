@@ -109,23 +109,23 @@ int main(int argc, char *argv[]) {
                 // count how much drivers we have
                 countDriver++;
                 //find the right texi
-                int i = texiCenter.getDriverInIndex(0)->getMyCabId();
+                int cabId = texiCenter.getDriverInIndex(0)->getMyCabId();
                 cout<<"now we get the texi for the driver\n";
-                CabBase cabBase = *texiCenter.getCabWithId(i);
+                CabBase* cabBase = texiCenter.getCabWithId(cabId);
 
                 //for serialization create buffer
                 char buffer[1024];
 
                 //serialize
-                CabBase *cabBase1 = &cabBase;
                 std::string serial_str;
                 boost::iostreams::back_insert_device<std::string> inserter(serial_str);
                 boost::iostreams::stream<boost::iostreams::back_insert_device<std::string> > s(inserter);
                 boost::archive::binary_oarchive oa(s);
-                oa << cabBase1;
+                oa << cabBase;
                 s.flush();
 
                 //here we sent back the right texi cab
+                cout<<"//here we sent back the right texi cab\n";
                 udp->sendData(serial_str);
 
                 //sent back the right trip

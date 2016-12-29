@@ -68,16 +68,16 @@ int main(int argc, char *argv[]) {
     //here the client get the texi fron the server
     udp->reciveData(buffer, sizeof(buffer));
     //for de-serializa we need put buffer to string
-    string bufferRecivedTexi = buffer;
+    string bufferRecivedTexi = bufferToString(buffer, sizeof(buffer));
     //make instence of cab
     CabBase* cabBase;
     //de serialize
-    boost::iostreams::basic_array_source<char> device((char *) bufferRecivedTexi.c_str(),
-                                                      (char *) bufferRecivedTexi.size());
+    boost::iostreams::basic_array_source<char> device(bufferRecivedTexi.c_str(), bufferRecivedTexi.size());
     boost::iostreams::stream<boost::iostreams::basic_array_source<char> > s2(device);
     boost::archive::binary_iarchive ia(s2);
     ia >> cabBase;
-
+    cout<<"cabebase recived:"<<endl;
+    cout<<cabBase->getCabId()<<endl;
     //client get the trip from the server
     udp->reciveData(buffer, sizeof(buffer));
     //for de-serializa we need put buffer to string
