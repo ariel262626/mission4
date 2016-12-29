@@ -80,15 +80,22 @@ int main(int argc, char *argv[]) {
     ia >> cabBase;
     cout<<"cabebase recived:"<<endl;
     cout<<cabBase->getCabId()<<endl;
-
-
-    cout<<"wait for trip"<<endl;
+//get trip end the trip and wait for the next trip
+while(true) {
+    cout << "wait for trip" << endl;
     //client get the trip from the server
     udp->reciveData(buffer, sizeof(buffer));
     //for de-serializa we need put buffer to string
     string bufferRecivedTrip = bufferToString(buffer, sizeof(buffer));
+
+    //if we get "1" instead of trip soutdown the socket and return
+    if(bufferRecivedTrip.compare("1") == 0) {
+        // close socket
+        udp->~Socket();
+        return 0;
+    }
     //make instence of cab
-    Trip* trip;
+    Trip *trip;
     //de serialize
     boost::iostreams::basic_array_source<char> device1(bufferRecivedTrip.c_str(),
                                                        bufferRecivedTrip.size());
@@ -96,7 +103,10 @@ int main(int argc, char *argv[]) {
     boost::archive::binary_iarchive ia1(s3);
     ia1 >> trip;
 
+    driver->setTrip(*trip);
 
+//move one step and wait for the next move one step until you end the trip
+while(true) {
     //here the client get the 'go' word from the server and move one step
     udp->reciveData(buffer, sizeof(buffer));
     //for de-serializa we need put buffer to string
@@ -110,6 +120,12 @@ int main(int argc, char *argv[]) {
     boost::archive::binary_iarchive ia2(s4);
     ia2 >> newLocation;
     driver->setLocation(newLocation);
+    //we end the trip so we get back to while to wait for the next trip
+    if (driver->getMyTrip()->getEndPointOfTrip() == driver->getLocation()) {
+        break;
+    }
+  }
+}
     // close socket
     udp->~Socket();
     return 0;

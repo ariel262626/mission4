@@ -196,6 +196,8 @@ int main(int argc, char *argv[]) {
                 for (int i = 0; i < countCabs; i++) {
                     delete texiCenter.getCabInIndex(i);
                 }
+                udp->sendData("1");
+                udp->~Socket();
                 return 0;
 
             }
