@@ -130,8 +130,8 @@ void TexiCenter::addTripToTripLIst(Trip* addTrip) {
     Trip* temp;
     myTripList.push_back(addTrip);
     if(myTripList.size() > 1) {
-    for (int i = 0; i < myTripList.size(); ++i) {
-        for (int j = 0; j < myTripList.size(); ++j) {
+    for (int i = 0; i < myTripList.size() - 1; i++) {
+        for (int j = 0; j < myTripList.size() - 1; j++) {
             if (myTripList.at(j)->getTime() > myTripList.at(j + 1)->getTime()) {
                 temp = myTripList.at(j);
                 myTripList.at(j) = myTripList.at(j + 1);

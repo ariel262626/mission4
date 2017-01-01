@@ -23,7 +23,7 @@ public:
     Matrix2d(int high, int width, vector<Point> obstaclePoint);
     Matrix2d(){};
     //destructour.
-    ~Matrix2d(){};
+    ~Matrix2d();
 
     /*
      *

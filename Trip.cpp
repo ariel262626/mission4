@@ -21,6 +21,11 @@ Trip::Trip(int rideId, int xStart, int yStart, int xEnd, int yEnd, int passenger
 
 Trip::Trip() {}
 
+
+Trip::~Trip() {
+    delete this;
+}
+
 //we have the start point and end point so we calculate all the path with bfs here
 vector<Node*> Trip::getPathOfTrip(Matrix2d map) {
     vector<Node*> listOfNodeInTrip;
@@ -81,3 +86,4 @@ void Trip::setTime() {
 int Trip::getTime() {
     return myTime;
 }
+

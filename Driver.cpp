@@ -19,6 +19,10 @@ Driver::Driver(int id, int age, char martialStatus, int experience, int vechileI
 }
 Driver::Driver() {}
 
+Driver::~Driver() {
+    delete this;
+}
+
 void Driver::setLocation(Point p) {
     myLocation = p;
 }
@@ -94,3 +98,5 @@ Trip* Driver::getMyTrip() {
 void Driver:: setCab(CabBase newCab){
     myTaxiStandart = newCab;
 }
+
+
