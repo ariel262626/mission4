@@ -6,8 +6,6 @@
 #include "Driver.h"
 #include "PharserInfo.h"
 #include <unistd.h>
-//#include <boost>
-
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/tokenizer.hpp>
@@ -21,14 +19,10 @@
 #include <boost/archive/binary_iarchive.hpp>
 
 using namespace std;
-using namespace boost::archive;
-std::stringstream ss;
 
-
-std::string bufferToString(char* buffer, int bufflen)
+string bufferToString(char* buffer, int bufflen)
 {
     std::string ret(buffer, bufflen);
-
     return ret;
 }
 
@@ -78,7 +72,6 @@ int main(int argc, char *argv[]) {
     ia >> cabBase;
 //get trip end the trip and wait for the next trip
 while(true) {
-    cout << "wait for trip" << endl;
     //client get the trip from the server
     udp->reciveData(buffer, sizeof(buffer));
     //for de-serializa we need put buffer to string
@@ -93,7 +86,7 @@ while(true) {
     boost::archive::binary_iarchive ia1(s3);
     ia1 >> trip;
 
-    //if we get "-1" instead of trip soutdown the socket and return
+    //if we get "-1" instead of trip shutdown the socket and return
     if(trip->getRideId() == -1) {
         // close socket
         udp->~Socket();
