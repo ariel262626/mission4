@@ -127,7 +127,19 @@ void TexiCenter::addCabToCabsLIst(CabBase* addCab) {
 }
 
 void TexiCenter::addTripToTripLIst(Trip* addTrip) {
+    Trip* temp;
     myTripList.push_back(addTrip);
+    if(myTripList.size() > 1) {
+    for (int i = 0; i < myTripList.size(); ++i) {
+        for (int j = 0; j < myTripList.size(); ++j) {
+            if (myTripList.at(j)->getTime() > myTripList.at(j + 1)->getTime()) {
+                temp = myTripList.at(j);
+                myTripList.at(j) = myTripList.at(j + 1);
+                myTripList.at(j + 1) = temp;
+            }
+        }
+    }
+    }
 }
 
 void TexiCenter::setDriverList(vector<Driver*> driversList) {
@@ -184,4 +196,16 @@ Driver* TexiCenter::getDriverWithId(int id) {
         }
     }
     return driver;
+}
+
+void TexiCenter::eraseTripInIndex() {
+    myTripList.erase(myTripList.begin());
+}
+
+vector<Driver*> TexiCenter:: getMyDriverList (){
+    return myDriversList;
+}
+
+vector<Trip*> TexiCenter:: getMyTripList (){
+    return myTripList;
 }

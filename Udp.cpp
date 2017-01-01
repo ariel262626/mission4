@@ -77,7 +77,7 @@ int Udp::sendData(string data) {
 	//send
 	int sent_bytes = sendto(this->socketDescriptor,
 			datas, data_len, 0, (struct sockaddr *) &sin, sizeof(sin));
-	cout << sent_bytes << endl;
+	//cout << sent_bytes << endl;
 	//check if send successfully
 	if (sent_bytes < 0) {
 		return ERROR_SEND;

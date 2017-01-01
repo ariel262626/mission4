@@ -43,9 +43,6 @@ int main(int argc, char *argv[]) {
 
     Socket *udp = new Udp(1, 5555);
     int f = udp->initialize();
-    cout<<"in server initialize"<<endl;
-    cout<<f<<endl;
-
     char buffer[1024];
 
     // support more than one client?
@@ -84,14 +81,10 @@ int main(int argc, char *argv[]) {
         switch (choose) {
             // insert new driver to the game
             case 1: {
-                cout<< "before get numofdrivers\n";
                 //get from user how much drivers we need to get
                 cin >> numberOfDrivers;
-                cout<< "after get numofdrivers\n";
                 //here we get the driver from clientDriver
                 int num = udp->reciveData(buffer, sizeof(buffer));
-                cout<< "are you 174?"<<endl;
-                cout<< num<<endl;
                 //for de-serializa we need put buffer to string
                 string bufferRecivedDr = bufferToString(buffer, sizeof(buffer));
                 //make instence of cab
@@ -102,20 +95,17 @@ int main(int argc, char *argv[]) {
                 boost::iostreams::stream<boost::iostreams::basic_array_source<char> > s2(device);
                 boost::archive::binary_iarchive ia(s2);
                 ia >> driver2;
-                cout<< "after deserialize\n";
                 // send the string of user to class of parser
                 // we will get now new driver
-                cout<<"driverId:";
-                cout<<driver2->getId();
                 int driverId = driver2->getId();
                 // add driver to taxi center
                 texiCenter.addDriverToDriverLIst(driver2);
                 // count how much drivers we have
                 countDriver++;
 
+
                 //find the right texi
                 int cabId = texiCenter.getDriverInIndex(0)->getMyCabId();
-                cout<<"now we get the texi for the driver\n";
                 CabBase* cabBase = texiCenter.getCabWithId(cabId);
                 texiCenter.getDriverWithId(0)->setCab(*cabBase);
 
@@ -127,25 +117,12 @@ int main(int argc, char *argv[]) {
                 oa << cabBase;
                 s.flush();
                 //here we sent back the right texi cab
-                cout<<"//here we sent back the right texi cab\n";
                 udp->sendData(serial_str);
 
                 Trip* trip = texiCenter.getTripInIndex(0);
-               // driver2->setTrip(*trip);
-                //sent back the right trip
-              //  Driver driver1 = *(texiCenter.getDriverWithId(driverId));
-               // Trip* trip = driver2->getMyTrip();
-                //serialize
-                //Trip *trip1 = &trip;
-                std::string serial_str1;
-                boost::iostreams::back_insert_device<std::string> inserter1(serial_str1);
-                boost::iostreams::stream<boost::iostreams::back_insert_device<std::string> > s1(inserter1);
-                boost::archive::binary_oarchive oa1(s1);
-                oa1 << trip;
-                s1.flush();
-                //here we sent back the right trip
-                udp->sendData(serial_str1);
 
+                //we add the first trip to the driver
+                driver2->setTrip(*trip);
                 break;
             }
             case 2: {
@@ -155,8 +132,11 @@ int main(int argc, char *argv[]) {
                 // use in the pharser class to handle the data
                 PharserInfo pharser = PharserInfo(insertRide);
                 Trip* trip = pharser.createNewRide();
-                // add trip to taxi center
+                // add trip to taxi center - we need to sort the trip list according the time
                 texiCenter.addTripToTripLIst(trip);
+                if(!texiCenter.getMyDriverList().empty()){
+                    texiCenter.getDriverInIndex(0)->setTrip(*trip);
+                }
                 break;
             }
             case 3: {
@@ -196,29 +176,50 @@ int main(int argc, char *argv[]) {
                 for (int i = 0; i < countCabs; i++) {
                     delete texiCenter.getCabInIndex(i);
                 }
-                udp->sendData("1");
+                Trip* tripClose = new Trip(-1, 0, 0, 0, 0, 0, 0, 0);
+                //send the close trip
+                std::string serial_str1;
+                boost::iostreams::back_insert_device<std::string> inserter1(serial_str1);
+                boost::iostreams::stream<boost::iostreams::back_insert_device<std::string> > s1(inserter1);
+                boost::archive::binary_oarchive oa1(s1);
+                oa1 << tripClose;
+                s1.flush();
+                //here we sent back the right trip
+                udp->sendData(serial_str1);
+                cout<<"client allready closed now server closed"<<endl;
+                delete  tripClose;
                 udp->~Socket();
                 return 0;
 
             }
             case 9: {
-//                vector<Node*> path;
-//                Point newPosition;
-//                Trip* trip= texiCenter.getTripInIndex(0);
-//                path = trip->getPathOfTrip(*newMap);
-//                Driver* d1 = texiCenter.getDriverInIndex(0);
-//                d1->moveStep(path);
+                Trip* trip= texiCenter.getTripInIndex(0);
+                Driver* d1 = texiCenter.getDriverInIndex(0);
+                Point startOfTrip = trip->getStartPointOfTrip();
+                Point driverLocation = d1->getLocation();
+                if(driverLocation == startOfTrip) {
+                    if(!texiCenter.getMyTripList().empty()) {
+                        //send the next trip
+                        std::string serial_str1;
+                        boost::iostreams::back_insert_device<std::string> inserter1(serial_str1);
+                        boost::iostreams::stream<boost::iostreams::back_insert_device<std::string> > s1(inserter1);
+                        boost::archive::binary_oarchive oa1(s1);
+                        oa1 << trip;
+                        s1.flush();
+                        //here we sent back the right trip
+                        udp->sendData(serial_str1);
+                    }
+                }
                 //we use clone for not delete the path
-
                 // update the clock for each movement
                 clock.setTime();
                 vector<Node> path;
                 Point newPosition;
-                Trip* trip= texiCenter.getTripInIndex(0);
                 path = trip->getPathOfTripClone(*newMap);
-                Driver* d1 = texiCenter.getDriverInIndex(0);
+
                 d1->moveStep(path, clock.getTime());
                 newPosition = texiCenter.getDriverInIndex(0)->getLocation();
+
 
                 //serialize
                 std::string serial_str;
@@ -229,11 +230,14 @@ int main(int argc, char *argv[]) {
                 s.flush();
                 //here we sent back the 'go' for move one step
                 udp->sendData(serial_str);
+
+                //after we end trip
+                if(texiCenter.getTripInIndex(0)->getEndPointOfTrip() == newPosition) {
+                    texiCenter.eraseTripInIndex();
+                }
             }
         }
     }
-    // end the program
-    return 0;
 }
 
 

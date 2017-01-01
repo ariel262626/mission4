@@ -119,7 +119,9 @@ public:
     Trip* getTripInIndex(int i);
     CabBase* getCabWithId(int i);
     Driver* getDriverWithId(int id);
-
+    void eraseTripInIndex();
+    vector<Driver*>  getMyDriverList();
+    vector<Trip*> getMyTripList ();
     };
 
 #endif //MISSION2_TEXICENTER_H

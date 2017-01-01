@@ -38,8 +38,6 @@ int main(int argc, char *argv[]) {
     Socket* udp = new Udp(0, 5555);
     //bind the server if fail do fail
     int t = udp->initialize();
-    cout<<"in client initialize"<<endl;
-    cout<<t<<endl;
     //for serialization create buffer
     char buffer[1024];
 
@@ -78,8 +76,6 @@ int main(int argc, char *argv[]) {
     boost::iostreams::stream<boost::iostreams::basic_array_source<char> > s2(device);
     boost::archive::binary_iarchive ia(s2);
     ia >> cabBase;
-    cout<<"cabebase recived:"<<endl;
-    cout<<cabBase->getCabId()<<endl;
 //get trip end the trip and wait for the next trip
 while(true) {
     cout << "wait for trip" << endl;
@@ -88,12 +84,6 @@ while(true) {
     //for de-serializa we need put buffer to string
     string bufferRecivedTrip = bufferToString(buffer, sizeof(buffer));
 
-    //if we get "1" instead of trip soutdown the socket and return
-    if(bufferRecivedTrip.compare("1") == 0) {
-        // close socket
-        udp->~Socket();
-        return 0;
-    }
     //make instence of cab
     Trip *trip;
     //de serialize
@@ -103,6 +93,12 @@ while(true) {
     boost::archive::binary_iarchive ia1(s3);
     ia1 >> trip;
 
+    //if we get "-1" instead of trip soutdown the socket and return
+    if(trip->getRideId() == -1) {
+        // close socket
+        udp->~Socket();
+        return 0;
+    }
     driver->setTrip(*trip);
 
 //move one step and wait for the next move one step until you end the trip
@@ -128,7 +124,4 @@ while(true) {
     }
   }
 }
-    // close socket
-    udp->~Socket();
-    return 0;
 }
