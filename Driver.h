@@ -43,7 +43,6 @@ public:
     Driver(int id, int age, char mariralStatus, int experience, int vechileId,
            CabBase taxiStandart, Trip trip);
     Driver();
-    ~Driver();
 /**
  * this metod get path and move the cab one step (standart cab), or two step (luxury cab) on the grid
  * @param path: the path trajectory of bfs

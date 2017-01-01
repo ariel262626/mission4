@@ -36,10 +36,7 @@ Matrix2d::Matrix2d(int high, int width, vector<Point> obstaclePoint): myObstacle
     }
 }
 
-// destructor
-Matrix2d::~Matrix2d() {
-    delete this;
-}
+
 
 void Matrix2d::printReal(vector<Node*> traj1){
     // run the all vector from the end to begin end print. that's the way of the driver

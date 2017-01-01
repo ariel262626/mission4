@@ -164,12 +164,12 @@ int main(int argc, char *argv[]) {
             }
             case 7: {
                 // delete the all new allocation memory
-                newMap->~Matrix2d();
+                delete newMap;
                 for (int i = 0; i < countDriver; i++) {
-                    texiCenter.getDriverInIndex(i)->~Driver();
+                    delete texiCenter.getDriverInIndex(i);
                 }
                 for (int i = 0; i < countCabs; i++) {
-                    texiCenter.getCabInIndex(i)->~CabBase();
+                    delete texiCenter.getCabInIndex(i);
                 }
                 Trip* tripClose = new Trip(-1, 0, 0, 0, 0, 0, 0, 0);
                 //send the close trip
@@ -181,7 +181,7 @@ int main(int argc, char *argv[]) {
                 s1.flush();
                 //here we sent back the right trip
                 udp->sendData(serial_str1);
-                tripClose->~Trip();
+                delete tripClose;
                 udp->~Socket();
                 return 0;
             }
@@ -229,7 +229,7 @@ int main(int argc, char *argv[]) {
                     // check //
                     Trip* temp = texiCenter.getTripInIndex(0);
                     texiCenter.eraseTripInIndex();
-                    temp->~Trip();
+                    delete temp;
                     if(!texiCenter.getMyTripList().empty()) {
                         Trip nextTrip = *texiCenter.getTripInIndex(0);
                         texiCenter.getDriverInIndex(0)->setTrip(nextTrip);

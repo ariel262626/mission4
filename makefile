@@ -1,9 +1,9 @@
 all: server client
-server: server.o Bfs.o Node.o CabBase.o Grid.o Point.o Matrix2d.o Grid.o InfoTaxi.o Driver.o LuxuryCab.o StandartCab.o Passenger.o PharserInfo.o TexiCenter.o Trip.o Udp.o Socket.o
-	g++ -std=c++0x -o server server.o Bfs.o Node.o CabBase.o Grid.o Point.o Matrix2d.o Grid.o InfoTaxi.o Driver.o LuxuryCab.o StandartCab.o Passenger.o PharserInfo.o TexiCenter.o Trip.o Udp.o Socket.o -lboost_serialization
+server: server.o Bfs.o Node.o CabBase.o Grid.o Point.o Matrix2d.o Grid.o InfoTaxi.o Driver.o LuxuryCab.o StandartCab.o Passenger.o Udp.o PharserInfo.o TexiCenter.o Trip.o Udp.o Socket.o ClockTime.o
+	g++ -std=c++0x -o server server.o Bfs.o Node.o CabBase.o Grid.o Point.o Matrix2d.o Grid.o InfoTaxi.o Driver.o LuxuryCab.o StandartCab.o Passenger.o Udp.o PharserInfo.o TexiCenter.o Trip.o ClockTime.o Socket.o -lboost_serialization
 
-client: client.o Bfs.o Node.o CabBase.o Grid.o InfoTaxi.o Point.o Matrix2d.o Grid.o Driver.o LuxuryCab.o StandartCab.o Passenger.o PharserInfo.o Trip.o Udp.o Socket.o
-	g++ -std=c++0x -o client client.o Bfs.o Node.o CabBase.o Grid.o InfoTaxi.o Point.o Matrix2d.o Grid.o Driver.o LuxuryCab.o StandartCab.o Passenger.o PharserInfo.o Trip.o Udp.o Socket.o -lboost_serialization
+client: client.o Bfs.o Node.o CabBase.o Grid.o InfoTaxi.o Point.o Matrix2d.o Grid.o Driver.o LuxuryCab.o StandartCab.o Passenger.o PharserInfo.o Trip.o Udp.o Socket.o ClockTime.o
+	g++ -std=c++0x -o client client.o Bfs.o Node.o CabBase.o Grid.o InfoTaxi.o Point.o Matrix2d.o Grid.o Driver.o LuxuryCab.o StandartCab.o Passenger.o PharserInfo.o Trip.o Udp.o Socket.o ClockTime.o -lboost_serialization
 
 Bfs.o: Bfs.cpp Bfs.h
 	g++ -std=c++0x -c Bfs.cpp
@@ -47,6 +47,9 @@ TexiCenter.o: TexiCenter.cpp TexiCenter.h
 
 Trip.o: Trip.cpp Trip.h
 	g++ -std=c++0x -c Trip.cpp
+
+ClockTime.o: ClockTime.cpp ClockTime.h
+	g++ -std=c++0x -c ClockTime.cpp
 
 Socket.o: Socket.cpp Socket.h
 	g++ -std=c++0x -c Socket.cpp

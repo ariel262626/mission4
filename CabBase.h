@@ -38,8 +38,7 @@ public:
     CabBase(int id, int type, char manaufactur, char color, Grid* map,
             Passenger* passenger);
      CabBase();
-
-    ~CabBase();
+    ~CabBase(){};
 
     /**
      * get the cab id
