@@ -77,11 +77,7 @@ int Udp::sendData(string data) {
 	//send
 	int sent_bytes = sendto(this->socketDescriptor,
 			datas, data_len, 0, (struct sockaddr *) &sin, sizeof(sin));
-<<<<<<< Updated upstream
-	cout << sent_bytes << endl;
-=======
-//	cout << sent_bytes << endl;
->>>>>>> Stashed changes
+	//cout << sent_bytes << endl;
 	//check if send successfully
 	if (sent_bytes < 0) {
 		return ERROR_SEND;
@@ -99,19 +95,12 @@ int Udp::sendData(string data) {
 int Udp::reciveData(char* buffer, int size) {
 	struct sockaddr_in to;
 	unsigned int to_len = sizeof(struct sockaddr_in);
-<<<<<<< Updated upstream
     //cout<<"before in recived";
 	//receive
 	int bytes = recvfrom(this->socketDescriptor,
 			buffer, size, 0, (struct sockaddr *) &to, &to_len);
    // cout<<"after in recived";
     //set the port number to the new one which we get with the data
-=======
-	//receive
-	int bytes = recvfrom(this->socketDescriptor,
-			buffer, size, 0, (struct sockaddr *) &to, &to_len);
-	//set the port number to the new one which we get with the data
->>>>>>> Stashed changes
 	this->port_number = ntohs(to.sin_port);
 	//check if receive successfully
 
