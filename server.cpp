@@ -190,7 +190,6 @@ int main(int argc, char *argv[]) {
                 delete  tripClose;
                 udp->~Socket();
                 return 0;
-
             }
             case 9: {
                 Trip* trip= texiCenter.getTripInIndex(0);
