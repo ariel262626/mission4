@@ -12,7 +12,10 @@
 #include "Driver.h"
 #include "TexiCenter.h"
 #include "PharserInfo.h"
+<<<<<<< Updated upstream
 #include "ClockTime.h"
+=======
+>>>>>>> Stashed changes
 #include <fstream>
 #include <sstream>
 #include <boost/archive/text_oarchive.hpp>
@@ -31,20 +34,28 @@ using namespace std;
 using namespace boost::archive;
 std::stringstream ss;
 
+<<<<<<< Updated upstream
 std::string bufferToString(char* buffer, int bufflen)
 {
     std::string ret(buffer, bufflen);
 
     return ret;
 }
+=======
+>>>>>>> Stashed changes
 
 int main(int argc, char *argv[]) {
     std::cout << "Hello, from server" << std::endl;
 
+<<<<<<< Updated upstream
     Socket *udp = new Udp(1, 5555);
     int f = udp->initialize();
     cout<<"in server initialize"<<endl;
     cout<<f<<endl;
+=======
+    Socket *udp = new Udp(1, 1226);
+    udp->initialize();
+>>>>>>> Stashed changes
 
     char buffer[1024];
 
@@ -73,8 +84,11 @@ int main(int argc, char *argv[]) {
     newMap->setobstaclePoint(listObstacle);
     // insert the map to taxi center, because the taxi center is in charge of all the programm actualy
     texiCenter.setMap(*newMap);
+<<<<<<< Updated upstream
     // create clock for the program
     ClockTime clock;
+=======
+>>>>>>> Stashed changes
     // request from the user mission to enter. we will expect all the time to another mission,
     // therefor we return on it until the user enter 7 (end of mission).
     while (true) {
@@ -84,6 +98,7 @@ int main(int argc, char *argv[]) {
         switch (choose) {
             // insert new driver to the game
             case 1: {
+<<<<<<< Updated upstream
                 cout<< "before get numofdrivers\n";
                 //get from user how much drivers we need to get
                 cin >> numberOfDrivers;
@@ -237,5 +252,147 @@ int main(int argc, char *argv[]) {
 }
 
 
+=======
+                //get from user how much drivers we need to get
+                cin >> numberOfDrivers;
+
+                //here we get the driver from clientDriver
+                udp->reciveData(buffer, sizeof(buffer));
+                //need serialize
+                //for de-serializa we need put buffer to string
+                string bufferRecivedDr = buffer;
+                //make instence of cab
+                Driver *driver2;
+                //de serialize
+                boost::iostreams::basic_array_source<char> device(bufferRecivedDr.c_str(), bufferRecivedDr.size());
+                boost::iostreams::stream<boost::iostreams::basic_array_source<char> > s2(device);
+                boost::archive::binary_iarchive ia(s2);
+                ia >> driver2;
+
+                string insertdriver;
+                cin >> insertdriver;
+                // send the string of user to class of parser
+                PharserInfo pharser = PharserInfo(insertdriver);
+                // we will get now new driver
+                Driver *driver = pharser.createDriver();
+                int driverId = driver->getId();
+                // add driver to taxi center
+                texiCenter.addDriverToDriverLIst(driver);
+                // count how much drivers we have
+                countDriver++;
+
+
+                    //find the right texi
+                    int i = texiCenter.getDriverInIndex(0)->getMyCabId();
+                    CabBase cabBase = *texiCenter.getCabWithId(i);
+
+                    //for serialization create buffer
+                    char buffer[1024];
+
+                    //serialize
+                    CabBase *cabBase1 = &cabBase;
+                    std::string serial_str;
+                    boost::iostreams::back_insert_device<std::string> inserter(serial_str);
+                    boost::iostreams::stream<boost::iostreams::back_insert_device<std::string> > s(inserter);
+                    boost::archive::binary_oarchive oa(s);
+                    oa << cabBase1;
+                    s.flush();
+
+                    //here we sent back the right texi cab
+                    udp->sendData(serial_str);
+
+                    //sent back the right trip
+                    Driver driver1 = *(texiCenter.getDriverWithId(driverId));
+                    Trip trip = driver1.getMyTrip();
+                    //serialize
+                    Trip *trip1 = &trip;
+                    std::string serial_str1;
+                    boost::iostreams::back_insert_device<std::string> inserter1(serial_str1);
+                    boost::iostreams::stream<boost::iostreams::back_insert_device<std::string> > s1(inserter1);
+                    boost::archive::binary_oarchive oa1(s1);
+                    oa1 << trip1;
+                    s.flush();
+
+                    //here we sent back the right texi cab
+                    udp->sendData(serial_str1);
+
+                    break;
+                }
+                case 2: {
+                    // get new ride from the user
+                    string insertRide;
+                    cin >> insertRide;
+                    // use in the pharser class to handle the data
+                    PharserInfo pharser = PharserInfo(insertRide);
+                    Trip trip = pharser.createNewRide();
+                    // add trip to taxi center
+                    texiCenter.addTripToTripLIst(trip);
+                    break;
+                }
+                case 3: {
+                    // get new cab from the user
+                    string insertVehicle;
+                    cin >> insertVehicle;
+                    // use in the pharser class to handle the data
+                    PharserInfo pharser = PharserInfo(insertVehicle);
+                    CabBase *vehicle = pharser.createVehicle();
+                    //count how much cabs we have
+                    countCabs++;
+                    // add cab to taxi center
+                    texiCenter.addCabToCabsLIst(vehicle);
+                    break;
+                }
+                case 4: {
+                    //insert id of driver
+                    int idMission4;
+                    Point location;
+                    cin >> idMission4;
+                    // find location of the driver in the grid
+                    location = texiCenter.findLocationOfDriver(idMission4);
+                    cout << location << endl;
+                    break;
+                }
+                case 6: {
+                    // start driving of all the drivers with their passengers
+                    texiCenter.startDriving();
+                    break;
+                }
+                case 7: {
+                    // delete the all new allocation memory
+                    delete newMap;
+                    for (int i = 0; i < countDriver; i++) {
+                        delete texiCenter.getDriverInIndex(i);
+                    }
+                    for (int i = 0; i < countCabs; i++) {
+                        delete texiCenter.getCabInIndex(i);
+                    }
+                    udp->~Socket();
+
+                }
+                case 9: {
+                    vector<Node*> path;
+                    Point newPosition;
+                    path = texiCenter.getTripInIndex(0).getPathOfTrip(*newMap);
+                    texiCenter.getDriverInIndex(0)->moveStep(path);
+                    newPosition = texiCenter.getDriverInIndex(0)->getLocation();
+
+                    //serialize
+                    std::string serial_str;
+                    boost::iostreams::back_insert_device<std::string> inserter(serial_str);
+                    boost::iostreams::stream<boost::iostreams::back_insert_device<std::string> > s(inserter);
+                    boost::archive::binary_oarchive oa(s);
+                    oa << newPosition;
+                    s.flush();
+                    //here we sent back the 'go' for move one step
+                    udp->sendData(serial_str);
+                }
+            }
+
+           return 0;
+        }
+    // end the program
+
+    }
+>>>>>>> Stashed changes
 
 

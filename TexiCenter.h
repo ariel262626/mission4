@@ -20,13 +20,13 @@ private:
     vector<Driver *> myDriversList;
     vector<Passenger *> myPassengresList;
     vector<CabBase *> myStandartCabList;
-    vector<Trip*> myTripList;
+    vector<Trip> myTripList;
     Matrix2d myMap;
     Bfs myBfs;
 public:
     // constructors
     TexiCenter(vector<Driver *> driversList, vector<Passenger *> passengresList,
-               vector<CabBase *> standartCabList, vector<Trip*> tripList, Matrix2d map, Bfs bfs);
+               vector<CabBase *> standartCabList, vector<Trip> tripList, Matrix2d map, Bfs bfs);
 
     TexiCenter();
 
@@ -65,7 +65,7 @@ public:
      * add trip to trip list
      * @param addTrip - the trip to add
      */
-    void addTripToTripLIst(Trip* addTrip);
+    void addTripToTripLIst(Trip addTrip);
 
     /**
      * set the driver list to this list
@@ -89,7 +89,7 @@ public:
      * set trip list to the recived list
      * @param tripsList - the recived list
      */
-    void setTripList(vector<Trip*> tripsList);
+    void setTripList(vector<Trip> tripsList);
 
     /**
      * set map
@@ -116,10 +116,7 @@ public:
      * @param i - index
      * @return  trip
      */
-    Trip* getTripInIndex(int i);
-    CabBase* getCabWithId(int i);
-    Driver* getDriverWithId(int id);
-
-    };
+    Trip getTripInIndex(int i);
+};
 
 #endif //MISSION2_TEXICENTER_H

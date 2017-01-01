@@ -6,7 +6,10 @@
 #include "Driver.h"
 #include "PharserInfo.h"
 #include <unistd.h>
+<<<<<<< Updated upstream
 //#include <boost>
+=======
+>>>>>>> Stashed changes
 
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
@@ -24,6 +27,7 @@ using namespace std;
 using namespace boost::archive;
 std::stringstream ss;
 
+<<<<<<< Updated upstream
 
 std::string bufferToString(char* buffer, int bufflen)
 {
@@ -40,6 +44,17 @@ int main(int argc, char *argv[]) {
     int t = udp->initialize();
     cout<<"in client initialize"<<endl;
     cout<<t<<endl;
+=======
+int main(int argc, char *argv[]) {
+    std::cout << "Hello, from client" << std::endl;
+
+    cout << argv[1] << endl;
+    //argv[1] = the port of the server
+    Socket* udp = new Udp(0, atoi(argv[1]));
+    //bind the server if fail do fail
+    udp->initialize();
+
+>>>>>>> Stashed changes
     //for serialization create buffer
     char buffer[1024];
 
@@ -51,7 +66,10 @@ int main(int argc, char *argv[]) {
     // we will get now new driver
     Driver *driver = pharser.createDriver();
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     //serialize
     string serial_str;
     boost::iostreams::back_insert_device<string> inserter(serial_str);
@@ -67,6 +85,7 @@ int main(int argc, char *argv[]) {
 
     //here the client get the texi fron the server
     udp->reciveData(buffer, sizeof(buffer));
+<<<<<<< Updated upstream
 
     //for de-serializa we need put buffer to string
     string bufferRecivedTexi = bufferToString(buffer, sizeof(buffer));
@@ -99,10 +118,33 @@ while(true) {
     //de serialize
     boost::iostreams::basic_array_source<char> device1(bufferRecivedTrip.c_str(),
                                                        bufferRecivedTrip.size());
+=======
+    //for de-serializa we need put buffer to string
+    string bufferRecivedTexi = buffer;
+    //make instence of cab
+    CabBase* cabBase;
+    //de serialize
+    boost::iostreams::basic_array_source<char> device((char *) bufferRecivedTexi.c_str(),
+                                                      (char *) bufferRecivedTexi.size());
+    boost::iostreams::stream<boost::iostreams::basic_array_source<char> > s2(device);
+    boost::archive::binary_iarchive ia(s2);
+    ia >> cabBase;
+
+    //client get the trip from the server
+    udp->reciveData(buffer, sizeof(buffer));
+    //for de-serializa we need put buffer to string
+    string bufferRecivedTrip = buffer;
+    //make instence of cab
+    Trip* trip;
+    //de serialize
+    boost::iostreams::basic_array_source<char> device1((char *) bufferRecivedTrip.c_str(),
+                                                       (char *) bufferRecivedTrip.size());
+>>>>>>> Stashed changes
     boost::iostreams::stream<boost::iostreams::basic_array_source<char> > s3(device1);
     boost::archive::binary_iarchive ia1(s3);
     ia1 >> trip;
 
+<<<<<<< Updated upstream
     driver->setTrip(*trip);
 
 //move one step and wait for the next move one step until you end the trip
@@ -128,6 +170,21 @@ while(true) {
     }
   }
 }
+=======
+    //here the client get the 'go' word from the server and move one step
+    udp->reciveData(buffer, sizeof(buffer));
+    //for de-serializa we need put buffer to string
+    string bufferRecivedAdvance = buffer;
+    //make instence of cab
+    Point newLocation;
+    //de serialize
+    boost::iostreams::basic_array_source<char> device2((char *) bufferRecivedAdvance.c_str(),
+                                                       (char *) bufferRecivedAdvance.size());
+    boost::iostreams::stream<boost::iostreams::basic_array_source<char> > s4(device2);
+    boost::archive::binary_iarchive ia2(s3);
+    ia2 >> newLocation;
+    driver->setLocation(newLocation);
+>>>>>>> Stashed changes
     // close socket
     udp->~Socket();
     return 0;

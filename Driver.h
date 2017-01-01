@@ -2,7 +2,6 @@
 // Created by ariel on 29/11/16.
 //
 #include <iostream>
-#include <boost/serialization/access.hpp>
 #include "StandartCab.h"
 #include "Trip.h"
 
@@ -11,22 +10,6 @@
 using namespace std;
 
 class Driver {
-    friend class boost::serialization::access;
-    template<class Archive>
-    void serialize(Archive &ar, const unsigned int version)
-    {
-        ar & myId;
-        ar & myAge;
-        ar & myMartialStatus;
-        ar & myExperience;
-        ar & myVehicleId;
-        ar & mySatisfication;
-        ar & myTaxiStandart;
-        ar & myLocation;
-        ar & myTrip;
-        ar & countTrip;
-    }
-
 private:
     int myId;
     int myAge;
@@ -47,7 +30,7 @@ public:
  * this metod get path and move the cab one step (standart cab), or two step (luxury cab) on the grid
  * @param path: the path trajectory of bfs
  */
-    void moveStep(vector<Node> path, int currentTime);
+    void moveStep(vector<Node*> path);
     /**
      * this method get the point of location which the drive is on the grid. and find the index of this point
      * on the trajectory of bfs.
@@ -55,7 +38,7 @@ public:
      * @param point: point
      * @return index of point in the trajectory
      */
-    int getIndexCurrentLocationPoint(vector<Node> path, Point point);
+    int getIndexCurrentLocationPoint(vector<Node*> path, Point point);
     /**
      * set location of the driver in the grid
      * @param p: point
@@ -95,13 +78,7 @@ public:
      * @return trip
      */
     int getCountTrips();
-
-    int getMyCabId();
-
-    Trip* getMyTrip();
-
-    void setCab(CabBase newCab);
-    };
+};
 
 
 #endif //MISSION2_DRIVER_H
