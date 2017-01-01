@@ -28,13 +28,10 @@
 #include <boost/archive/binary_iarchive.hpp>
 #include <vector>
 using namespace std;
-using namespace boost::archive;
-std::stringstream ss;
 
-std::string bufferToString(char* buffer, int bufflen)
+string bufferToString(char* buffer, int bufflen)
 {
     std::string ret(buffer, bufflen);
-
     return ret;
 }
 
@@ -42,10 +39,9 @@ int main(int argc, char *argv[]) {
     std::cout << "Hello, from server" << std::endl;
 
     Socket *udp = new Udp(1, 5555);
-    int f = udp->initialize();
+    udp->initialize();
     char buffer[1024];
 
-    // support more than one client?
     // here we will put the all information
     TexiCenter texiCenter;
     int choose;
@@ -186,7 +182,6 @@ int main(int argc, char *argv[]) {
                 s1.flush();
                 //here we sent back the right trip
                 udp->sendData(serial_str1);
-                cout<<"client allready closed now server closed"<<endl;
                 delete  tripClose;
                 udp->~Socket();
                 return 0;
