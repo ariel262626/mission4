@@ -40,6 +40,8 @@ public:
      CabBase();
     ~CabBase(){};
 
+    ~CabBase();
+
     /**
      * get the cab id
      * @return id
