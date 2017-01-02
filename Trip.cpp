@@ -19,7 +19,7 @@ Trip::Trip(int rideId, int xStart, int yStart, int xEnd, int yEnd, int passenger
     myTime = time;
 }
 
-Trip::Trip() {}
+Trip::Trip() { }
 
 
 //we have the start point and end point so we calculate all the path with bfs here

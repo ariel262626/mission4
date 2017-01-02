@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
     boost::iostreams::stream<boost::iostreams::basic_array_source<char> > s2(device);
     boost::archive::binary_iarchive ia(s2);
     ia >> cabBase;
-//get trip end the trip and wait for the next trip
+//get trip end the trip and wait for the next trip if there is one
 while(true) {
     //client get the trip from the server
     udp->reciveData(buffer, sizeof(buffer));

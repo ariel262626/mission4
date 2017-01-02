@@ -43,6 +43,7 @@ public:
     //constructors
     Trip(int rideId, int xStart, int yStart, int xEnd, int yEnd, int passengerNumber, double tarrif, int time);
     Trip();
+    ~Trip(){ };
 
     /**
      * get the path of the trip from the bfs

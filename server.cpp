@@ -49,6 +49,7 @@ int main(int argc, char *argv[]) {
     int numberOfDrivers = 1;
     string stringGrid, stringchoose, stringObst;
     vector<Point> listObstacle;
+    Driver *driver2;
 
     //find high and width -> use in class of pharser for translate the data
     getline(cin, stringGrid);
@@ -83,7 +84,7 @@ int main(int argc, char *argv[]) {
                 //for de-serializa we need put buffer to string
                 string bufferRecivedDr = bufferToString(buffer, sizeof(buffer));
                 //make instence of cab
-                Driver *driver2;
+                //Driver *driver2;
                 //de serialize
                 boost::iostreams::basic_array_source<char> device(bufferRecivedDr.c_str(),
                                                                   bufferRecivedDr.size());
@@ -114,10 +115,10 @@ int main(int argc, char *argv[]) {
                 //here we sent back the right texi cab
                 udp->sendData(serial_str);
 
-                Trip* trip = texiCenter.getTripInIndex(0);
+                //Trip* trip = texiCenter.getTripInIndex(0);
 
                 //we add the first trip to the driver
-                driver2->setTrip(*trip);
+               // driver2->setTrip(*trip);
                 break;
             }
             case 2: {
@@ -129,9 +130,9 @@ int main(int argc, char *argv[]) {
                 Trip* trip = pharser.createNewRide();
                 // add trip to taxi center - we need to sort the trip list according the time
                 texiCenter.addTripToTripLIst(trip);
-                if(!texiCenter.getMyDriverList().empty()){
+               /* if(!texiCenter.getMyDriverList().empty()){
                     texiCenter.getDriverInIndex(0)->setTrip(*trip);
-                }
+                }*/
                 break;
             }
             case 3: {
@@ -187,54 +188,56 @@ int main(int argc, char *argv[]) {
             }
             case 9: {
                 Trip* trip= texiCenter.getTripInIndex(0);
-                Driver* d1 = texiCenter.getDriverInIndex(0);
-                Point startOfTrip = trip->getStartPointOfTrip();
-                Point driverLocation = d1->getLocation();
-                if(driverLocation == startOfTrip) {
-                    if(!texiCenter.getMyTripList().empty()) {
-                        //send the next trip
-                        std::string serial_str1;
-                        boost::iostreams::back_insert_device<std::string> inserter1(serial_str1);
-                        boost::iostreams::stream<boost::iostreams::back_insert_device<std::string> > s1(inserter1);
-                        boost::archive::binary_oarchive oa1(s1);
-                        oa1 << trip;
-                        s1.flush();
-                        //here we sent back the right trip
-                        udp->sendData(serial_str1);
+                if (clock.getTime() == trip->getTime()) {
+                    driver2->setTrip(*trip);
+
+                    Point startOfTrip = trip->getStartPointOfTrip();
+                    Point driverLocation = driver2->getLocation();
+                    if (driverLocation == startOfTrip) {
+                        if (!texiCenter.getMyTripList().empty()) {
+                            //send the next trip
+                            std::string serial_str1;
+                            boost::iostreams::back_insert_device<std::string> inserter1(serial_str1);
+                            boost::iostreams::stream<boost::iostreams::back_insert_device<std::string> > s1(inserter1);
+                            boost::archive::binary_oarchive oa1(s1);
+                            oa1 << trip;
+                            s1.flush();
+                            //here we sent back the right trip
+                            udp->sendData(serial_str1);
+                        }
                     }
                 }
                 //we use clone for not delete the path
                 // update the clock for each movement
-                clock.setTime();
-                vector<Node> path;
-                Point newPosition;
-                path = trip->getPathOfTripClone(*newMap);
+                //clock.setTime();
 
-                d1->moveStep(path, clock.getTime());
-                newPosition = texiCenter.getDriverInIndex(0)->getLocation();
+                if(trip->getTime() <= clock.getTime()) {
+                    vector<Node> path;
+                    Point newPosition;
+                    path = trip->getPathOfTripClone(*newMap);
 
+                    driver2->moveStep(path, clock.getTime());
+                    newPosition = texiCenter.getDriverInIndex(0)->getLocation();
 
-                //serialize
-                std::string serial_str;
-                boost::iostreams::back_insert_device<std::string> inserter(serial_str);
-                boost::iostreams::stream<boost::iostreams::back_insert_device<std::string> > s(inserter);
-                boost::archive::binary_oarchive oa(s);
-                oa << newPosition;
-                s.flush();
-                //here we sent back the 'go' for move one step
-                udp->sendData(serial_str);
+                    //serialize
+                    std::string serial_str;
+                    boost::iostreams::back_insert_device<std::string> inserter(serial_str);
+                    boost::iostreams::stream<boost::iostreams::back_insert_device<std::string> > s(inserter);
+                    boost::archive::binary_oarchive oa(s);
+                    oa << newPosition;
+                    s.flush();
+                    //here we sent back the 'go' for move one step
+                    udp->sendData(serial_str);
 
-                //after we end trip
-                if(texiCenter.getTripInIndex(0)->getEndPointOfTrip() == newPosition) {
-                    // check //
-                    Trip* temp = texiCenter.getTripInIndex(0);
-                    texiCenter.eraseTripInIndex();
-                    delete temp;
-                    if(!texiCenter.getMyTripList().empty()) {
-                        Trip nextTrip = *texiCenter.getTripInIndex(0);
-                        texiCenter.getDriverInIndex(0)->setTrip(nextTrip);
+                    //after we end trip
+                    if (texiCenter.getTripInIndex(0)->getEndPointOfTrip() == newPosition) {
+                        // check //
+                        Trip *temp = texiCenter.getTripInIndex(0);
+                        texiCenter.eraseTripInIndex();
+                        delete temp;
                     }
                 }
+            clock.setTime();
             }
         }
     }
