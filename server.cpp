@@ -125,9 +125,6 @@ int main(int argc, char *argv[]) {
                 Trip* trip = pharser.createNewRide();
                 // add trip to taxi center - we need to sort the trip list according the time
                 texiCenter.addTripToTripLIst(trip);
-               /* if(!texiCenter.getMyDriverList().empty()){
-                    texiCenter.getDriverInIndex(0)->setTrip(*trip);
-                }*/
                 break;
             }
             case 3: {
@@ -178,7 +175,7 @@ int main(int argc, char *argv[]) {
                 //here we sent back the right trip
                 udp->sendData(serial_str1);
                 delete tripClose;
-                udp->~Socket();
+                delete udp;
                 return 0;
             }
             case 9: {

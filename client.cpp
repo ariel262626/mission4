@@ -89,7 +89,7 @@ while(true) {
     //if we get "-1" instead of trip shutdown the socket and return
     if(trip->getRideId() == -1) {
         // close socket
-        udp->~Socket();
+        delete udp;
         return 0;
     }
     driver->setTrip(*trip);
