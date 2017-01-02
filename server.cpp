@@ -37,7 +37,6 @@ string bufferToString(char* buffer, int bufflen)
 
 int main(int argc, char *argv[]) {
     std::cout << "Hello, from server" << std::endl;
-
     Socket *udp = new Udp(1, 5555);
     udp->initialize();
     char buffer[1024];
@@ -80,7 +79,7 @@ int main(int argc, char *argv[]) {
                 //get from user how much drivers we need to get
                 cin >> numberOfDrivers;
                 //here we get the driver from clientDriver
-                int num = udp->reciveData(buffer, sizeof(buffer));
+                udp->reciveData(buffer, sizeof(buffer));
                 //for de-serializa we need put buffer to string
                 string bufferRecivedDr = bufferToString(buffer, sizeof(buffer));
                 //make instence of cab
@@ -182,11 +181,15 @@ int main(int argc, char *argv[]) {
                 s1.flush();
                 //here we sent back the right trip
                 udp->sendData(serial_str1);
-                delete  tripClose;
+                delete tripClose;
                 udp->~Socket();
                 return 0;
             }
             case 9: {
+
+
+
+
                 Trip* trip= texiCenter.getTripInIndex(0);
                 Driver* d1 = texiCenter.getDriverInIndex(0);
                 Point startOfTrip = trip->getStartPointOfTrip();
@@ -227,13 +230,16 @@ int main(int argc, char *argv[]) {
 
                 //after we end trip
                 if(texiCenter.getTripInIndex(0)->getEndPointOfTrip() == newPosition) {
+                    // check //
+                    Trip* temp = texiCenter.getTripInIndex(0);
                     texiCenter.eraseTripInIndex();
+                    delete temp;
+                    if(!texiCenter.getMyTripList().empty()) {
+                        Trip nextTrip = *texiCenter.getTripInIndex(0);
+                        texiCenter.getDriverInIndex(0)->setTrip(nextTrip);
+                    }
                 }
             }
         }
     }
 }
-
-
-
-

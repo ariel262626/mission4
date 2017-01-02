@@ -45,3 +45,5 @@ void CabBase::setTarrif(double d) {
 Grid* CabBase::getMap() {
     return myMap;
 }
+
+

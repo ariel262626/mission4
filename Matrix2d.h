@@ -22,12 +22,8 @@ public:
     //constracturs.
     Matrix2d(int high, int width, vector<Point> obstaclePoint);
     Matrix2d(){};
-    //destructour.
-    ~Matrix2d(){};
+    ~Matrix2d();
 
-    /*
-     *
-     */
     /**
      * get the trajectory and print the path according bfs. iterate it from the end
      * until to the start.
