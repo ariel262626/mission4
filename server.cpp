@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
     int numberOfDrivers = 1;
     string stringGrid, stringchoose, stringObst;
     vector<Point> listObstacle;
-    Driver *driver2;
+    Driver *driver;
 
     //find high and width -> use in class of pharser for translate the data
     getline(cin, stringGrid);
@@ -84,18 +84,18 @@ int main(int argc, char *argv[]) {
                 //for de-serializa we need put buffer to string
                 string bufferRecivedDr = bufferToString(buffer, sizeof(buffer));
                 //make instence of cab
-                //Driver *driver2;
+                //Driver *driver;
                 //de serialize
                 boost::iostreams::basic_array_source<char> device(bufferRecivedDr.c_str(),
                                                                   bufferRecivedDr.size());
                 boost::iostreams::stream<boost::iostreams::basic_array_source<char> > s2(device);
                 boost::archive::binary_iarchive ia(s2);
-                ia >> driver2;
+                ia >> driver;
                 // send the string of user to class of parser
                 // we will get now new driver
-                int driverId = driver2->getId();
+                int driverId = driver->getId();
                 // add driver to taxi center
-                texiCenter.addDriverToDriverLIst(driver2);
+                texiCenter.addDriverToDriverLIst(driver);
                 // count how much drivers we have
                 countDriver++;
 
@@ -185,10 +185,10 @@ int main(int argc, char *argv[]) {
                 }
                 Trip* trip= texiCenter.getTripInIndex(0);
                 if (clock.getTime() == trip->getTime()) {
-                    driver2->setTrip(*trip);
+                    driver->setTrip(*trip);
 
                     Point startOfTrip = trip->getStartPointOfTrip();
-                    Point driverLocation = driver2->getLocation();
+                    Point driverLocation = driver->getLocation();
                     if (driverLocation == startOfTrip) {
                         if (!texiCenter.getMyTripList().empty()) {
                             //send the next trip
@@ -211,7 +211,7 @@ int main(int argc, char *argv[]) {
                     Point newPosition;
                     path = trip->getPathOfTripClone(*newMap);
 
-                    driver2->moveStep(path, clock.getTime());
+                    driver->moveStep(path, clock.getTime());
                     newPosition = texiCenter.getDriverInIndex(0)->getLocation();
 
                     //serialize

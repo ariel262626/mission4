@@ -89,6 +89,9 @@ while(true) {
     //if we get "-1" instead of trip shutdown the socket and return
     if(trip->getRideId() == -1) {
         // close socket
+        delete cabBase;
+        delete driver;
+        delete trip;
         delete udp;
         return 0;
     }
@@ -113,6 +116,7 @@ while(true) {
     Point p1 = driver->getMyTrip()->getEndPointOfTrip();
     Point p2 = driver->getLocation();
     if (p1 == p2) {
+        delete trip;
         break;
     }
   }
