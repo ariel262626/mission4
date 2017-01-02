@@ -114,11 +114,6 @@ int main(int argc, char *argv[]) {
                 s.flush();
                 //here we sent back the right texi cab
                 udp->sendData(serial_str);
-
-                //Trip* trip = texiCenter.getTripInIndex(0);
-
-                //we add the first trip to the driver
-               // driver2->setTrip(*trip);
                 break;
             }
             case 2: {
@@ -187,6 +182,10 @@ int main(int argc, char *argv[]) {
                 return 0;
             }
             case 9: {
+                if(texiCenter.getMyTripList().empty()) {
+                    clock.setTime();
+                    break;
+                }
                 Trip* trip= texiCenter.getTripInIndex(0);
                 if (clock.getTime() == trip->getTime()) {
                     driver2->setTrip(*trip);
@@ -209,7 +208,6 @@ int main(int argc, char *argv[]) {
                 }
                 //we use clone for not delete the path
                 // update the clock for each movement
-                //clock.setTime();
 
                 if(trip->getTime() <= clock.getTime()) {
                     vector<Node> path;
