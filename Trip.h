@@ -12,7 +12,9 @@
 #include "Matrix2d.h"
 
 using namespace std;
-
+/**
+ * in this class we create trip object that the driver get each time
+ */
 class Trip {
     friend class boost::serialization::access;
 
@@ -95,8 +97,15 @@ public:
      */
     void setPassengersNumber(int x);
 
+    /**
+     * set time of the trip
+     */
     void setTime();
 
+    /**
+     * get time of the trip
+     * @return
+     */
     int getTime();
 
 };

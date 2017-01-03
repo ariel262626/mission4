@@ -165,10 +165,7 @@ void TexiCenter::addTripToTripLIst(Trip* addTrip) {
     }
     }
 }
-/**
- * set driver in vector
- * @param driversList
- */
+
 void TexiCenter::setDriverList(vector<Driver*> driversList) {
         myDriversList.swap(driversList);
 }
@@ -176,6 +173,7 @@ void TexiCenter::setDriverList(vector<Driver*> driversList) {
 void TexiCenter::setPassengerList(vector<Passenger*> passengresList) {
     myPassengresList.swap(passengresList);
 }
+
 
 void TexiCenter::setBaseCabeList(vector<CabBase*> baseCabList) {
     myStandartCabList.swap(baseCabList);
@@ -186,7 +184,6 @@ void TexiCenter::setTripList(vector<Trip*> tripsList) {
 }
 
 void TexiCenter::setMap(Matrix2d map) {
-
     myMap.setHigh(map.getHigh());
     myMap.setWidth(map.getWidth());
     myMap.setobstaclePoint(map.getObstaclesList());

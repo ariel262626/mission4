@@ -14,7 +14,10 @@
 #include "Matrix2d.h"
 
 using namespace std;
-
+/**
+ * in this class we have the all data we insert as input. we hold the all listd of
+ * the objects and use them
+ */
 class TexiCenter {
 private:
     vector<Driver *> myDriversList;
@@ -117,10 +120,36 @@ public:
      * @return  trip
      */
     Trip* getTripInIndex(int i);
+
+    /**
+    * get cab with this id
+    * @param i - index
+    * @return  cabebase
+    */
     CabBase* getCabWithId(int i);
+
+    /**
+    * get driver with this id
+    * @param i - index
+    * @return  trip
+    */
     Driver* getDriverWithId(int id);
+
+    /**
+    * erase trip in index
+    * @param i - index
+    */
     void eraseTripInIndex();
+
+    /**
+    * get my list of drivers
+    * @return  list
+    */
     vector<Driver*>  getMyDriverList();
+    /**
+     * get my trip list
+     * @return  list trip
+     */
     vector<Trip*> getMyTripList ();
     };
 

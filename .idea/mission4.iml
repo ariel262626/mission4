@@ -41,6 +41,7 @@
       <sourceFolder url="file://$MODULE_DIR$/TexiCenter.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Udp.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/PharserInfo.cpp" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/cmake-build-debug/CMakeFiles" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
