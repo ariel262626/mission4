@@ -302,6 +302,7 @@ int main(int argc, char *argv[]) {
             }
             case 7: {
                 server.deleteAllocationMemory();
+                // call function that send special trip to shut down the program
                 server.tripToCloseClient();
                 delete server.getUdp();
                 return 0;
