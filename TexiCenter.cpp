@@ -33,7 +33,9 @@ vector<Driver*> getAllDriversAtThisPoint(vector<Driver*> myDriversList,Point sta
     }
     return driversAtPoint;
 }
-
+/**
+ * for mission 6. move the drivers with their corresponding trip to the end point of the path's trip
+ */
 void TexiCenter::startDriving() {
     vector<Node*> pathOfNodeInTrip;
     vector<Driver*> allDriversAtStartPointTrip;
@@ -80,7 +82,12 @@ void TexiCenter::startDriving() {
         }
     }
 }
-
+/**
+ * here we will find the closest driver of the passenger location.
+ * we will iterate on the list of the driver and check their location.
+ * @param passenger
+ * @return the close driver
+ */
 Driver TexiCenter::findDriver(Passenger passenger) {
     //save the closest driver to the passenger
     Driver closestDriver;
@@ -107,28 +114,45 @@ Driver TexiCenter::findDriver(Passenger passenger) {
     }
     return closestDriver;
 }
-
+/**
+ * here we get id drier and find the right driver in the vector
+ * @param idDriverToFind: get index id driver
+ * @return point-> location of driver
+ */
 Point TexiCenter::findLocationOfDriver(int idDriverToFind) {
     Point locationOfDriver;
+    // iterate on the all vector
     for(int i = 0; i < myDriversList.size(); i++) {
         if(myDriversList.at(i)->getId() == idDriverToFind) {
+            // get my location
             locationOfDriver = myDriversList.at(i)->getLocation();
         }
     }
     return locationOfDriver;
 }
-
+/**
+ * add driver to the vector
+ * @param addDriver
+ */
 void TexiCenter::addDriverToDriverLIst(Driver* addDriver) {
     myDriversList.push_back(addDriver);
 }
-
+/**
+ * add cab to the vector
+ * @param addCab
+ */
 void TexiCenter::addCabToCabsLIst(CabBase* addCab) {
     myStandartCabList.push_back(addCab);
 }
-
+/**
+ * here we add trip to the list. notice we add the trip and sort the list so the
+ * time clock of the trip will insert in the right place in the list (push and sort)
+ * @param addTrip
+ */
 void TexiCenter::addTripToTripLIst(Trip* addTrip) {
     Trip* temp;
     myTripList.push_back(addTrip);
+    // now sort the vector
     if(myTripList.size() > 1) {
     for (int i = 0; i < myTripList.size() - 1; i++) {
         for (int j = 0; j < myTripList.size() - 1; j++) {
@@ -141,7 +165,10 @@ void TexiCenter::addTripToTripLIst(Trip* addTrip) {
     }
     }
 }
-
+/**
+ * set driver in vector
+ * @param driversList
+ */
 void TexiCenter::setDriverList(vector<Driver*> driversList) {
         myDriversList.swap(driversList);
 }

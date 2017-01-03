@@ -1,8 +1,3 @@
-
-
-
-
-
 cmake_minimum_required(VERSION 3.6)
 project(mission4)
 
@@ -16,17 +11,14 @@ set(SOURCE_FILES  Matrix2d.cpp
         GameFlow.cpp GameFlow.h
         CabBase.h CabBase.cpp PharserInfo.cpp PharserInfo.h Udp.cpp Udp.h ClockTime.cpp ClockTime.h
         Socket.cpp Socket.h)
-#add_executable(mission4 ${SOURCE_FILES})
-
-
 
 set(BOOST_ROOT CACHE PATH "/usr/include/boost/")
 find_package(Boost 1.58.0 COMPONENTS serialization system)
 include_directories(${Boost_INCLUDE_DIR})
 
 
-add_executable(server server.cpp ${SOURCE_FILES} )
-add_executable(client client.cpp ${SOURCE_FILES} )
+add_executable(Server Server.cpp ${SOURCE_FILES} )
+add_executable(Client Client.cpp ${SOURCE_FILES} )
 
-target_link_libraries(server ${Boost_LIBRARIES})
-target_link_libraries(client ${Boost_LIBRARIES})
+target_link_libraries(Server ${Boost_LIBRARIES})
+target_link_libraries(Client ${Boost_LIBRARIES})

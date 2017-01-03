@@ -209,14 +209,15 @@ int main(int argc, char *argv[]) {
                         }
                     }
                 }
-                //we use clone for not delete the path
+
                 // update the clock for each movement
                 // make advance only in case the time at least such us the time of the trip
                 if(trip->getTime() <= clock.getTime()) {
                     vector<Node> path;
                     Point newPosition;
+                    // get the path of the grid. we use clone for not delete the path
                     path = trip->getPathOfTripClone(*newMap);
-                    // move on or two steps on the grid
+                    // move one or two steps on the grid
                     driver->moveStep(path, clock.getTime());
                     // get the new location of the driver
                     newPosition = texiCenter.getDriverInIndex(0)->getLocation();
@@ -232,12 +233,13 @@ int main(int argc, char *argv[]) {
 
                     //after we end trip
                     if (texiCenter.getTripInIndex(0)->getEndPointOfTrip() == newPosition) {
-                        // check //
+                        // delete trip
                         Trip *temp = texiCenter.getTripInIndex(0);
                         texiCenter.eraseTripInIndex();
                         delete temp;
                     }
                 }
+            // update the time for each insert 9
             clock.setTime();
             }
         }
