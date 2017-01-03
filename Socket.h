@@ -83,6 +83,8 @@ public:
 	***********************************************************************/
 	virtual int reciveData(char* buffer, int size) = 0;
 
+	virtual void setIp(string myip);
+
 
 
 

@@ -1,5 +1,5 @@
 //
-// Created by yanaiela on 12/10/16.
+// Created by dvir on 12/10/16.
 //
 
 #include "Udp.h"
@@ -33,8 +33,9 @@ string bufferToString(char* buffer, int bufflen)
 int main(int argc, char *argv[]) {
     cout << "Hello, from client" << endl;
     //argv[1] = the port of the server
-    Socket* udp = new Udp(0, stoi(argv[1]));
+    Socket* udp = new Udp(0, stoi(argv[2]));
     //bind the server if fail do fail
+    udp->setIp(argv[1]);
     int t = udp->initialize();
     //for serialization create buffer
     char buffer[1024];

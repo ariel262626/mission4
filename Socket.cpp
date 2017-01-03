@@ -40,5 +40,9 @@ Socket::Socket(bool b, int i) {
     this->port_number = i;
 }
 
+void Socket::setIp(string myip) {
+	this->ip_address = myip;
+}
+
 
 
