@@ -4,8 +4,8 @@
 
 #include "Driver.h"
 
-Driver::Driver(int id, int age, char martialStatus, int experience, int vechileId, CabBase taxiStandart,
-                Trip trip) :  myTaxiStandart(taxiStandart){
+Driver::Driver(int id, int age, char martialStatus, int experience, int vechileId, CabBase* taxiStandart,
+                Trip trip) {
     myId = id;
     myAge = age;
     myMartialStatus = martialStatus;
@@ -51,7 +51,7 @@ void Driver::moveStep(vector<Node> path, int currentTime) {
     //we get the index of out current point in the path of our trip
     int index = getIndexCurrentLocationPoint(path, myLocation);
     // check if i'm luxury
-    if(myTaxiStandart.amILuxury() == 2) {
+    if(myTaxiStandart->amILuxury() == 2) {
         //if the our next step of the luxury cab is out of the grid we will move only 1
         if(index - 2 >= 0) {
             setLocation(path.at(index - 2).getPointOfnode());
@@ -92,8 +92,10 @@ Trip* Driver::getMyTrip() {
     return &myTrip;
 }
 
-void Driver:: setCab(CabBase newCab){
+void Driver:: setCab(CabBase* newCab) {
     myTaxiStandart = newCab;
 }
 
-
+CabBase* Driver:: getCab() {
+    return myTaxiStandart;
+}

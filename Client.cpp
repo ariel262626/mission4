@@ -32,9 +32,9 @@ string bufferToString(char* buffer, int bufflen)
 
 int main(int argc, char *argv[]) {
     cout << "Hello, from client" << endl;
-    //argv[1] = the port of the server
+    //argv[2] = the port of the server
     Socket* udp = new Udp(0, stoi(argv[2]));
-    //bind the server if fail do fail
+    //bind the server if fail do fail argv[1] = ip
     udp->setIp(argv[1]);
     int t = udp->initialize();
     //for serialization create buffer

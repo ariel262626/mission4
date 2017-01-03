@@ -17,7 +17,7 @@ find_package(Boost 1.58.0 COMPONENTS serialization system)
 include_directories(${Boost_INCLUDE_DIR})
 
 
-add_executable(Server Server.cpp ${SOURCE_FILES} )
+add_executable(Server Server.cpp ${SOURCE_FILES} Server.h)
 add_executable(Client Client.cpp ${SOURCE_FILES} )
 
 target_link_libraries(Server ${Boost_LIBRARIES})

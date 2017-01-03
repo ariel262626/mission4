@@ -1,9 +1,9 @@
-all: server client
-server: server.o Bfs.o Node.o CabBase.o Grid.o Point.o Matrix2d.o Grid.o InfoTaxi.o Driver.o LuxuryCab.o StandartCab.o Passenger.o Udp.o PharserInfo.o TexiCenter.o Trip.o Udp.o Socket.o ClockTime.o
-	g++ -std=c++0x -o server server.o Bfs.o Node.o CabBase.o Grid.o Point.o Matrix2d.o Grid.o InfoTaxi.o Driver.o LuxuryCab.o StandartCab.o Passenger.o Udp.o PharserInfo.o TexiCenter.o Trip.o ClockTime.o Socket.o -lboost_serialization
+all: Server Client
+Server: Server.o Bfs.o Node.o CabBase.o Grid.o Point.o Matrix2d.o Grid.o InfoTaxi.o Driver.o LuxuryCab.o StandartCab.o Passenger.o Udp.o PharserInfo.o TexiCenter.o Trip.o Udp.o Socket.o ClockTime.o
+	g++ -std=c++0x -o Server Server.o Bfs.o Node.o CabBase.o Grid.o Point.o Matrix2d.o Grid.o InfoTaxi.o Driver.o LuxuryCab.o StandartCab.o Passenger.o Udp.o PharserInfo.o TexiCenter.o Trip.o ClockTime.o Socket.o -lboost_serialization
 
-client: client.o Bfs.o Node.o CabBase.o Grid.o InfoTaxi.o Point.o Matrix2d.o Grid.o Driver.o LuxuryCab.o StandartCab.o Passenger.o PharserInfo.o Trip.o Udp.o Socket.o ClockTime.o
-	g++ -std=c++0x -o client client.o Bfs.o Node.o CabBase.o Grid.o InfoTaxi.o Point.o Matrix2d.o Grid.o Driver.o LuxuryCab.o StandartCab.o Passenger.o PharserInfo.o Trip.o Udp.o Socket.o ClockTime.o -lboost_serialization
+Client: Client.o Bfs.o Node.o CabBase.o Grid.o InfoTaxi.o Point.o Matrix2d.o Grid.o Driver.o LuxuryCab.o StandartCab.o Passenger.o PharserInfo.o Trip.o Udp.o Socket.o ClockTime.o
+	g++ -std=c++0x -o Client Client.o Bfs.o Node.o CabBase.o Grid.o InfoTaxi.o Point.o Matrix2d.o Grid.o Driver.o LuxuryCab.o StandartCab.o Passenger.o PharserInfo.o Trip.o Udp.o Socket.o ClockTime.o -lboost_serialization
 
 Bfs.o: Bfs.cpp Bfs.h
 	g++ -std=c++0x -c Bfs.cpp
@@ -57,8 +57,8 @@ Socket.o: Socket.cpp Socket.h
 Udp.o: Udp.cpp Udp.h
 	g++ -std=c++0x -c Udp.cpp
 
-client.o: client.cpp
-	g++ -std=c++0x -c client.cpp -lboost_serialization
+Client.o: Client.cpp
+	g++ -std=c++0x -c Client.cpp -lboost_serialization
 
-server.o: server.cpp
-	g++ -std=c++0x -c server.cpp -lboost_serialization
+Server.o: Server.cpp
+	g++ -std=c++0x -c Server.cpp -lboost_serialization

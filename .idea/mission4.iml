@@ -5,16 +5,16 @@
       <sourceFolder url="file://$MODULE_DIR$/InfoTaxi.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Node.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Server.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Bfs.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CabBase.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TexiCenter.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Bfs.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Grid.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Point.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Node.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/LuxuryCab.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ClockTime.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Matrix2d.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Udp.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Grid.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Matrix2d.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/PharserInfo.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/StandartCab.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/GameFlow.cpp" isTestSource="false" />
@@ -34,12 +34,13 @@
       <sourceFolder url="file://$MODULE_DIR$/Grid.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CabBase.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/InfoTaxi.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Server.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Udp.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/LuxuryCab.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Socket.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Client.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/StandartCab.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TexiCenter.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Udp.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Socket.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/PharserInfo.cpp" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/cmake-build-debug/CMakeFiles" />
     </content>

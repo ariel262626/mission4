@@ -34,14 +34,14 @@ private:
     int myExperience;
     int myVehicleId;
     int mySatisfication;
-    CabBase myTaxiStandart;
+    CabBase* myTaxiStandart;
     Point myLocation;
     Trip myTrip;
     int countTrip;
 public:
     //constructor
     Driver(int id, int age, char mariralStatus, int experience, int vechileId,
-           CabBase taxiStandart, Trip trip);
+           CabBase* taxiStandart, Trip trip);
      Driver();
     //distructor
     ~Driver(){ };
@@ -114,7 +114,9 @@ public:
      * set cab to driver
      * @param newCab  - the cab to set
      */
-    void setCab(CabBase newCab);
+    void setCab(CabBase* newCab);
+    CabBase* getCab();
+
     };
 
 
