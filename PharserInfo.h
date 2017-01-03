@@ -9,6 +9,9 @@
 #include "Grid.h"
 #include "Matrix2d.h"
 
+/**
+ * pharse the input to object
+ */
 class PharserInfo{
 private:
     string myInput;

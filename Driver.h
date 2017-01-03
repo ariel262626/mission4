@@ -42,7 +42,8 @@ public:
     //constructor
     Driver(int id, int age, char mariralStatus, int experience, int vechileId,
            CabBase taxiStandart, Trip trip);
-    Driver();
+     Driver();
+    //distructor
     ~Driver(){ };
 /**
  * this metod get path and move the cab one step (standart cab), or two step (luxury cab) on the grid
@@ -97,10 +98,22 @@ public:
      */
     int getCountTrips();
 
+    /**
+     * get id of the cab
+     * @return id
+     */
     int getMyCabId();
 
+    /**
+     * get a pointer to my trip
+     * @return pointer to the trip
+     */
     Trip* getMyTrip();
 
+    /**
+     * set cab to driver
+     * @param newCab  - the cab to set
+     */
     void setCab(CabBase newCab);
     };
 

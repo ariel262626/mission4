@@ -9,6 +9,9 @@
 #include "Passenger.h"
 #include "Grid.h"
 
+/**
+ * father of classes of cabs
+ */
 class CabBase {
     friend class boost::serialization::access;
 

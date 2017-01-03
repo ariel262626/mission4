@@ -12,6 +12,7 @@
  * and overloading for == and print this object.
  */
 class Point {
+    //for boost
     friend class boost::serialization::access;
 
     template<class Archive>
@@ -26,7 +27,6 @@ private:
 public:
     //constractur
     Point(int newX, int newY);
-
     Point();
 
     //deconstractur

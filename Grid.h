@@ -67,6 +67,9 @@ public:
      */
     virtual vector<Point> getObstaclesList(){};
 
+    /**
+     * for boost operation
+     */
     friend class boost::serialization::access;
     template<class Archive>
     void serialize(Archive &ar, const unsigned int version) {}

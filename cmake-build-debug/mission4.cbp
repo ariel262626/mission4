@@ -37,8 +37,8 @@
 					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="client">
-				<Option output="/home/ariel/ClionProjects/mission4/cmake-build-debug/client" prefix_auto="0" extension_auto="0"/>
+			<Target title="Client">
+				<Option output="/home/ariel/ClionProjects/mission4/cmake-build-debug/Client" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/ariel/ClionProjects/mission4/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -54,14 +54,14 @@
 					<Add directory="/usr/include/c++/5/backward"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 client"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 Client"/>
 					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="client/fast">
-				<Option output="/home/ariel/ClionProjects/mission4/cmake-build-debug/client" prefix_auto="0" extension_auto="0"/>
+			<Target title="Client/fast">
+				<Option output="/home/ariel/ClionProjects/mission4/cmake-build-debug/Client" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/ariel/ClionProjects/mission4/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -77,14 +77,14 @@
 					<Add directory="/usr/include/c++/5/backward"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 client/fast"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 Client/fast"/>
 					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="server">
-				<Option output="/home/ariel/ClionProjects/mission4/cmake-build-debug/server" prefix_auto="0" extension_auto="0"/>
+			<Target title="Server">
+				<Option output="/home/ariel/ClionProjects/mission4/cmake-build-debug/Server" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/ariel/ClionProjects/mission4/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -100,14 +100,14 @@
 					<Add directory="/usr/include/c++/5/backward"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 server"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 Server"/>
 					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="server/fast">
-				<Option output="/home/ariel/ClionProjects/mission4/cmake-build-debug/server" prefix_auto="0" extension_auto="0"/>
+			<Target title="Server/fast">
+				<Option output="/home/ariel/ClionProjects/mission4/cmake-build-debug/Server" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/ariel/ClionProjects/mission4/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -123,7 +123,7 @@
 					<Add directory="/usr/include/c++/5/backward"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 server/fast"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 Server/fast"/>
 					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ariel/ClionProjects/mission4/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
@@ -131,154 +131,154 @@
 			</Target>
 		</Build>
 		<Unit filename="/home/ariel/ClionProjects/mission4/Bfs.cpp">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/Bfs.h">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/CabBase.cpp">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/CabBase.h">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/Client.cpp">
+			<Option target="Client"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/ClockTime.cpp">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/ClockTime.h">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/Driver.cpp">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/Driver.h">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/GameFlow.cpp">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/GameFlow.h">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/Grid.cpp">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/Grid.h">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/InfoTaxi.cpp">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/InfoTaxi.h">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/LuxuryCab.cpp">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/LuxuryCab.h">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/Matrix2d.cpp">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/Matrix2d.h">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/Node.cpp">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/Node.h">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/Passenger.cpp">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/Passenger.h">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/PharserInfo.cpp">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/PharserInfo.h">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/Point.cpp">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/Point.h">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/Server.cpp">
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/Socket.cpp">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/Socket.h">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/StandartCab.cpp">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/StandartCab.h">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/TexiCenter.cpp">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/TexiCenter.h">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/Trip.cpp">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/Trip.h">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/Udp.cpp">
-			<Option target="client"/>
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/Udp.h">
-			<Option target="client"/>
-			<Option target="server"/>
-		</Unit>
-		<Unit filename="/home/ariel/ClionProjects/mission4/client.cpp">
-			<Option target="client"/>
-		</Unit>
-		<Unit filename="/home/ariel/ClionProjects/mission4/server.cpp">
-			<Option target="server"/>
+			<Option target="Client"/>
+			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
