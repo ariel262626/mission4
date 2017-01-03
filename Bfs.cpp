@@ -17,6 +17,8 @@ Bfs::Bfs(Node start, Node end, int dimention, Grid *matrix)
     numOfNeibours= dimention * 2;
     myMatrix = matrix;
 }
+
+//destructor
 Bfs::Bfs(){};
 
 /**
@@ -89,7 +91,7 @@ void Bfs:: manageQueue(queue<Node*> &queue1, stack<Node*> &stack1, Node *current
             queue1.push(neighbours[i]);
             stack1.push(neighbours[i]);
         } else {
-            //delete the bad negbours
+            //delete the bad neigbours
             if (!(neighbours[i]->getFlag())) {
             delete neighbours[i];
         }

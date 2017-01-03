@@ -4,8 +4,7 @@
 
 #include "CabBase.h"
 
-CabBase::CabBase(int id, int type, char manaufactur, char color, Grid* map, Passenger* passenger)
-        : myPassenger(passenger) {
+CabBase::CabBase(int id, int type, char manaufactur, char color, Grid* map, Passenger* passenger) {
     myId = id;
     myType = type;
     myKilometers = 0;
@@ -17,10 +16,6 @@ CabBase::CabBase(int id, int type, char manaufactur, char color, Grid* map, Pass
 }
 
 CabBase::CabBase(){}
-
-/*CabBase::~CabBase() {
-    delete this;
-}*/
 
 int CabBase::amILuxury() {
     return myType;

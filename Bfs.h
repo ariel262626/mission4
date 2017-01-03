@@ -28,7 +28,7 @@ public:
     //constructor
     Bfs(Node start, Node end, int dimention, Grid *matrix);
     Bfs();
-    //deconstructor
+    //destructor
     ~Bfs(){};
 
     /*

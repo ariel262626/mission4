@@ -38,6 +38,8 @@ public:
     CabBase(int id, int type, char manaufactur, char color, Grid* map,
             Passenger* passenger);
      CabBase();
+
+    //destructor
     ~CabBase(){};
 
     /**
