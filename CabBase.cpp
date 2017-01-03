@@ -18,9 +18,9 @@ CabBase::CabBase(int id, int type, char manaufactur, char color, Grid* map, Pass
 
 CabBase::CabBase(){}
 
-CabBase::~CabBase() {
+/*CabBase::~CabBase() {
     delete this;
-}
+}*/
 
 int CabBase::amILuxury() {
     return myType;
