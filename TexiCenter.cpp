@@ -6,7 +6,7 @@
 #include "Matrix2d.h"
 
 TexiCenter::TexiCenter(vector<Driver*> driversList, vector<Passenger*> passengresList,
-                       vector<CabBase*> standartCabList, vector<Trip*> tripList, Matrix2d map, Bfs bfs) {
+                       vector<CabBase*> standartCabList, vector<Trip*> tripList, Matrix2d* map, Bfs bfs) {
     myDriversList = driversList;
     myPassengresList = passengresList;
     myStandartCabList = standartCabList;
@@ -73,7 +73,7 @@ void TexiCenter::startDriving() {
         //if we dont have a driver at the start point of trip
         if(flag != 1) {
             //we get all the point of the trip
-            pathOfNodeInTrip = myTripList.at(0)->getPathOfTrip(myMap);
+            pathOfNodeInTrip = myTripList.at(0)->getPathOfTrip(*myMap);
             //for now start driving is to get the driver to his end point
             myDriversList.at(i)->setLocation(pathOfNodeInTrip.at(0)->getPointOfnode());
             myDriversList.at(i)->setCountTrips();
@@ -100,8 +100,8 @@ Driver TexiCenter::findDriver(Passenger passenger) {
         Node driverLocation =  Node(myDriversList[i]->getLocation(), false);
         //get the passenger location
         Node passengerLocation = Node(passenger.getStartPoint(), true);
-        Matrix2d mapCopy = myMap;
-        myBfs = Bfs(driverLocation, passengerLocation, 2, &mapCopy);
+        Matrix2d* mapCopy = myMap;
+        myBfs = Bfs(driverLocation, passengerLocation, 2, mapCopy);
         //for each driver we need to calculate his path
         listOfNodeInTrip = myBfs.runBfs(&driverLocation, &passengerLocation);
         //check whos path is the shortest
@@ -183,11 +183,15 @@ void TexiCenter::setTripList(vector<Trip*> tripsList) {
     myTripList.swap(tripsList);
 }
 
-void TexiCenter::setMap(Matrix2d map) {
-    myMap.setHigh(map.getHigh());
-    myMap.setWidth(map.getWidth());
-    myMap.setobstaclePoint(map.getObstaclesList());
+void TexiCenter::setMap(Matrix2d* map) {
+    //myMap->setHigh(map.getHigh());
+    //myMap->setWidth(map.getWidth());
+    //myMap->setobstaclePoint(map.getObstaclesList());
     myMap = map;
+}
+
+Matrix2d* TexiCenter::getMap() {
+    return myMap;
 }
 
 Driver* TexiCenter::getDriverInIndex(int i) {
@@ -232,4 +236,8 @@ vector<Driver*> TexiCenter:: getMyDriverList (){
 
 vector<Trip*> TexiCenter:: getMyTripList (){
     return myTripList;
+}
+
+vector<CabBase*> TexiCenter:: getMyCabBaseList (){
+    return myStandartCabList;
 }

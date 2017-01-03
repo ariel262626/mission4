@@ -14,17 +14,29 @@
 class Server {
 private:
     int numberOfDrivers;
-
+    Socket* udp;
+    ClockTime clockTime;
+    Driver* myDriver;
 public:
     Server() { };
     //TODO retutn private
-    Socket* udp;
     TexiCenter texiCenter;
-    Driver* getDriver();
+    Driver* getDriverFromClient();
     void setCabToDriver(Driver* driver);
     void sendCab(CabBase* cabBase);
     void getNewRide();
     void getNewCab();
     void printCurrentLocation();
+    void deleteAllocationMemory();
+    void tripToCloseClient();
+    Socket* getUdp();
+    void setUdp(Socket* udp1);
+    ClockTime getClock();
+    bool tripListNotEmpty();
+    void sendTripToClient();
+    Driver* getMyDriver();
+    void setMyDriver();
+    void moveClient();
+    Trip* getCurrentTrip();
 
     };

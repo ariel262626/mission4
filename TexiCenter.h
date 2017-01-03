@@ -24,12 +24,12 @@ private:
     vector<Passenger *> myPassengresList;
     vector<CabBase *> myStandartCabList;
     vector<Trip*> myTripList;
-    Matrix2d myMap;
+    Matrix2d* myMap;
     Bfs myBfs;
 public:
     // constructors
     TexiCenter(vector<Driver *> driversList, vector<Passenger *> passengresList,
-               vector<CabBase *> standartCabList, vector<Trip*> tripList, Matrix2d map, Bfs bfs);
+               vector<CabBase *> standartCabList, vector<Trip*> tripList, Matrix2d* map, Bfs bfs);
 
     TexiCenter();
 
@@ -98,7 +98,7 @@ public:
      * set map
      * @param map - the map to set
      */
-    void setMap(Matrix2d map);
+    void setMap(Matrix2d* map);
 
     /**
      * get driver from the list with according to the index
@@ -151,6 +151,15 @@ public:
      * @return  list trip
      */
     vector<Trip*> getMyTripList ();
+
+    /**
+    * get my cab list
+    * @return  list cab
+    */
+    vector<CabBase*> getMyCabBaseList ();
+
+    Matrix2d* getMap();
+
     };
 
 #endif //MISSION2_TEXICENTER_H

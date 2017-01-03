@@ -30,10 +30,133 @@ using namespace std;
  * @param bufflen: lenth of the buffer
  * @return the string buffer
  */
+
+
+
 string bufferToString(char* buffer, int bufflen)
 {
     std::string ret(buffer, bufflen);
     return ret;
+}
+
+Trip* Server::getCurrentTrip() {
+    return texiCenter.getTripInIndex(0);
+}
+
+
+void Server::setMyDriver() {
+    myDriver = texiCenter.getDriverInIndex(0);
+}
+
+Driver* Server::getMyDriver() {
+    return texiCenter.getDriverInIndex(0);
+}
+
+void Server::moveClient() {
+    // get the first trip from the list. if we will finish the trip, we will erase it from the list
+    Trip* trip = texiCenter.getTripInIndex(0);
+    // update the clock for each movement
+    // make advance only in case the time at least such us the time of the trip
+    if(trip->getTime() <= clockTime.getTime()) {
+        vector<Node> path;
+        Point newPosition;
+        // get the path of the grid. we use clone for not delete the path
+        path = trip->getPathOfTripClone(*texiCenter.getMap());
+        // move one or two steps on the grid
+        myDriver->moveStep(path, clockTime.getTime());
+        // get the new location of the driver
+        newPosition = texiCenter.getDriverInIndex(0)->getLocation();
+        //serialize the point and send to client
+        std::string serial_str;
+        boost::iostreams::back_insert_device<std::string> inserter(serial_str);
+        boost::iostreams::stream<boost::iostreams::back_insert_device<std::string> > s(inserter);
+        boost::archive::binary_oarchive oa(s);
+        oa << newPosition;
+        s.flush();
+        //here we sent back the 'go' for move one step
+        udp->sendData(serial_str);
+
+        //after we end trip
+        if (texiCenter.getTripInIndex(0)->getEndPointOfTrip() == newPosition) {
+            // delete trip
+            Trip *temp = texiCenter.getTripInIndex(0);
+            texiCenter.eraseTripInIndex();
+            delete temp;
+        }
+    }
+    // update the time for each insert 9
+    clockTime.setTime();
+}
+
+bool Server::tripListNotEmpty() {
+    if(texiCenter.getMyTripList().empty()) {
+        // update the clock
+        clockTime.setTime();
+        return false;
+    }
+    return true;
+}
+
+void Server::sendTripToClient() {
+    Trip* trip = texiCenter.getTripInIndex(0);
+    // update the trip to driver and send the trip to client only once, when the time is comming.
+    // if the time isn't comming-> just update the clock
+    if (clockTime.getTime() == trip->getTime()) {
+        myDriver->setTrip(*trip);
+        // check if the location of the driver in the same point as start of the trip.
+        // if yes-> we in new trip and therefor send it to client
+        Point startOfTrip = trip->getStartPointOfTrip();
+        Point driverLocation = myDriver->getLocation();
+        if (driverLocation == startOfTrip) {
+            // make sure we have trip in te list
+            if (!texiCenter.getMyTripList().empty()) {
+                //send the next trip by serialization
+                std::string serial_str1;
+                boost::iostreams::back_insert_device<std::string> inserter1(serial_str1);
+                boost::iostreams::stream<boost::iostreams::back_insert_device<std::string> > s1(inserter1);
+                boost::archive::binary_oarchive oa1(s1);
+                oa1 << trip;
+                s1.flush();
+                //here we sent back the right trip
+                udp->sendData(serial_str1);
+            }
+        }
+    }
+}
+
+Socket* Server::getUdp() {
+    return udp;
+}
+
+void Server::setUdp(Socket* newUdp) {
+    udp = newUdp;
+}
+
+void Server::tripToCloseClient() {
+    //create special trip and send ir the client in order to know when shut down the process
+    Trip* tripClose = new Trip(-1, 0, 0, 0, 0, 0, 0, 0);
+    //send the close trip
+    std::string serial_str1;
+    boost::iostreams::back_insert_device<std::string> inserter1(serial_str1);
+    boost::iostreams::stream<boost::iostreams::back_insert_device<std::string> > s1(inserter1);
+    boost::archive::binary_oarchive oa1(s1);
+    oa1 << tripClose;
+    s1.flush();
+    //here we sent back the right trip
+    udp->sendData(serial_str1);
+    // delete allocated memory and close the socket
+    delete tripClose;
+}
+
+void Server::deleteAllocationMemory() {
+    // delete the all new allocation memory
+    delete texiCenter.getMap();
+    for (int i = 0; i < texiCenter.getMyDriverList().size(); i++) {
+        delete texiCenter.getDriverInIndex(i);
+    }
+    for (int i = 0; i < texiCenter.getMyCabBaseList().size(); i++) {
+        delete texiCenter.getCabInIndex(i);
+    }
 }
 
 void Server::printCurrentLocation() {
@@ -88,7 +211,7 @@ void Server::setCabToDriver(Driver* driver) {
     texiCenter.getDriverWithId(0)->setCab(cabBase);
 }
 
-Driver* Server::getDriver() {
+Driver* Server::getDriverFromClient() {
     Driver *driver;
     char buffer[1024];
     //get from user how much drivers we need to get
@@ -105,15 +228,22 @@ Driver* Server::getDriver() {
     ia >> driver;
     // add driver to taxi center
     texiCenter.addDriverToDriverLIst(driver);
+    //set my driver to the driver we got
+    setMyDriver();
     return driver;
+}
+
+ClockTime Server::getClock() {
+    return clockTime;
 }
 
 int main(int argc, char *argv[]) {
     cout << "Hello, from server" << endl;
     Server server;
     // create connection between the server and client
-    server.udp = new Udp(1, stoi(argv[1]));
-    server.udp->initialize();
+    Socket* udp = new Udp(1, stoi(argv[1]));
+    server.setUdp(udp);
+    server.getUdp()->initialize();
 
 
     // here we will put the all information
@@ -139,7 +269,7 @@ int main(int argc, char *argv[]) {
     // insert the list of obstacles to the map (grid)
     newMap->setobstaclePoint(listObstacle);
     // insert the map to taxi center, because the taxi center is in charge of all the programm actualy
-    server.texiCenter.setMap(*newMap);
+    server.texiCenter.setMap(newMap);
     // create clock for the program
     ClockTime clock;
     // request from the user mission to enter. we will expect all the time to another mission,
@@ -149,7 +279,7 @@ int main(int argc, char *argv[]) {
         cin >> choose;
         switch (choose) {
             case 1: {
-                driver = server.getDriver();
+                driver = server.getDriverFromClient();
                 countDriver++;
                 server.setCabToDriver(driver);
                 CabBase* cabBase = driver->getCab();
@@ -171,94 +301,19 @@ int main(int argc, char *argv[]) {
                 break;
             }
             case 7: {
-                // delete the all new allocation memory
-                delete newMap;
-                for (int i = 0; i < countDriver; i++) {
-                    delete server.texiCenter.getDriverInIndex(i);
-                }
-                for (int i = 0; i < countCabs; i++) {
-                    delete server.texiCenter.getCabInIndex(i);
-                }
-                //create special trip and send ir the client in order to know when shut down the process
-                Trip* tripClose = new Trip(-1, 0, 0, 0, 0, 0, 0, 0);
-                //send the close trip
-                std::string serial_str1;
-                boost::iostreams::back_insert_device<std::string> inserter1(serial_str1);
-                boost::iostreams::stream<boost::iostreams::back_insert_device<std::string> > s1(inserter1);
-                boost::archive::binary_oarchive oa1(s1);
-                oa1 << tripClose;
-                s1.flush();
-                //here we sent back the right trip
-                server.udp->sendData(serial_str1);
-                // delete allocated memory and close the socket
-                delete tripClose;
-                delete server.udp;
+                server.deleteAllocationMemory();
+                server.tripToCloseClient();
+                delete server.getUdp();
                 return 0;
             }
             case 9: {
-                // for case we we have advance without trip
-                if(server.texiCenter.getMyTripList().empty()) {
-                    // update the clock
-                    clock.setTime();
+                // for case we have advance without trip
+                if(server.tripListNotEmpty()) {
+                    server.sendTripToClient();
+                    server.moveClient();
+                } else {
                     break;
                 }
-                // get the first trip from the list. if we will finish the trip, we will erase it from the list
-                Trip* trip= server.texiCenter.getTripInIndex(0);
-                // update the trip to driver and send the trip to client only once, when the time is comming.
-                // if the time isn't comming-> just update the clock
-                if (clock.getTime() == trip->getTime()) {
-                    driver->setTrip(*trip);
-                    // check if the location of the driver in the same point as start of the trip.
-                    // if yes-> we in new trip and therefor send it to client
-                    Point startOfTrip = trip->getStartPointOfTrip();
-                    Point driverLocation = driver->getLocation();
-                    if (driverLocation == startOfTrip) {
-                        // make sure we have trip in te list
-                        if (!server.texiCenter.getMyTripList().empty()) {
-                            //send the next trip by serialization
-                            std::string serial_str1;
-                            boost::iostreams::back_insert_device<std::string> inserter1(serial_str1);
-                            boost::iostreams::stream<boost::iostreams::back_insert_device<std::string> > s1(inserter1);
-                            boost::archive::binary_oarchive oa1(s1);
-                            oa1 << trip;
-                            s1.flush();
-                            //here we sent back the right trip
-                            server.udp->sendData(serial_str1);
-                        }
-                    }
-                }
-
-                // update the clock for each movement
-                // make advance only in case the time at least such us the time of the trip
-                if(trip->getTime() <= clock.getTime()) {
-                    vector<Node> path;
-                    Point newPosition;
-                    // get the path of the grid. we use clone for not delete the path
-                    path = trip->getPathOfTripClone(*newMap);
-                    // move one or two steps on the grid
-                    driver->moveStep(path, clock.getTime());
-                    // get the new location of the driver
-                    newPosition = server.texiCenter.getDriverInIndex(0)->getLocation();
-                    //serialize the point and send to client
-                    std::string serial_str;
-                    boost::iostreams::back_insert_device<std::string> inserter(serial_str);
-                    boost::iostreams::stream<boost::iostreams::back_insert_device<std::string> > s(inserter);
-                    boost::archive::binary_oarchive oa(s);
-                    oa << newPosition;
-                    s.flush();
-                    //here we sent back the 'go' for move one step
-                    server.udp->sendData(serial_str);
-
-                    //after we end trip
-                    if (server.texiCenter.getTripInIndex(0)->getEndPointOfTrip() == newPosition) {
-                        // delete trip
-                        Trip *temp = server.texiCenter.getTripInIndex(0);
-                        server.texiCenter.eraseTripInIndex();
-                        delete temp;
-                    }
-                }
-            // update the time for each insert 9
-            clock.setTime();
             }
         }
     }
