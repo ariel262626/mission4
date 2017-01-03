@@ -36,6 +36,38 @@ string bufferToString(char* buffer, int bufflen)
     return ret;
 }
 
+void Server::printCurrentLocation() {
+    //insert id of driver
+    int DriverId;
+    Point location;
+    cin >> DriverId;
+    // find location of the driver in the grid and print it
+    location = texiCenter.findLocationOfDriver(DriverId);
+    cout << location << endl;
+}
+
+void Server::getNewCab() {
+    // get new cab from the user
+    string insertVehicle;
+    cin >> insertVehicle;
+    // use in the pharser class to handle the data
+    PharserInfo pharser = PharserInfo(insertVehicle);
+    CabBase *vehicle = pharser.createVehicle();
+    // add cab to taxi center
+    texiCenter.addCabToCabsLIst(vehicle);
+}
+
+void Server::getNewRide() {
+    // get new ride from the user
+    string insertRide;
+    cin >> insertRide;
+    // use in the pharser class to handle the data
+    PharserInfo pharser = PharserInfo(insertRide);
+    Trip* trip = pharser.createNewRide();
+    // add trip to taxi center - we need to sort the trip list according the time
+    texiCenter.addTripToTripLIst(trip);
+}
+
 void Server::sendCab(CabBase* cabBase) {
     // now send the vechile to the client
     //serialize
@@ -118,50 +150,24 @@ int main(int argc, char *argv[]) {
         switch (choose) {
             case 1: {
                 driver = server.getDriver();
+                countDriver++;
                 server.setCabToDriver(driver);
-                //check if we get the cab ok!!!!!!!!!!!!!!!
                 CabBase* cabBase = driver->getCab();
                 server.sendCab(cabBase);
-
                 break;
             }
             case 2: {
-                // get new ride from the user
-                string insertRide;
-                cin >> insertRide;
-                // use in the pharser class to handle the data
-                PharserInfo pharser = PharserInfo(insertRide);
-                Trip* trip = pharser.createNewRide();
-                // add trip to taxi center - we need to sort the trip list according the time
-                server.texiCenter.addTripToTripLIst(trip);
+                server.getNewRide();
                 break;
             }
             case 3: {
-                // get new cab from the user
-                string insertVehicle;
-                cin >> insertVehicle;
-                // use in the pharser class to handle the data
-                PharserInfo pharser = PharserInfo(insertVehicle);
-                CabBase *vehicle = pharser.createVehicle();
+                server.getNewCab();
                 //count how much cabs we have
                 countCabs++;
-                // add cab to taxi center
-                server.texiCenter.addCabToCabsLIst(vehicle);
                 break;
             }
             case 4: {
-                //insert id of driver
-                int idMission4;
-                Point location;
-                cin >> idMission4;
-                // find location of the driver in the grid and print it
-                location = server.texiCenter.findLocationOfDriver(idMission4);
-                cout << location << endl;
-                break;
-            }
-            case 6: {
-                // start driving of all the drivers with their passengers
-                server.texiCenter.startDriving();
+                server.printCurrentLocation();
                 break;
             }
             case 7: {

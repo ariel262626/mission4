@@ -23,5 +23,8 @@ public:
     Driver* getDriver();
     void setCabToDriver(Driver* driver);
     void sendCab(CabBase* cabBase);
+    void getNewRide();
+    void getNewCab();
+    void printCurrentLocation();
 
     };
