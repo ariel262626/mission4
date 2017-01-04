@@ -39,6 +39,14 @@ string bufferToString(char* buffer, int bufflen)
     return ret;
 }
 
+CabBase* Server::getMyCabBase() {
+    return myCabBase;
+}
+
+void Server::deleteUdp() {
+    delete udp;
+}
+
 Trip* Server::getCurrentTrip() {
     return texiCenter.getTripInIndex(0);
 }
@@ -46,6 +54,10 @@ Trip* Server::getCurrentTrip() {
 
 void Server::setMyDriver() {
     myDriver = texiCenter.getDriverInIndex(0);
+}
+
+void Server::setMyCabBase()  {
+    myCabBase = texiCenter.getCabInIndex(0);
 }
 
 Driver* Server::getMyDriver() {
@@ -151,11 +163,13 @@ void Server::tripToCloseClient() {
 void Server::deleteAllocationMemory() {
     // delete the all new allocation memory
     delete texiCenter.getMap();
-    for (int i = 0; i < texiCenter.getMyDriverList().size(); i++) {
-        delete texiCenter.getDriverInIndex(i);
+    for (int i = 0; i < 1; i++) {
+        Driver* deleteDriver = texiCenter.getDriverInIndex(i);
+        delete deleteDriver;
     }
     for (int i = 0; i < texiCenter.getMyCabBaseList().size(); i++) {
-        delete texiCenter.getCabInIndex(i);
+        CabBase* deleteCabBase = texiCenter.getCabInIndex(i);
+        delete deleteCabBase;
     }
 }
 
@@ -208,6 +222,7 @@ void Server::setCabToDriver(Driver* driver) {
     //find the right taxi for connect the cab to the driver
     int cabId = texiCenter.getDriverInIndex(0)->getMyCabId();
     CabBase* cabBase = texiCenter.getCabWithId(cabId);
+    setMyCabBase();
     texiCenter.getDriverWithId(0)->setCab(cabBase);
 }
 
@@ -304,7 +319,7 @@ int main(int argc, char *argv[]) {
                 server.deleteAllocationMemory();
                 // call function that send special trip to shut down the program
                 server.tripToCloseClient();
-                delete server.getUdp();
+                server.deleteUdp();
                 return 0;
             }
             case 9: {

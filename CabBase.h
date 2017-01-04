@@ -43,7 +43,9 @@ public:
      CabBase();
 
     //destructor
-    ~CabBase(){};
+    ~CabBase(){
+        delete myMap;
+    };
 
     /**
      * get the cab id
