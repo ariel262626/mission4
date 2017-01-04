@@ -5,13 +5,25 @@
 #ifndef UNTITLED_MATRIX2D_H
 #define UNTITLED_MATRIX2D_H
 
+#include <boost/serialization/access.hpp>
 #include "Grid.h"
+#include <iostream>
 
 /*
  * class of 2D matrix- build the specific matrix of 2d and heiress from grid
  * we always keep her update.
  */
 class Matrix2d : public Grid {
+
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned int version)
+    {
+        ar & myWidth;
+        ar & myHigh;
+        ar & myObstaclePoint;
+
+    }
 private:
     int myWidth;
     int myHigh;

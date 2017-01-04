@@ -8,6 +8,7 @@
 #include <boost/serialization/access.hpp>
 #include "Passenger.h"
 #include "Grid.h"
+#include "Matrix2d.h"
 
 /**
  * father of classes of cabs
@@ -88,6 +89,13 @@ public:
      * @return Grid*
      */
     Grid* getMap();
+
+    /**
+     * set mqp
+     * @param map m
+     */
+    void setMap(Matrix2d* map);
+
     };
 
 #endif //MISSION2_CABBASE_H

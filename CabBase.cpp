@@ -3,6 +3,7 @@
 //
 
 #include "CabBase.h"
+#include "Matrix2d.h"
 
 CabBase::CabBase(int id, int type, char manaufactur, char color, Grid* map, Passenger* passenger) {
     myId = id;
@@ -45,4 +46,7 @@ Grid* CabBase::getMap() {
     return myMap;
 }
 
+void CabBase::setMap(Matrix2d* map) {
+    myMap = map;
+}
 

@@ -44,6 +44,8 @@ CabBase* Server::getMyCabBase() {
 }
 
 void Server::deleteUdp() {
+    Matrix2d* mp = texiCenter.getMap();
+    delete mp;
     delete udp;
 }
 
@@ -162,7 +164,7 @@ void Server::tripToCloseClient() {
 
 void Server::deleteAllocationMemory() {
     // delete the all new allocation memory
-    delete texiCenter.getMap();
+    //delete texiCenter.getMap();
     for (int i = 0; i < 1; i++) {
         Driver* deleteDriver = texiCenter.getDriverInIndex(i);
         delete deleteDriver;
@@ -189,7 +191,7 @@ void Server::getNewCab() {
     cin >> insertVehicle;
     // use in the pharser class to handle the data
     PharserInfo pharser = PharserInfo(insertVehicle);
-    CabBase *vehicle = pharser.createVehicle();
+    CabBase* vehicle = pharser.createVehicle();
     // add cab to taxi center
     texiCenter.addCabToCabsLIst(vehicle);
 }
@@ -222,7 +224,6 @@ void Server::setCabToDriver(Driver* driver) {
     //find the right taxi for connect the cab to the driver
     int cabId = texiCenter.getDriverInIndex(0)->getMyCabId();
     CabBase* cabBase = texiCenter.getCabWithId(cabId);
-    setMyCabBase();
     texiCenter.getDriverWithId(0)->setCab(cabBase);
 }
 
@@ -307,6 +308,8 @@ int main(int argc, char *argv[]) {
             }
             case 3: {
                 server.getNewCab();
+                server.setMyCabBase();
+                //server.getMyCabBase()->setMap(newMap);
                 //count how much cabs we have
                 countCabs++;
                 break;

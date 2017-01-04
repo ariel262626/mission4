@@ -44,7 +44,8 @@ public:
            CabBase* taxiStandart, Trip trip);
      Driver();
     //distructor
-    ~Driver(){ };
+    ~Driver(){
+    };
 /**
  * this metod get path and move the cab one step (standart cab), or two step (luxury cab) on the grid
  * @param path: the path trajectory of bfs
