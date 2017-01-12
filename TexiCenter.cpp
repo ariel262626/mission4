@@ -4,18 +4,41 @@
 
 #include "TexiCenter.h"
 #include "Matrix2d.h"
+#include <fstream>
+#include <sstream>
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/algorithm/string/predicate.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/algorithm/string.hpp>
+#include <boost/iostreams/device/back_inserter.hpp>
+#include <boost/iostreams/stream.hpp>
+#include <boost/archive/binary_oarchive.hpp>
+#include <boost/archive/binary_iarchive.hpp>
 
 TexiCenter::TexiCenter(vector<Driver*> driversList, vector<Passenger*> passengresList,
-                       vector<CabBase*> standartCabList, vector<Trip*> tripList, Matrix2d* map, Bfs bfs) {
+                       vector<CabBase*> standartCabList, vector<Trip*> tripList, Matrix2d* map, Bfs bfs, Socket* tcp) {
     myDriversList = driversList;
     myPassengresList = passengresList;
     myStandartCabList = standartCabList;
     myTripList = tripList;
     myMap = map;
     myBfs = bfs;
+    myTcp = tcp;
 }
 
 TexiCenter::TexiCenter() {}
+
+TexiCenter::~TexiCenter() {
+    // delete the all new allocation memory before the object of taxi center is over
+    delete myMap;
+    for (int i = 0; i < myDriversList.size(); i++) {
+        delete getDriverInIndex(i);
+    }
+    for (int i = 0; i < myStandartCabList.size(); i++) {
+        delete getCabInIndex(i);
+    }
+}
 
 /**
  * get all the drivers at the point of the start point of trip
@@ -184,9 +207,9 @@ void TexiCenter::setTripList(vector<Trip*> tripsList) {
 }
 
 void TexiCenter::setMap(Matrix2d* map) {
-    //myMap->setHigh(map.getHigh());
-    //myMap->setWidth(map.getWidth());
-    //myMap->setobstaclePoint(map.getObstaclesList());
+   // myMap->setHigh(map->getHigh());
+   // myMap->setWidth(map->getWidth());
+   // myMap->setobstaclePoint(map->getObstaclesList());
     myMap = map;
 }
 
@@ -240,4 +263,27 @@ vector<Trip*> TexiCenter:: getMyTripList (){
 
 vector<CabBase*> TexiCenter:: getMyCabBaseList (){
     return myStandartCabList;
+}
+
+void TexiCenter::setCabToDriver(Driver* driver) {
+    //find the right taxi for connect the cab to the driver
+    int cabId = getDriverInIndex(0)->getMyCabId();
+    CabBase* cabBase = getCabWithId(cabId);
+    driver->setCab(cabBase);
+}
+
+ClockTime TexiCenter::getMyClockTime() {
+    return myClockTime;
+}
+
+Socket* TexiCenter::getMyTcp() {
+    return myTcp;
+}
+
+vector<SocketToDriver> TexiCenter::getMySocketToDriverList() {
+    return mySocketToDriverList;
+}
+
+void TexiCenter::setMySocketToDriverList(SocketToDriver socketToDriver) {
+    mySocketToDriverList.push_back(socketToDriver);
 }

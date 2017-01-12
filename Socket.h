@@ -65,7 +65,7 @@ public:
 	* The Function operation: initialize the Socket object and getting a   *
 	* socket descriptor. pure virtual method							   *
 	***********************************************************************/
-	virtual int initialize() = 0;
+	virtual int initialize(int numberOfDrivers) = 0;
 	/***********************************************************************
 	* function name: sendData											   *
 	* The Input: string representing the data to send		               *
@@ -85,7 +85,7 @@ public:
 
 	virtual void setIp(string myip);
 
-
+    virtual int accpetFromClient() = 0;
 
 
 };

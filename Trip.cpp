@@ -17,6 +17,7 @@ Trip::Trip(int rideId, int xStart, int yStart, int xEnd, int yEnd, int passenger
     myPassengerNumber = passengerNumber;
     myTariff = tarrif;
     myTime = time;
+    myPath = NULL;
 }
 
 Trip::Trip() { }
@@ -30,6 +31,8 @@ vector<Node*> Trip::getPathOfTrip(Matrix2d map) {
         Bfs bfs = Bfs(startNode, endNode, 2, &map);
         //we get all the points of the trip. run the bfs for that
         listOfNodeInTrip = bfs.runBfs(&startNode, &endNode);
+        //we get the path to member
+        myPath.swap(listOfNodeInTrip);
         return listOfNodeInTrip;
 }
 

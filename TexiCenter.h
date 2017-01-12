@@ -12,6 +12,9 @@
 #include "Trip.h"
 #include "Bfs.h"
 #include "Matrix2d.h"
+#include "Socket.h"
+#include "ClockTime.h"
+#include "SocketToDriver.h"
 
 using namespace std;
 /**
@@ -26,12 +29,22 @@ private:
     vector<Trip*> myTripList;
     Matrix2d* myMap;
     Bfs myBfs;
+    Socket* myTcp;
+    ClockTime myClockTime;
+    vector<SocketToDriver> mySocketToDriverList;
+public:
+    const vector<SocketToDriver> &getMySocketToDriverList() const;
+
+
 public:
     // constructors
     TexiCenter(vector<Driver *> driversList, vector<Passenger *> passengresList,
-               vector<CabBase *> standartCabList, vector<Trip*> tripList, Matrix2d* map, Bfs bfs);
+               vector<CabBase *> standartCabList, vector<Trip*> tripList, Matrix2d* map, Bfs bfs, Socket* tcp);
 
     TexiCenter();
+    ~TexiCenter();
+
+    ClockTime getMyClockTime();
 
     /**
      * get all drivers to the end point
@@ -160,6 +173,20 @@ public:
 
     Matrix2d* getMap();
 
+    void handleDriver(Driver* driver);
+    void sendCab(CabBase* cabBase);
+
+    /**
+     * set cab into driver
+     * @param driver - the driver
+     */
+    void setCabToDriver(Driver* driver);
+
+    Socket* getMyTcp();
+
+    void setMySocketToDriverList(SocketToDriver socketToDriver);
+
+    vector<SocketToDriver> getMySocketToDriverList();
     };
 
 #endif //MISSION2_TEXICENTER_H

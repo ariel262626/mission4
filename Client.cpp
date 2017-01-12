@@ -5,6 +5,7 @@
 #include "Udp.h"
 #include "Driver.h"
 #include "PharserInfo.h"
+#include "Tcp.h"
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/algorithm/string/predicate.hpp>
@@ -31,12 +32,11 @@ string bufferToString(char* buffer, int bufflen)
 }
 
 int main(int argc, char *argv[]) {
-    cout << "Hello, from client" << endl;
     //argv[2] = the port of the server
-    Socket* udp = new Udp(0, stoi(argv[2]));
+    Socket* tcp = new Tcp(0, stoi(argv[2]));
     //bind the server if fail do fail argv[1] = ip
-    udp->setIp(argv[1]);
-    int t = udp->initialize();
+    tcp->setIp(argv[1]);
+    int t = tcp->initialize(0);
     //for serialization create buffer
     char buffer[1024];
 
@@ -60,10 +60,10 @@ int main(int argc, char *argv[]) {
     /*server wait to get this data (we need to send here driver) than the server give  the driver the rifght
      * texi and returns this texi*/
     //send the driver to server
-    udp->sendData(serial_str);
+    tcp->sendData(serial_str);
 
     //here the client get the texi fron the server
-    udp->reciveData(buffer, sizeof(buffer));
+    tcp->reciveData(buffer, sizeof(buffer));
 
     //for de-serializa we need put buffer to string
     string bufferRecivedTexi = bufferToString(buffer, sizeof(buffer));
@@ -79,7 +79,7 @@ int main(int argc, char *argv[]) {
 //get trip end the trip and wait for the next trip if there is one
 while(true) {
     //client get the trip from the server
-    udp->reciveData(buffer, sizeof(buffer));
+    tcp->reciveData(buffer, sizeof(buffer));
     //for de-serializa we need put buffer to string
     string bufferRecivedTrip = bufferToString(buffer, sizeof(buffer));
 
@@ -98,7 +98,7 @@ while(true) {
         delete cabBase;
         delete driver;
         delete trip;
-        delete udp;
+        delete tcp;
         return 0;
     }
     // update the trip to driver for each time we get new trip (we get the new trip
@@ -108,7 +108,7 @@ while(true) {
 //move one step and wait for the next move one step until you end the trip
 while(true) {
     //here the client get the 'go' word from the server and move one step
-    udp->reciveData(buffer, sizeof(buffer));
+    tcp->reciveData(buffer, sizeof(buffer));
     //for de-serializa we need put buffer to string
     string bufferRecivedAdvance = bufferToString(buffer, sizeof(buffer));
     //make instance of cab

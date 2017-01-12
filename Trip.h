@@ -41,6 +41,8 @@ private:
     int myPassengerNumber;
     double myTariff;
     int myTime;
+    vector<Node*> myPath;
+
 public:
     //constructors
     Trip(int rideId, int xStart, int yStart, int xEnd, int yEnd, int passengerNumber, double tarrif, int time);
