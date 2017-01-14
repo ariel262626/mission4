@@ -29,13 +29,13 @@ GameFlow::GameFlow() {}
  void GameFlow:: run() {
 
     // here we will put the all information
-    int choose;
-    int countDriver = 0;
-    int countCabs = 0;
+    extern int choose;
+    //int countDriver = 0;
+    //int countCabs = 0;
     string stringGrid, stringObst;
     vector<Point> listObstacle;
     Driver *driver;
-     ConnectionClients connectionClients = ConnectionClients (texiCenter);
+     ConnectionClients connectionClients = ConnectionClients ();
 
     //find high and width -> use in class of pharser for translate the data
     getline(cin, stringGrid);
@@ -71,13 +71,13 @@ GameFlow::GameFlow() {}
             }
             case 3: {
                 getNewCab();
-                setMyCabBase();
+                //setMyCabBase();
                 //count how much cabs we have
-                countCabs++;
+                //countCabs++;
                 break;
             }
             case 4: {
-                connectionClients.printCurrentLocation();
+                printCurrentLocation();
                 break;
             }
             case 7: {
@@ -88,7 +88,7 @@ GameFlow::GameFlow() {}
                 return;
             }
             case 9: {
-                connectionClients.stepClients();
+
             }
         }
     }
@@ -120,9 +120,9 @@ void GameFlow::setMyDriver() {
 }
 
 //neddddddddd ????????????????????????????????????????????????????????????????????????????????
-void GameFlow::setMyCabBase()  {
+/*void GameFlow::setMyCabBase()  {
     myCabBase = texiCenter.getCabInIndex(0);
-}
+}*/
 
 Driver* GameFlow::getMyDriver() {
     return texiCenter.getDriverInIndex(0);
@@ -170,37 +170,44 @@ void GameFlow::getNewRide() {
 }
 
 Driver* GameFlow::getDriverFromClient() {
+
     Driver *driver;
     char buffer[1024];
     int numberOfDrivers;
     //get from user how much drivers we need to get
     cin >> numberOfDrivers;
+    int const amountsTreadsofClients = numberOfDrivers;
+    pthread_t treadsOfDrivers[amountsTreadsofClients];
     int socketDescriptor = myTcp->initialize(numberOfDrivers);
     for (int i = 0; i < numberOfDrivers; i++) {
         int socketDescriptorClient = myTcp->accpetFromClient();
-
-    //here we get the driver from clientDriver
-    myTcp->reciveData(buffer, sizeof(buffer));
-    //for de-serializa we need put buffer to string
-    string bufferRecivedDr = bufferToString(buffer, sizeof(buffer));
-    //de serialize
-    boost::iostreams::basic_array_source<char> device(bufferRecivedDr.c_str(),
-                                                      bufferRecivedDr.size());
-    boost::iostreams::stream<boost::iostreams::basic_array_source<char> > s2(device);
-    boost::archive::binary_iarchive ia(s2);
-    ia >> driver;
-    // add driver to taxi center
-    texiCenter.addDriverToDriverLIst(driver);
+        //here we get the driver from clientDriver
+        myTcp->reciveData(buffer, sizeof(buffer));
+        //for de-serializa we need put buffer to string
+        string bufferRecivedDr = bufferToString(buffer, sizeof(buffer));
+        //de serialize
+        boost::iostreams::basic_array_source<char> device(bufferRecivedDr.c_str(),
+                                                          bufferRecivedDr.size());
+        boost::iostreams::stream<boost::iostreams::basic_array_source<char> > s2(device);
+        boost::archive::binary_iarchive ia(s2);
+        ia >> driver;
+        // add driver to taxi center
+        texiCenter.addDriverToDriverLIst(driver);
         //we use socketToDriver for the conection between driver to discriptorckient
-    SocketToDriver socketToDriver = SocketToDriver (socketDescriptorClient, driver);
+        SocketToDriver* socketToDriver = new SocketToDriver (socketDescriptorClient, driver, &texiCenter);
         texiCenter.setMySocketToDriverList(socketToDriver);
+
+        // here we open new tread for each driver (client)
+
+        pthread_create(&treadsOfDrivers[i],NULL,ConnectionClients:: runClients,socketToDriver);
+
     }
     //set my driver to the driver we got
     setMyDriver();
     return driver;
 }
 
-void TexiCenter::sendCab(CabBase* cabBase) {
+void GameFlow::sendCab(CabBase* cabBase) {
     // now send the vechile to the client
     //serialize
     std::string serial_str;
@@ -213,5 +220,14 @@ void TexiCenter::sendCab(CabBase* cabBase) {
     myTcp->sendData(serial_str);
 }
 
+void GameFlow::printCurrentLocation() {
+    //insert id of driver
+    int DriverId;
+    Point location;
+    cin >> DriverId;
+    // find location of the driver in the grid and print it
+    location = texiCenter.findLocationOfDriver(DriverId);
+    cout << location << endl;
+}
 
 

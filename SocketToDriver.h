@@ -8,18 +8,23 @@
 
 #include "Socket.h"
 #include "Driver.h"
+#include "TexiCenter.h"
 
 class SocketToDriver {
 private:
     int myDescriptorClient;
     Driver* myDriver;
+    TexiCenter* myTexiCenter;
 
 public:
-    SocketToDriver (int myDescriptorClient, Driver* driver);
+    SocketToDriver (int myDescriptorClient, Driver* driver, TexiCenter* texiCenter);
     int getMySocket();
     Driver *getMyDriver();
     void setMyDescriptor (int descriptorClient);
     void setMyDriver(Driver *myDriver);
+    TexiCenter* getMyTexiCenter();
+    void setMyTexiCenter(TexiCenter* texiCenter);
+
 };
 
 

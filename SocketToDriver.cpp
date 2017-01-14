@@ -4,9 +4,10 @@
 
 #include "SocketToDriver.h"
 
-SocketToDriver:: SocketToDriver (int descriptorClient, Driver* driver){
+SocketToDriver:: SocketToDriver (int descriptorClient, Driver* driver, TexiCenter* texiCenter){
     myDescriptorClient = descriptorClient;
     myDriver = driver;
+    myTexiCenter = texiCenter;
 }
 
 int SocketToDriver::getMySocket() {
@@ -23,5 +24,13 @@ void SocketToDriver::setMyDescriptor (int descriptorClient) {
 
 void SocketToDriver::setMyDriver(Driver* driver) {
     myDriver = driver;
+}
+
+TexiCenter* SocketToDriver::getMyTexiCenter() {
+    return myTexiCenter;
+}
+
+void SocketToDriver::setMyTexiCenter(TexiCenter* texiCenter) {
+    myTexiCenter = texiCenter;
 }
 

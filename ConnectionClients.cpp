@@ -16,20 +16,26 @@
 #include "ConnectionClients.h"
 
 using namespace std;
+int choose = 0;
 
-ConnectionClients::ConnectionClients(TexiCenter &texiCenter) {
-    myChoose = 0;
-    myTexiCenter = texiCenter;
-}
+// in this class we have no ant members-> it's static. all members we will need will be global
 
-void ConnectionClients:: runClients (){
-    while(true) {
-    switch(myChoose) {
-        case 4:
-            printCurrentLocation();
-            break;
+ConnectionClients::ConnectionClients() {}
+    //myChoose = 0;
+    //myTexiCenter = texiCenter;
+//}
+
+void* ConnectionClients:: runClients (void * socketToDriver){
+    // casting to instance of SocketToDriver
+    SocketToDriver* socketToDriver1 = (SocketToDriver*) socketToDriver;
+    while(tripListNotEmpty(socketToDriver1)) {
+    switch(choose) {
+        case 7:
+            // here we will finish the thread
+
         case 9:
-            stepClients();
+            stepClients(socketToDriver1);
+            choose = 0;
             break;
         default:
             break;
@@ -37,53 +43,36 @@ void ConnectionClients:: runClients (){
     }
 }
 
-void ConnectionClients::stepClients() {
+void ConnectionClients::stepClients(SocketToDriver* socketToDriver) {
     // for case we have advance without trip
-    if(tripListNotEmpty()) {
-        sendTripToClient();
-        moveClient();
-    } else {
-        break;
-    }
+        sendTripToClient(socketToDriver);
+        moveClient(socketToDriver);
 }
 
-void ConnectionClients:: setChoose(int choose){
-    myChoose = choose;
-}
 
-void ConnectionClients::printCurrentLocation() {
-    //insert id of driver
-    int DriverId;
-    Point location;
-    cin >> DriverId;
-    // find location of the driver in the grid and print it
-    location = myTexiCenter.findLocationOfDriver(DriverId);
-    cout << location << endl;
-}
-
-bool ConnectionClients::tripListNotEmpty() {
-    if(myTexiCenter.getMyTripList().empty()) {
+bool ConnectionClients::tripListNotEmpty(SocketToDriver* socketToDriver) {
+    if(socketToDriver->getMyTexiCenter()->getMyTripList().empty()) {
         // update the clock
-        myTexiCenter.getMyClockTime().setTime();
+        socketToDriver->getMyTexiCenter()->getMyClockTime().setTime();
         return false;
     }
     return true;
 }
 
 
-void ConnectionClients::sendTripToClient() {
-    Trip* trip = myTexiCenter.getTripInIndex(0);
+void ConnectionClients::sendTripToClient(SocketToDriver* socketToDriver) {
+    Trip* trip = socketToDriver->getMyTexiCenter()->getTripInIndex(0);
     // update the trip to driver and send the trip to client only once, when the time is comming.
     // if the time isn't comming-> just update the clock
-    if (myTexiCenter.getMyClockTime().getTime() == trip->getTime()) {
-        myTexiCenter.getmyDriver->setTrip(*trip);
+    if (socketToDriver->getMyTexiCenter()->getMyClockTime().getTime() == trip->getTime()) {
+        socketToDriver->getMyDriver()->setTrip(*trip);
         // check if the location of the driver in the same point as start of the trip.
         // if yes-> we in new trip and therefor send it to client
         Point startOfTrip = trip->getStartPointOfTrip();
-        Point driverLocation = myDriver->getLocation();
+        Point driverLocation = socketToDriver->getMyDriver()->getLocation();
         if (driverLocation == startOfTrip) {
             // make sure we have trip in te list
-            if (!myTexiCenter.getMyTripList().empty()) {
+            if (!socketToDriver->getMyTexiCenter()->getMyTripList().empty()) {
                 //send the next trip by serialization
                 std::string serial_str1;
                 boost::iostreams::back_insert_device<std::string> inserter1(serial_str1);
@@ -92,26 +81,26 @@ void ConnectionClients::sendTripToClient() {
                 oa1 << trip;
                 s1.flush();
                 //here we sent back the right trip
-                myTexiCenter.getMyTcp()->sendData(serial_str1);
+                socketToDriver->getMyTexiCenter()->getMyTcp()->sendData(serial_str1);
             }
         }
     }
 }
 
-void ConnectionClients::moveClient() {
+void ConnectionClients::moveClient(SocketToDriver* socketToDriver) {
     // get the first trip from the list. if we will finish the trip, we will erase it from the list
-    Trip* trip = myTexiCenter.getTripInIndex(0);
+    Trip* trip = socketToDriver->getMyTexiCenter()->getTripInIndex(0);
     // update the clock for each movement
     // make advance only in case the time at least such us the time of the trip
-    if(trip->getTime() <= myTexiCenter.getMyClockTime().getTime()) {
+    if(trip->getTime() <= socketToDriver->getMyTexiCenter()->getMyClockTime().getTime()) {
         vector<Node> path;
         Point newPosition;
         // get the path of the grid. we use clone for not delete the path
-        path = trip->getPathOfTripClone(*myTexiCenter.getMap());
+        path = trip->getPathOfTripClone(*socketToDriver->getMyTexiCenter()->getMap());
         // move one or two steps on the grid
-        myDriver->moveStep(path, myTexiCenter.getMyClockTime().getTime());
+        socketToDriver->getMyDriver()->moveStep(path, socketToDriver->getMyTexiCenter()->getMyClockTime().getTime());
         // get the new location of the driver
-        newPosition = myTexiCenter.getDriverInIndex(0)->getLocation();
+        newPosition = socketToDriver->getMyTexiCenter()->getDriverInIndex(0)->getLocation();
         //serialize the point and send to client
         std::string serial_str;
         boost::iostreams::back_insert_device<std::string> inserter(serial_str);
@@ -120,16 +109,16 @@ void ConnectionClients::moveClient() {
         oa << newPosition;
         s.flush();
         //here we sent back the 'go' for move one step
-        myTexiCenter.getMyTcp()->sendData(serial_str);
+        socketToDriver->getMyTexiCenter()->getMyTcp()->sendData(serial_str);
 
         //after we end trip
-        if (myTexiCenter.getTripInIndex(0)->getEndPointOfTrip() == newPosition) {
+        if (socketToDriver->getMyTexiCenter()->getTripInIndex(0)->getEndPointOfTrip() == newPosition) {
             // delete trip
-            Trip *temp = myTexiCenter.getTripInIndex(0);
-            myTexiCenter.eraseTripInIndex();
+            Trip *temp = socketToDriver->getMyTexiCenter()->getTripInIndex(0);
+            socketToDriver->getMyTexiCenter()->eraseTripInIndex();
             delete temp;
         }
     }
     // update the time for each insert 9
-    myTexiCenter.getMyClockTime().setTime();
+    socketToDriver->getMyTexiCenter()->getMyClockTime().setTime();
 }

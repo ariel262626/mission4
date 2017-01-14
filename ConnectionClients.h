@@ -10,29 +10,24 @@
 
 class ConnectionClients {
 private:
-    int myChoose;
-    TexiCenter myTexiCenter;
+    //int myChoose;
+    //TexiCenter myTexiCenter;
 
 public:
-    ConnectionClients(TexiCenter &texiCenter);
-    void  runClients ();
-    void setChoose (int choose);
-    /**
-     * print cuurent location
-     */
-    void printCurrentLocation();
+    ConnectionClients();
+    static void* runClients (void* socketToDriver);
 
     /**
      * check if trip list empty
      * @return true if not empty
      */
-    bool tripListNotEmpty();
+    static bool tripListNotEmpty(SocketToDriver* socketToDriver);
 
-    void sendTripToClient();
+    static void sendTripToClient(SocketToDriver* socketToDriver);
 
-    void stepClients();
+    static void stepClients(SocketToDriver* socketToDriver);
 
-    void moveClient();
+    static void moveClient(SocketToDriver* socketToDriver);
 
     };
 

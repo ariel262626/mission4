@@ -31,10 +31,7 @@ private:
     Bfs myBfs;
     Socket* myTcp;
     ClockTime myClockTime;
-    vector<SocketToDriver> mySocketToDriverList;
-public:
-    const vector<SocketToDriver> &getMySocketToDriverList() const;
-
+    vector<SocketToDriver*> mySocketToDriverList;
 
 public:
     // constructors
@@ -173,7 +170,6 @@ public:
 
     Matrix2d* getMap();
 
-    void handleDriver(Driver* driver);
     void sendCab(CabBase* cabBase);
 
     /**
@@ -184,9 +180,11 @@ public:
 
     Socket* getMyTcp();
 
-    void setMySocketToDriverList(SocketToDriver socketToDriver);
+    void setMySocketToDriverList(SocketToDriver* socketToDriver);
 
-    vector<SocketToDriver> getMySocketToDriverList();
+    vector<SocketToDriver*> getMySocketToDriverList();
+
+   // Driver* getmyDriverAccordingSocketNum(int descriptorClient);
     };
 
 #endif //MISSION2_TEXICENTER_H

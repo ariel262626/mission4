@@ -29,8 +29,6 @@ public:
     Driver* getDriverFromClient();
 
 
-
-
     /**
      * send cab to client
      * @param cabBase - the cab
@@ -74,12 +72,8 @@ public:
     /**
      * set mycab
      */
-    void setMyCabBase();
+   // void setMyCabBase();
 
-    /**
-     * move driverClient onestep
-     */
-    void moveClient();
 
     /**
      * get current trip
@@ -92,6 +86,8 @@ public:
      * @return mycabBase
      */
     CabBase* getMyCabBase();
+
+    void printCurrentLocation();
 };
 
 

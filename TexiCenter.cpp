@@ -280,10 +280,18 @@ Socket* TexiCenter::getMyTcp() {
     return myTcp;
 }
 
-vector<SocketToDriver> TexiCenter::getMySocketToDriverList() {
+vector<SocketToDriver*> TexiCenter::getMySocketToDriverList() {
     return mySocketToDriverList;
 }
 
-void TexiCenter::setMySocketToDriverList(SocketToDriver socketToDriver) {
+void TexiCenter::setMySocketToDriverList(SocketToDriver* socketToDriver) {
     mySocketToDriverList.push_back(socketToDriver);
 }
+/*
+Driver* TexiCenter:: getmyDriverAccordingSocketNum(int descriptorClient){
+    for (int i = 0; i< mySocketToDriverList.size(); i++){
+        if (mySocketToDriverList[i].getMySocket() == descriptorClient){
+            return mySocketToDriverList[i].getMyDriver();
+        }
+    }
+}*/
