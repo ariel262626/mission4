@@ -21,13 +21,10 @@ int choose = 0;
 // in this class we have no ant members-> it's static. all members we will need will be global
 
 ConnectionClients::ConnectionClients() {}
-    //myChoose = 0;
-    //myTexiCenter = texiCenter;
-//}
 
 void* ConnectionClients:: runClients (void * socketToDriver){
     // casting to instance of SocketToDriver
-    SocketToDriver* socketToDriver1 = (SocketToDriver*) socketToDriver;
+    SocketToDriver* socketToDriver1 = (SocketToDriver*)socketToDriver;
     while(tripListNotEmpty(socketToDriver1)) {
     switch(choose) {
         case 7:
@@ -41,6 +38,56 @@ void* ConnectionClients:: runClients (void * socketToDriver){
             break;
     }
     }
+}
+
+SocketToDriver* ConnectionClients::findCurrectDriverToTrip(TexiCenter* texiCenter, Trip* trip) {
+    vector<Driver*> driverList = texiCenter->getMyDriverList();
+    SocketToDriver* socketToDriver;
+    vector<Driver*> allDriversAtStartPointTrip;
+    Point startPiontOfTrip = trip->getStartPointOfTrip();
+    Driver* freeDriver;
+    /*find if there is driver at the point of the starting point of the trip
+   * if there is this driver will take the trip*/
+        for(int j = 0; j < driverList.size(); j++) {
+            Point driverLocation = driverList.at(j)->getLocation();
+            if (driverLocation == startPiontOfTrip) {
+                allDriversAtStartPointTrip = getAllDriversAtThisPoint(driverList, startPiontOfTrip);
+                freeDriver = allDriversAtStartPointTrip.at(0);
+                for (int k = 0; k < allDriversAtStartPointTrip.size(); k++) {
+                    if (allDriversAtStartPointTrip.at(k)->getCountTrips() < freeDriver->getCountTrips()) {
+                        freeDriver = allDriversAtStartPointTrip.at(k);
+                    }
+                }
+            }
+        }
+    socketToDriver = findSocketToDriver(freeDriver, texiCenter);
+    return socketToDriver;
+}
+
+SocketToDriver* ConnectionClients:: findSocketToDriver(Driver* driver, TexiCenter* texiCenter){
+    vector<SocketToDriver*> mySocketToDriverList = texiCenter->getMySocketToDriverList();
+    for (int i = 0; i< texiCenter->getMyDriverList().size(); i++){
+        if (mySocketToDriverList[i]->getMyDriver()->getId() == driver->getId()){
+            return mySocketToDriverList[i];
+        }
+    }
+}
+
+/**
+ * get all the drivers at the point of the start point of trip
+ * @param myDriversList - the list of drivers
+ * @param startPiontOfTrip - start point of trip
+ * @return vector of the driver at the point
+ */
+vector<Driver*> ConnectionClients::getAllDriversAtThisPoint(vector<Driver*> myDriversList,Point startPiontOfTrip) {
+    vector<Driver*> driversAtPoint;
+    for (int i = 0; i < myDriversList.size(); i++) {
+        if(myDriversList.at(i)->getLocation() == startPiontOfTrip) {
+            Driver* driver = myDriversList.at(i);
+            driversAtPoint.push_back(driver);
+        }
+    }
+    return driversAtPoint;
 }
 
 void ConnectionClients::stepClients(SocketToDriver* socketToDriver) {
@@ -62,17 +109,20 @@ bool ConnectionClients::tripListNotEmpty(SocketToDriver* socketToDriver) {
 
 void ConnectionClients::sendTripToClient(SocketToDriver* socketToDriver) {
     Trip* trip = socketToDriver->getMyTexiCenter()->getTripInIndex(0);
+    //after we get trip we finding who is the right sockettodriver for him
+    SocketToDriver* socketToUpdate =
+            findCurrectDriverToTrip(socketToDriver->getMyTexiCenter(), trip);
     // update the trip to driver and send the trip to client only once, when the time is comming.
     // if the time isn't comming-> just update the clock
-    if (socketToDriver->getMyTexiCenter()->getMyClockTime().getTime() == trip->getTime()) {
-        socketToDriver->getMyDriver()->setTrip(*trip);
+    if (socketToUpdate->getMyTexiCenter()->getMyClockTime().getTime() == trip->getTime()) {
+        socketToUpdate->getMyDriver()->setTrip(*trip);
         // check if the location of the driver in the same point as start of the trip.
         // if yes-> we in new trip and therefor send it to client
         Point startOfTrip = trip->getStartPointOfTrip();
-        Point driverLocation = socketToDriver->getMyDriver()->getLocation();
+        Point driverLocation = socketToUpdate->getMyDriver()->getLocation();
         if (driverLocation == startOfTrip) {
             // make sure we have trip in te list
-            if (!socketToDriver->getMyTexiCenter()->getMyTripList().empty()) {
+            if (!socketToUpdate->getMyTexiCenter()->getMyTripList().empty()) {
                 //send the next trip by serialization
                 std::string serial_str1;
                 boost::iostreams::back_insert_device<std::string> inserter1(serial_str1);
@@ -81,7 +131,7 @@ void ConnectionClients::sendTripToClient(SocketToDriver* socketToDriver) {
                 oa1 << trip;
                 s1.flush();
                 //here we sent back the right trip
-                socketToDriver->getMyTexiCenter()->getMyTcp()->sendData(serial_str1);
+                socketToUpdate->getMyTexiCenter()->getMyTcp()->sendData(serial_str1, socketToUpdate->getMyDescriptor());
             }
         }
     }
@@ -109,7 +159,7 @@ void ConnectionClients::moveClient(SocketToDriver* socketToDriver) {
         oa << newPosition;
         s.flush();
         //here we sent back the 'go' for move one step
-        socketToDriver->getMyTexiCenter()->getMyTcp()->sendData(serial_str);
+        socketToDriver->getMyTexiCenter()->getMyTcp()->sendData(serial_str, socketToDriver->getMyDescriptor());
 
         //after we end trip
         if (socketToDriver->getMyTexiCenter()->getTripInIndex(0)->getEndPointOfTrip() == newPosition) {

@@ -14,7 +14,7 @@ class GameFlow {
 
 private:
     Socket* myTcp;
-    TexiCenter texiCenter;
+    TexiCenter* texiCenter;
     Driver* myDriver;
     CabBase* myCabBase;
 public:
@@ -26,14 +26,14 @@ public:
      * get the driver from client
      * @return driver
      */
-    Driver* getDriverFromClient();
+    vector <SocketToDriver*> getDriversFromClients();
 
 
     /**
      * send cab to client
      * @param cabBase - the cab
      */
-    void sendCab(CabBase* cabBase);
+    void sendCab(CabBase* cabBase, int socketDescriptor);
 
     /**
      * get trip

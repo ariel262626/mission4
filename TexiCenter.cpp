@@ -267,7 +267,7 @@ vector<CabBase*> TexiCenter:: getMyCabBaseList (){
 
 void TexiCenter::setCabToDriver(Driver* driver) {
     //find the right taxi for connect the cab to the driver
-    int cabId = getDriverInIndex(0)->getMyCabId();
+    int cabId = driver->getMyCabId();
     CabBase* cabBase = getCabWithId(cabId);
     driver->setCab(cabBase);
 }
@@ -287,11 +287,3 @@ vector<SocketToDriver*> TexiCenter::getMySocketToDriverList() {
 void TexiCenter::setMySocketToDriverList(SocketToDriver* socketToDriver) {
     mySocketToDriverList.push_back(socketToDriver);
 }
-/*
-Driver* TexiCenter:: getmyDriverAccordingSocketNum(int descriptorClient){
-    for (int i = 0; i< mySocketToDriverList.size(); i++){
-        if (mySocketToDriverList[i].getMySocket() == descriptorClient){
-            return mySocketToDriverList[i].getMyDriver();
-        }
-    }
-}*/

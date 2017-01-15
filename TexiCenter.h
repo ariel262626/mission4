@@ -21,6 +21,7 @@ using namespace std;
  * in this class we have the all data we insert as input. we hold the all listd of
  * the objects and use them
  */
+class SocketToDriver;
 class TexiCenter {
 private:
     vector<Driver *> myDriversList;
@@ -37,7 +38,6 @@ public:
     // constructors
     TexiCenter(vector<Driver *> driversList, vector<Passenger *> passengresList,
                vector<CabBase *> standartCabList, vector<Trip*> tripList, Matrix2d* map, Bfs bfs, Socket* tcp);
-
     TexiCenter();
     ~TexiCenter();
 

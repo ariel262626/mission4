@@ -29,6 +29,13 @@ public:
 
     static void moveClient(SocketToDriver* socketToDriver);
 
+    static SocketToDriver* findCurrectDriverToTrip(TexiCenter* texiCenter, Trip* trip);
+
+    static vector<Driver*> getAllDriversAtThisPoint(vector<Driver*> myDriversList,Point startPiontOfTrip);
+
+    static SocketToDriver* findSocketToDriver(Driver* driver, TexiCenter* texiCenter);
+
+
     };
 
 

@@ -10,7 +10,7 @@ SocketToDriver:: SocketToDriver (int descriptorClient, Driver* driver, TexiCente
     myTexiCenter = texiCenter;
 }
 
-int SocketToDriver::getMySocket() {
+int SocketToDriver::getMyDescriptor() {
     return myDescriptorClient;
 }
 
@@ -29,8 +29,3 @@ void SocketToDriver::setMyDriver(Driver* driver) {
 TexiCenter* SocketToDriver::getMyTexiCenter() {
     return myTexiCenter;
 }
-
-void SocketToDriver::setMyTexiCenter(TexiCenter* texiCenter) {
-    myTexiCenter = texiCenter;
-}
-

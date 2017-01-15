@@ -25,7 +25,8 @@ using namespace std;
  * @param bufflen: lenth of the buffer
  * @return the string buffer
  */
-string bufferToString(char* buffer, int bufflen)
+
+string bufferrToString(char* buffer, int bufflen)
 {
     std::string ret(buffer, bufflen);
     return ret;
@@ -36,7 +37,7 @@ int main(int argc, char *argv[]) {
     Socket* tcp = new Tcp(0, stoi(argv[2]));
     //bind the server if fail do fail argv[1] = ip
     tcp->setIp(argv[1]);
-    int t = tcp->initialize(0);
+    int socketServer = tcp->initialize();
     //for serialization create buffer
     char buffer[1024];
 
@@ -60,13 +61,13 @@ int main(int argc, char *argv[]) {
     /*server wait to get this data (we need to send here driver) than the server give  the driver the rifght
      * texi and returns this texi*/
     //send the driver to server
-    tcp->sendData(serial_str);
+    tcp->sendData(serial_str, socketServer);
 
     //here the client get the texi fron the server
-    tcp->reciveData(buffer, sizeof(buffer));
+    tcp->reciveData(buffer, sizeof(buffer), socketServer);
 
     //for de-serializa we need put buffer to string
-    string bufferRecivedTexi = bufferToString(buffer, sizeof(buffer));
+    string bufferRecivedTexi = bufferrToString(buffer, sizeof(buffer));
     //make instance of cab
     CabBase* cabBase;
     //de serialize
@@ -79,9 +80,9 @@ int main(int argc, char *argv[]) {
 //get trip end the trip and wait for the next trip if there is one
 while(true) {
     //client get the trip from the server
-    tcp->reciveData(buffer, sizeof(buffer));
+    tcp->reciveData(buffer, sizeof(buffer), socketServer);
     //for de-serializa we need put buffer to string
-    string bufferRecivedTrip = bufferToString(buffer, sizeof(buffer));
+    string bufferRecivedTrip = bufferrToString(buffer, sizeof(buffer));
 
     //make instance of cab
     Trip *trip;
@@ -108,9 +109,9 @@ while(true) {
 //move one step and wait for the next move one step until you end the trip
 while(true) {
     //here the client get the 'go' word from the server and move one step
-    tcp->reciveData(buffer, sizeof(buffer));
+    tcp->reciveData(buffer, sizeof(buffer), socketServer);
     //for de-serializa we need put buffer to string
-    string bufferRecivedAdvance = bufferToString(buffer, sizeof(buffer));
+    string bufferRecivedAdvance = bufferrToString(buffer, sizeof(buffer));
     //make instance of cab
     Point newLocation;
     //de serialize

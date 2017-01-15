@@ -17,7 +17,6 @@ Trip::Trip(int rideId, int xStart, int yStart, int xEnd, int yEnd, int passenger
     myPassengerNumber = passengerNumber;
     myTariff = tarrif;
     myTime = time;
-    myPath = NULL;
 }
 
 Trip::Trip() { }
