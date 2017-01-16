@@ -9,6 +9,7 @@
 #include "Socket.h"
 #include "TexiCenter.h"
 #include "ClockTime.h"
+#include "TripMap.h"
 
 class GameFlow {
 
@@ -88,7 +89,9 @@ public:
     CabBase* getMyCabBase();
 
     void printCurrentLocation();
-};
+
+    static void* path(void* tripMap);
+    };
 
 
 #endif //MISSION2_GAMEFLOW_H

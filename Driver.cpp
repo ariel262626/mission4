@@ -4,8 +4,7 @@
 
 #include "Driver.h"
 
-Driver::Driver(int id, int age, char martialStatus, int experience, int vechileId, CabBase* taxiStandart,
-                Trip trip) {
+Driver::Driver(int id, int age, char martialStatus, int experience, int vechileId, CabBase* taxiStandart) {
     myId = id;
     myAge = age;
     myMartialStatus = martialStatus;
@@ -14,7 +13,7 @@ Driver::Driver(int id, int age, char martialStatus, int experience, int vechileI
     mySatisfication = 0;
     myTaxiStandart = taxiStandart;
     myLocation  = Point (0,0);
-    myTrip = trip;
+    myTrip = NULL;
     countTrip=0;
 }
 Driver::Driver() {}
@@ -36,7 +35,7 @@ void Driver::setStatisfication(int rate) {
     mySatisfication = rate;
 }
 
-void Driver::setTrip(Trip trip) {
+void Driver::setTrip(Trip* trip) {
     myTrip = trip;
 }
 
@@ -45,7 +44,7 @@ int Driver::getId() {
 }
 
 void Driver::moveStep(vector<Node> path, int currentTime) {
-    if (currentTime < myTrip.getTime()){
+    if (currentTime < myTrip->getTime()){
         return;
     }
     //we get the index of out current point in the path of our trip
@@ -89,7 +88,7 @@ int Driver::getMyCabId() {
 }
 
 Trip* Driver::getMyTrip() {
-    return &myTrip;
+    return myTrip;
 }
 
 void Driver:: setCab(CabBase* newCab) {

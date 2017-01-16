@@ -46,6 +46,7 @@ vector<Node> Trip::getPathOfTripClone(Matrix2d map) {
     for (int i = 0; i < listOfNodeInTrip.size(); ++i) {
         listOfNodeInTripclone.push_back(*listOfNodeInTrip.at(i));
     }
+    myPath = listOfNodeInTrip;
     return listOfNodeInTripclone;
 }
 

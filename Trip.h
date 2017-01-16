@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <boost/serialization/access.hpp>
+#include <boost/serialization/vector.hpp>
 #include "Point.h"
 #include "Node.h"
 #include "Matrix2d.h"
@@ -30,6 +31,7 @@ class Trip {
         ar & myPassengerNumber;
         ar & myTariff;
         ar & myTime;
+        ar & myPath;
     }
 private:
     int myRideId;

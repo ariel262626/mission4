@@ -44,9 +44,7 @@ Driver* PharserInfo:: createDriver (){
 
     // create new driver and return it to the main
     CabBase cab = CabBase();
-    Trip trip = Trip();
-    Driver *driver = new Driver(driverId, driverAge, driverStatus, driverExperience, driverVehicleId, &cab,
-                                trip);
+    Driver *driver = new Driver(driverId, driverAge, driverStatus, driverExperience, driverVehicleId, &cab);
     return driver;
 }
 
@@ -76,7 +74,7 @@ CabBase* PharserInfo:: createVehicle (){
     char color = getOneElementchar();
 
     //create new cab
-    CabBase *vehicle = new CabBase(vehicleId, cabType, manufacturer, color, NULL, NULL);
+    CabBase *vehicle = new CabBase(vehicleId, cabType, manufacturer, color,/* NULL,*/ NULL);
     return vehicle;
 }
 

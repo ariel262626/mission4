@@ -1,7 +1,7 @@
 //
 // Created by dvir on 12/10/16.
 //
-
+#include <boost/serialization/vector.hpp>
 #include "Udp.h"
 #include "Driver.h"
 #include "PharserInfo.h"
@@ -104,7 +104,7 @@ while(true) {
     }
     // update the trip to driver for each time we get new trip (we get the new trip
     // only in case the driver finish the last trip)
-    driver->setTrip(*trip);
+    driver->setTrip(trip);
 
 //move one step and wait for the next move one step until you end the trip
 while(true) {

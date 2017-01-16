@@ -111,32 +111,32 @@ void TexiCenter::startDriving() {
  * @param passenger
  * @return the close driver
  */
-Driver TexiCenter::findDriver(Passenger passenger) {
-    //save the closest driver to the passenger
-    Driver closestDriver;
-    //initialize (max 10X10)
-    long minDistance = 100;
-    vector<Node*> listOfNodeInTrip;
-    //check all the drivers
-    for(int i = 0; i < myDriversList.size(); i++) {
-        //get the driver location
-        Node driverLocation =  Node(myDriversList[i]->getLocation(), false);
-        //get the passenger location
-        Node passengerLocation = Node(passenger.getStartPoint(), true);
-        Matrix2d* mapCopy = myMap;
-        myBfs = Bfs(driverLocation, passengerLocation, 2, mapCopy);
-        //for each driver we need to calculate his path
-        listOfNodeInTrip = myBfs.runBfs(&driverLocation, &passengerLocation);
-        //check whos path is the shortest
-        if(minDistance > listOfNodeInTrip.size())
-        minDistance = listOfNodeInTrip.size();
-        //update closest driver
-        closestDriver = *(myDriversList[i]);
-        //because he is the closest set him this trip
-        closestDriver.setTrip(*myTripList.at(i));
-    }
-    return closestDriver;
-}
+//Driver TexiCenter::findDriver(Passenger passenger) {
+//    //save the closest driver to the passenger
+//    Driver closestDriver;
+//    //initialize (max 10X10)
+//    long minDistance = 100;
+//    vector<Node*> listOfNodeInTrip;
+//    //check all the drivers
+//    for(int i = 0; i < myDriversList.size(); i++) {
+//        //get the driver location
+//        Node driverLocation =  Node(myDriversList[i]->getLocation(), false);
+//        //get the passenger location
+//        Node passengerLocation = Node(passenger.getStartPoint(), true);
+//        Matrix2d* mapCopy = myMap;
+//        myBfs = Bfs(driverLocation, passengerLocation, 2, mapCopy);
+//        //for each driver we need to calculate his path
+//        listOfNodeInTrip = myBfs.runBfs(&driverLocation, &passengerLocation);
+//        //check whos path is the shortest
+//        if(minDistance > listOfNodeInTrip.size())
+//        minDistance = listOfNodeInTrip.size();
+//        //update closest driver
+//        closestDriver = *(myDriversList[i]);
+//        //because he is the closest set him this trip
+//        closestDriver.setTrip(myTripList.at(i));
+//    }
+//    return closestDriver;
+//}
 /**
  * here we get id drier and find the right driver in the vector
  * @param idDriverToFind: get index id driver
@@ -278,6 +278,10 @@ ClockTime TexiCenter::getMyClockTime() {
 
 Socket* TexiCenter::getMyTcp() {
     return myTcp;
+}
+
+void TexiCenter::setMyTcp(Socket* tcp) {
+    myTcp = tcp;
 }
 
 vector<SocketToDriver*> TexiCenter::getMySocketToDriverList() {

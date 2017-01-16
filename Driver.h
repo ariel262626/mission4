@@ -3,6 +3,7 @@
 //
 #include <iostream>
 #include <boost/serialization/access.hpp>
+#include <boost/serialization/vector.hpp>
 #include "StandartCab.h"
 #include "Trip.h"
 
@@ -36,12 +37,12 @@ private:
     int mySatisfication;
     CabBase* myTaxiStandart;
     Point myLocation;
-    Trip myTrip;
+    Trip* myTrip;
     int countTrip;
 public:
     //constructor
     Driver(int id, int age, char mariralStatus, int experience, int vechileId,
-           CabBase* taxiStandart, Trip trip);
+           CabBase* taxiStandart);
      Driver();
     //distructor
     ~Driver(){
@@ -83,7 +84,7 @@ public:
      * set the trip to driver
      * @param trip
      */
-    void setTrip(Trip trip);
+    void setTrip(Trip* trip);
     /**
      * the id of the driver
      * @return id of the driver

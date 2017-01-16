@@ -29,74 +29,77 @@ GameFlow::GameFlow() {}
 
  void GameFlow:: run() {
 
-    // here we will put the all information
-    extern int choose;
-    //int countDriver = 0;
-    //int countCabs = 0;
-    string stringGrid, stringObst;
-    vector<Point> listObstacle;
-    Driver *driver;
-     ConnectionClients connectionClients = ConnectionClients ();
-     vector<SocketToDriver*> listSocketToDriver;
-    //find high and width -> use in class of pharser for translate the data
-    getline(cin, stringGrid);
-    PharserInfo pharseGrid = PharserInfo(stringGrid);
-    //create map
-    Matrix2d *newMap = pharseGrid.createGrid();
-    // insert obstacle points
-    cin >> stringObst;
-    // insert obstacles,if the number is big from zero, the function request from the user
-    // to insert the obstacle points.
-    PharserInfo pharseObstacles = PharserInfo(stringObst);
-    listObstacle = pharseObstacles.obstaclePoints();
-    // insert the list of obstacles to the map (grid)
-    newMap->setobstaclePoint(listObstacle);
-    // insert the map to taxi center, because the taxi center is in charge of all the programm actualy
-    texiCenter->setMap(newMap);
-    // request from the user mission to enter. we will expect all the time to another mission,
-    // therefor we return on it until the user enter 7 (end of mission).
-    while (true) {
-        // choose mission to perform
-        cin >> choose;
-        switch (choose) {
-            case 1: {
-                listSocketToDriver = getDriversFromClients();
-                for(int i = 0; i < texiCenter->getMyCabBaseList().size(); i++) {
-                    driver = texiCenter->getDriverInIndex(i);
-                    texiCenter->setCabToDriver(driver);
-                    CabBase *cabBase = driver->getCab();
-                    sendCab(cabBase, listSocketToDriver[i]->getMyDescriptor());
-                }
-                break;
-            }
-            case 2: {
-                getNewRide();
-                break;
-            }
-            case 3: {
-                getNewCab();
-                //setMyCabBase();
-                //count how much cabs we have
-                //countCabs++;
-                break;
-            }
-            case 4: {
-                printCurrentLocation();
-                break;
-            }
-            case 7: {
-                // the allocate memory which placed in taxi center will be deleted when the program finish.
-                // now, call function that send special trip to shut down the program
-                tripToCloseClient();
-                delete myTcp;
-                return;
-            }
-            case 9: {
-
-            }
-        }
-    }
-}
+     // here we will put the all information
+     extern int choose;
+     extern ClockTime clockTime;
+     //int countDriver = 0;
+     //int countCabs = 0;
+     texiCenter->setMyTcp(myTcp);
+     string stringGrid, stringObst;
+     vector<Point> listObstacle;
+     Driver *driver;
+     ConnectionClients connectionClients = ConnectionClients();
+     vector<SocketToDriver *> listSocketToDriver;
+     //find high and width -> use in class of pharser for translate the data
+     getline(cin, stringGrid);
+     PharserInfo pharseGrid = PharserInfo(stringGrid);
+     //create map
+     Matrix2d *newMap = pharseGrid.createGrid();
+     // insert obstacle points
+     cin >> stringObst;
+     // insert obstacles,if the number is big from zero, the function request from the user
+     // to insert the obstacle points.
+     PharserInfo pharseObstacles = PharserInfo(stringObst);
+     listObstacle = pharseObstacles.obstaclePoints();
+     // insert the list of obstacles to the map (grid)
+     newMap->setobstaclePoint(listObstacle);
+     // insert the map to taxi center, because the taxi center is in charge of all the programm actualy
+     texiCenter->setMap(newMap);
+     // request from the user mission to enter. we will expect all the time to another mission,
+     // therefor we return on it until the user enter 7 (end of mission).
+     while (true) {
+         // choose mission to perform
+         cin >> choose;
+         switch (choose) {
+             case 1: {
+                 listSocketToDriver = getDriversFromClients();
+                 for (int i = 0; i < texiCenter->getMyCabBaseList().size(); i++) {
+                     driver = texiCenter->getDriverInIndex(i);
+                     texiCenter->setCabToDriver(driver);
+                     CabBase *cabBase = driver->getCab();
+                     sendCab(cabBase, listSocketToDriver[i]->getMyDescriptor());
+                 }
+                 break;
+             }
+             case 2: {
+                 getNewRide();
+                 break;
+             }
+             case 3: {
+                 getNewCab();
+                 //setMyCabBase();
+                 //count how much cabs we have
+                 //countCabs++;
+                 break;
+             }
+             case 4: {
+                 printCurrentLocation();
+                 break;
+             }
+             case 7: {
+                 // the allocate memory which placed in taxi center will be deleted when the program finish.
+                 // now, call function that send special trip to shut down the program
+                 tripToCloseClient();
+                 delete myTcp;
+                 return;
+             }
+             case 9: {
+                 // update the clock
+                 clockTime.setTime();
+             }
+         }
+     }
+ }
 
 /**
 * this function convert char* to string for the serialize
@@ -122,11 +125,6 @@ Trip* GameFlow::getCurrentTrip() {
 void GameFlow::setMyDriver() {
     myDriver = texiCenter->getDriverInIndex(0);
 }
-
-//neddddddddd ????????????????????????????????????????????????????????????????????????????????
-/*void GameFlow::setMyCabBase()  {
-    myCabBase = texiCenter.getCabInIndex(0);
-}*/
 
 Driver* GameFlow::getMyDriver() {
     return texiCenter->getDriverInIndex(0);
@@ -161,18 +159,26 @@ void GameFlow::getNewCab() {
 }
 
 void GameFlow::getNewRide() {
+    pthread_t treadsOfTrips;
     // get new ride from the user
     string insertRide;
     cin >> insertRide;
     // use in the pharser class to handle the data
     PharserInfo pharser = PharserInfo(insertRide);
     Trip* trip = pharser.createNewRide();
+    //pthread_create(treadsOfTrips, NULL, Trip:: getPathOfTripClone, socketToDriver);
     // add trip to taxi center - we need to sort the trip list according the time
+    TripMap* tripMap = new TripMap(trip, texiCenter->getMap());
+    pthread_create(&treadsOfTrips, NULL, GameFlow::path, tripMap);
     texiCenter->addTripToTripLIst(trip);
 }
 
-vector <SocketToDriver*> GameFlow::getDriversFromClients() {
+void* GameFlow::path(void* tripMap) {
+    TripMap* tripMap1 = (TripMap*)tripMap;
+    tripMap1->getTrip()->getPathOfTripClone(*tripMap1->getMap());
+}
 
+vector <SocketToDriver*> GameFlow::getDriversFromClients() {
     Driver *driver;
     char buffer[1024];
     int numberOfDrivers;
@@ -184,7 +190,7 @@ vector <SocketToDriver*> GameFlow::getDriversFromClients() {
     for (int i = 0; i < numberOfDrivers; i++) {
         int socketDescriptorClient = myTcp->accpetFromClient();
         //here we get the driver from clientDriver
-        myTcp->reciveData(buffer, sizeof(buffer), socketDescriptor);
+        myTcp->reciveData(buffer, sizeof(buffer), socketDescriptorClient);
         //for de-serializa we need put buffer to string
         string bufferRecivedDr = bufferToString(buffer, sizeof(buffer));
         //de serialize
@@ -200,12 +206,11 @@ vector <SocketToDriver*> GameFlow::getDriversFromClients() {
         texiCenter->setMySocketToDriverList(socketToDriver);
 
         // here we open new tread for each driver (client)
-
         pthread_create(&treadsOfDrivers[i], NULL, ConnectionClients:: runClients, socketToDriver);
 
     }
     //set my driver to the driver we got
-    setMyDriver();
+    //setMyDriver();
     return texiCenter->getMySocketToDriverList();
 }
 
@@ -222,6 +227,7 @@ void GameFlow::sendCab(CabBase* cabBase, int socketDescriptor) {
     myTcp->sendData(serial_str, socketDescriptor);
 }
 
+//case 4
 void GameFlow::printCurrentLocation() {
     //insert id of driver
     int DriverId;

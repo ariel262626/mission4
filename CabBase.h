@@ -24,7 +24,7 @@ class CabBase {
         ar & myManaufactur;
         ar & myColor;
         ar & myTariff;
-        ar & myMap;
+       // ar & myMap;
         ar & myPassenger;
         ar & myKilometers;
     }
@@ -34,12 +34,12 @@ protected:
     char myManaufactur;
     char myColor;
     double myTariff;
-    Grid* myMap;
+   // Grid* myMap;
     Passenger* myPassenger;
     int myKilometers;
 public:
     //constructor
-    CabBase(int id, int type, char manaufactur, char color, Grid* map,
+    CabBase(int id, int type, char manaufactur, char color/*, Grid* map*/,
             Passenger* passenger);
      CabBase();
 
@@ -86,13 +86,13 @@ public:
      * get the map(ways-gps) of the cab
      * @return Grid*
      */
-    Grid* getMap();
+   // Grid* getMap();
 
     /**
      * set mqp
      * @param map m
      */
-    void setMap(Matrix2d* map);
+   // void setMap(Matrix2d* map);
 
     };
 

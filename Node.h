@@ -11,6 +11,16 @@
  * and boolean falg.
  */
 class Node {
+
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned int version)
+    {
+        ar & currentPoint;
+        ar & myFather;
+        ar & flag;
+        ar & isObstacle;
+    }
 private:
     Point currentPoint;
     // we need to know about every point who is call her, in order to we could

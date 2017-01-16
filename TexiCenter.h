@@ -180,6 +180,8 @@ public:
 
     Socket* getMyTcp();
 
+    void setMyTcp(Socket* tcp);
+
     void setMySocketToDriverList(SocketToDriver* socketToDriver);
 
     vector<SocketToDriver*> getMySocketToDriverList();

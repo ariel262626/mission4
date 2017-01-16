@@ -10,7 +10,7 @@ set(SOURCE_FILES  Matrix2d.cpp
         TexiCenter.cpp TexiCenter.h
         GameFlow.cpp GameFlow.h
         CabBase.h CabBase.cpp PharserInfo.cpp PharserInfo.h Tcp.cpp Tcp.h ClockTime.cpp ClockTime.h
-        Socket.cpp Socket.h SocketToDriver.cpp SocketToDriver.h ConnectionClients.cpp ConnectionClients.h)
+        Socket.cpp Socket.h SocketToDriver.cpp SocketToDriver.h ConnectionClients.cpp ConnectionClients.h TripMap.cpp TripMap.h)
 
 set(BOOST_ROOT CACHE PATH "/usr/include/boost/")
 find_package(Boost 1.58.0 COMPONENTS serialization system)
