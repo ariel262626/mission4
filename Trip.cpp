@@ -31,7 +31,7 @@ vector<Node*> Trip::getPathOfTrip(Matrix2d map) {
         //we get all the points of the trip. run the bfs for that
         listOfNodeInTrip = bfs.runBfs(&startNode, &endNode);
         //we get the path to member
-        myPath.swap(listOfNodeInTrip);
+        //myPath.swap(*listOfNodeInTrip);
         return listOfNodeInTrip;
 }
 
@@ -46,7 +46,7 @@ vector<Node> Trip::getPathOfTripClone(Matrix2d map) {
     for (int i = 0; i < listOfNodeInTrip.size(); ++i) {
         listOfNodeInTripclone.push_back(*listOfNodeInTrip.at(i));
     }
-    myPath = listOfNodeInTrip;
+    myPath = listOfNodeInTripclone;
     return listOfNodeInTripclone;
 }
 

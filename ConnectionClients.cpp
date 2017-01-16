@@ -104,7 +104,7 @@ void ConnectionClients::stepClients(SocketToDriver* socketToDriver) {
 bool ConnectionClients::tripListNotEmpty(SocketToDriver* socketToDriver) {
     if(socketToDriver->getMyTexiCenter()->getMyTripList().empty()) {
         // update the clock
-        socketToDriver->getMyTexiCenter()->getMyClockTime().setTime();
+       // socketToDriver->getMyTexiCenter()->getMyClockTime().setTime();
         return false;
     }
     return true;

@@ -12,7 +12,7 @@ CabBase::CabBase(int id, int type, char manaufactur, char color/*, Grid* map*/, 
     myManaufactur = manaufactur;
     myColor = color;
     myTariff = 0;
-   // myMap = map;
+    //myMap = map;
     myPassenger = passenger;
 }
 

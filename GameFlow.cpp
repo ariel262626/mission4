@@ -159,17 +159,16 @@ void GameFlow::getNewCab() {
 }
 
 void GameFlow::getNewRide() {
-    pthread_t treadsOfTrips;
+    pthread_t treadOfTrip;
     // get new ride from the user
     string insertRide;
     cin >> insertRide;
     // use in the pharser class to handle the data
     PharserInfo pharser = PharserInfo(insertRide);
     Trip* trip = pharser.createNewRide();
-    //pthread_create(treadsOfTrips, NULL, Trip:: getPathOfTripClone, socketToDriver);
     // add trip to taxi center - we need to sort the trip list according the time
     TripMap* tripMap = new TripMap(trip, texiCenter->getMap());
-    pthread_create(&treadsOfTrips, NULL, GameFlow::path, tripMap);
+    pthread_create(&treadOfTrip, NULL, GameFlow::path, tripMap);
     texiCenter->addTripToTripLIst(trip);
 }
 

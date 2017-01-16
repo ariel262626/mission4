@@ -92,7 +92,7 @@ public:
      * set mqp
      * @param map m
      */
-   // void setMap(Matrix2d* map);
+    void setMap(Matrix2d* map);
 
     };
 

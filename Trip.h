@@ -43,7 +43,7 @@ private:
     int myPassengerNumber;
     double myTariff;
     int myTime;
-    vector<Node*> myPath;
+    vector<Node> myPath;
 
 public:
     //constructors
