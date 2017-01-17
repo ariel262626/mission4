@@ -228,6 +228,15 @@ CabBase* TexiCenter::getCabInIndex(int i) {
 Trip* TexiCenter::getTripInIndex(int i) {
     return myTripList.at(i);
 }
+//get the next trip that not taken yet
+Trip* TexiCenter::getFreeTrip() {
+    for (int i = 0; i < getMyTripList().size(); i++){
+        if(!getMyTripList().at(i)->getIsTaken()) {
+            getMyTripList()[i]->setIsTaken();
+            return getMyTripList()[i];
+        }
+    }
+}
 
 CabBase* TexiCenter::getCabWithId(int id) {
     CabBase* cabBase;
@@ -249,8 +258,21 @@ Driver* TexiCenter::getDriverWithId(int id) {
     return driver;
 }
 
-void TexiCenter::eraseTripInIndex() {
-    myTripList.erase(myTripList.begin());
+void TexiCenter::eraseTripWithId(int rideId) {
+    for(int i = 0; i < myTripList.size(); i++) {
+        if(rideId == myTripList.at(i)->getRideId()) {
+            int index = getTripWithId(rideId);
+            myTripList.erase(myTripList.begin() + index);
+        }
+    }
+}
+
+int TexiCenter::getTripWithId(int id) {
+    for(int i = 0; i < myTripList.size(); i++) {
+        if(myTripList.at(i)->getRideId() == id) {
+            return i;
+        }
+    }
 }
 
 vector<Driver*> TexiCenter:: getMyDriverList (){

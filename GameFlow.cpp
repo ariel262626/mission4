@@ -7,6 +7,7 @@
 #include "PharserInfo.h"
 #include "Tcp.h"
 #include "ConnectionClients.h"
+#include "BooleanToDescriptor.h"
 #include <fstream>
 #include <sstream>
 #include <boost/archive/text_oarchive.hpp>
@@ -19,7 +20,7 @@
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 #include <vector>
-
+extern pthread_t treadOfTrip;
 GameFlow:: GameFlow (Socket* tcp){
     myTcp = tcp;
     texiCenter = new TexiCenter();
@@ -32,6 +33,7 @@ GameFlow::GameFlow() {}
      // here we will put the all information
      extern int choose;
      extern ClockTime clockTime;
+     extern vector <BooleanToDescriptor> myBoolList;
      //int countDriver = 0;
      //int countCabs = 0;
      texiCenter->setMyTcp(myTcp);
@@ -60,6 +62,11 @@ GameFlow::GameFlow() {}
      while (true) {
          // choose mission to perform
          cin >> choose;
+         if (!myBoolList.empty()) {
+             for (int i = 0; i < texiCenter->getMyDriverList().size(); i++) {
+                 myBoolList[i].setIsMovedToFalse();
+             }
+         }
          switch (choose) {
              case 1: {
                  listSocketToDriver = getDriversFromClients();
@@ -68,6 +75,8 @@ GameFlow::GameFlow() {}
                      texiCenter->setCabToDriver(driver);
                      CabBase *cabBase = driver->getCab();
                      sendCab(cabBase, listSocketToDriver[i]->getMyDescriptor());
+                     BooleanToDescriptor booleanToDescriptor = BooleanToDescriptor(listSocketToDriver[i]->getMyDescriptor());
+                     myBoolList.push_back(booleanToDescriptor);
                  }
                  break;
              }
@@ -159,7 +168,7 @@ void GameFlow::getNewCab() {
 }
 
 void GameFlow::getNewRide() {
-    pthread_t treadOfTrip;
+
     // get new ride from the user
     string insertRide;
     cin >> insertRide;
@@ -168,8 +177,8 @@ void GameFlow::getNewRide() {
     Trip* trip = pharser.createNewRide();
     // add trip to taxi center - we need to sort the trip list according the time
     TripMap* tripMap = new TripMap(trip, texiCenter->getMap());
-    pthread_create(&treadOfTrip, NULL, GameFlow::path, tripMap);
     texiCenter->addTripToTripLIst(trip);
+    pthread_create(&treadOfTrip, NULL, GameFlow::path, tripMap);
 }
 
 void* GameFlow::path(void* tripMap) {

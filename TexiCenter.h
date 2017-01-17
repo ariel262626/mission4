@@ -149,7 +149,7 @@ public:
     * erase trip in index
     * @param i - index
     */
-    void eraseTripInIndex();
+    void eraseTripWithId(int rideID);
 
     /**
     * get my list of drivers
@@ -178,15 +178,41 @@ public:
      */
     void setCabToDriver(Driver* driver);
 
+    /**
+     * get my tcp
+     * @param socket
+     */
     Socket* getMyTcp();
 
+    /**
+     * set my tcp
+     * @param tcp
+     */
     void setMyTcp(Socket* tcp);
 
+    /**
+     * set the object of socketToDriver to the list
+     * @param the object
+     */
     void setMySocketToDriverList(SocketToDriver* socketToDriver);
 
+    /**
+     * get the list
+     */
     vector<SocketToDriver*> getMySocketToDriverList();
 
    // Driver* getmyDriverAccordingSocketNum(int descriptorClient);
+
+    /**
+     * get the free trip that his not taken yet
+     */
+    Trip* getFreeTrip();
+
+    /**
+     * get the trip according id
+     * @param the id
+     */
+    int getTripWithId(int id);
     };
 
 #endif //MISSION2_TEXICENTER_H

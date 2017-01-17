@@ -138,6 +138,14 @@
 			<Option target="Client"/>
 			<Option target="Server"/>
 		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/BooleanToDescriptor.cpp">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/BooleanToDescriptor.h">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/CabBase.cpp">
 			<Option target="Client"/>
 			<Option target="Server"/>
@@ -154,6 +162,14 @@
 			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/ClockTime.h">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/ConnectionClients.cpp">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/ConnectionClients.h">
 			<Option target="Client"/>
 			<Option target="Server"/>
 		</Unit>
@@ -178,14 +194,6 @@
 			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/Grid.h">
-			<Option target="Client"/>
-			<Option target="Server"/>
-		</Unit>
-		<Unit filename="/home/ariel/ClionProjects/mission4/InfoTaxi.cpp">
-			<Option target="Client"/>
-			<Option target="Server"/>
-		</Unit>
-		<Unit filename="/home/ariel/ClionProjects/mission4/InfoTaxi.h">
 			<Option target="Client"/>
 			<Option target="Server"/>
 		</Unit>
@@ -240,9 +248,6 @@
 		<Unit filename="/home/ariel/ClionProjects/mission4/Server.cpp">
 			<Option target="Server"/>
 		</Unit>
-		<Unit filename="/home/ariel/ClionProjects/mission4/Server.h">
-			<Option target="Server"/>
-		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/Socket.cpp">
 			<Option target="Client"/>
 			<Option target="Server"/>
@@ -251,11 +256,27 @@
 			<Option target="Client"/>
 			<Option target="Server"/>
 		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/SocketToDriver.cpp">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/SocketToDriver.h">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/StandartCab.cpp">
 			<Option target="Client"/>
 			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/StandartCab.h">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/Tcp.cpp">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/Tcp.h">
 			<Option target="Client"/>
 			<Option target="Server"/>
 		</Unit>
@@ -275,11 +296,11 @@
 			<Option target="Client"/>
 			<Option target="Server"/>
 		</Unit>
-		<Unit filename="/home/ariel/ClionProjects/mission4/Udp.cpp">
+		<Unit filename="/home/ariel/ClionProjects/mission4/TripMap.cpp">
 			<Option target="Client"/>
 			<Option target="Server"/>
 		</Unit>
-		<Unit filename="/home/ariel/ClionProjects/mission4/Udp.h">
+		<Unit filename="/home/ariel/ClionProjects/mission4/TripMap.h">
 			<Option target="Client"/>
 			<Option target="Server"/>
 		</Unit>

@@ -166,6 +166,36 @@ Bfs.cpp.s:
 	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/Bfs.cpp.s
 .PHONY : Bfs.cpp.s
 
+BooleanToDescriptor.o: BooleanToDescriptor.cpp.o
+
+.PHONY : BooleanToDescriptor.o
+
+# target to build an object file
+BooleanToDescriptor.cpp.o:
+	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/BooleanToDescriptor.cpp.o
+	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/BooleanToDescriptor.cpp.o
+.PHONY : BooleanToDescriptor.cpp.o
+
+BooleanToDescriptor.i: BooleanToDescriptor.cpp.i
+
+.PHONY : BooleanToDescriptor.i
+
+# target to preprocess a source file
+BooleanToDescriptor.cpp.i:
+	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/BooleanToDescriptor.cpp.i
+	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/BooleanToDescriptor.cpp.i
+.PHONY : BooleanToDescriptor.cpp.i
+
+BooleanToDescriptor.s: BooleanToDescriptor.cpp.s
+
+.PHONY : BooleanToDescriptor.s
+
+# target to generate assembly for a file
+BooleanToDescriptor.cpp.s:
+	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/BooleanToDescriptor.cpp.s
+	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/BooleanToDescriptor.cpp.s
+.PHONY : BooleanToDescriptor.cpp.s
+
 CabBase.o: CabBase.cpp.o
 
 .PHONY : CabBase.o
@@ -252,6 +282,36 @@ ClockTime.cpp.s:
 	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/ClockTime.cpp.s
 	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/ClockTime.cpp.s
 .PHONY : ClockTime.cpp.s
+
+ConnectionClients.o: ConnectionClients.cpp.o
+
+.PHONY : ConnectionClients.o
+
+# target to build an object file
+ConnectionClients.cpp.o:
+	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/ConnectionClients.cpp.o
+	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/ConnectionClients.cpp.o
+.PHONY : ConnectionClients.cpp.o
+
+ConnectionClients.i: ConnectionClients.cpp.i
+
+.PHONY : ConnectionClients.i
+
+# target to preprocess a source file
+ConnectionClients.cpp.i:
+	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/ConnectionClients.cpp.i
+	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/ConnectionClients.cpp.i
+.PHONY : ConnectionClients.cpp.i
+
+ConnectionClients.s: ConnectionClients.cpp.s
+
+.PHONY : ConnectionClients.s
+
+# target to generate assembly for a file
+ConnectionClients.cpp.s:
+	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/ConnectionClients.cpp.s
+	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/ConnectionClients.cpp.s
+.PHONY : ConnectionClients.cpp.s
 
 Driver.o: Driver.cpp.o
 
@@ -342,36 +402,6 @@ Grid.cpp.s:
 	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/Grid.cpp.s
 	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/Grid.cpp.s
 .PHONY : Grid.cpp.s
-
-InfoTaxi.o: InfoTaxi.cpp.o
-
-.PHONY : InfoTaxi.o
-
-# target to build an object file
-InfoTaxi.cpp.o:
-	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/InfoTaxi.cpp.o
-	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/InfoTaxi.cpp.o
-.PHONY : InfoTaxi.cpp.o
-
-InfoTaxi.i: InfoTaxi.cpp.i
-
-.PHONY : InfoTaxi.i
-
-# target to preprocess a source file
-InfoTaxi.cpp.i:
-	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/InfoTaxi.cpp.i
-	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/InfoTaxi.cpp.i
-.PHONY : InfoTaxi.cpp.i
-
-InfoTaxi.s: InfoTaxi.cpp.s
-
-.PHONY : InfoTaxi.s
-
-# target to generate assembly for a file
-InfoTaxi.cpp.s:
-	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/InfoTaxi.cpp.s
-	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/InfoTaxi.cpp.s
-.PHONY : InfoTaxi.cpp.s
 
 LuxuryCab.o: LuxuryCab.cpp.o
 
@@ -610,6 +640,36 @@ Socket.cpp.s:
 	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/Socket.cpp.s
 .PHONY : Socket.cpp.s
 
+SocketToDriver.o: SocketToDriver.cpp.o
+
+.PHONY : SocketToDriver.o
+
+# target to build an object file
+SocketToDriver.cpp.o:
+	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/SocketToDriver.cpp.o
+	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/SocketToDriver.cpp.o
+.PHONY : SocketToDriver.cpp.o
+
+SocketToDriver.i: SocketToDriver.cpp.i
+
+.PHONY : SocketToDriver.i
+
+# target to preprocess a source file
+SocketToDriver.cpp.i:
+	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/SocketToDriver.cpp.i
+	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/SocketToDriver.cpp.i
+.PHONY : SocketToDriver.cpp.i
+
+SocketToDriver.s: SocketToDriver.cpp.s
+
+.PHONY : SocketToDriver.s
+
+# target to generate assembly for a file
+SocketToDriver.cpp.s:
+	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/SocketToDriver.cpp.s
+	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/SocketToDriver.cpp.s
+.PHONY : SocketToDriver.cpp.s
+
 StandartCab.o: StandartCab.cpp.o
 
 .PHONY : StandartCab.o
@@ -639,6 +699,36 @@ StandartCab.cpp.s:
 	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/StandartCab.cpp.s
 	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/StandartCab.cpp.s
 .PHONY : StandartCab.cpp.s
+
+Tcp.o: Tcp.cpp.o
+
+.PHONY : Tcp.o
+
+# target to build an object file
+Tcp.cpp.o:
+	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/Tcp.cpp.o
+	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/Tcp.cpp.o
+.PHONY : Tcp.cpp.o
+
+Tcp.i: Tcp.cpp.i
+
+.PHONY : Tcp.i
+
+# target to preprocess a source file
+Tcp.cpp.i:
+	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/Tcp.cpp.i
+	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/Tcp.cpp.i
+.PHONY : Tcp.cpp.i
+
+Tcp.s: Tcp.cpp.s
+
+.PHONY : Tcp.s
+
+# target to generate assembly for a file
+Tcp.cpp.s:
+	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/Tcp.cpp.s
+	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/Tcp.cpp.s
+.PHONY : Tcp.cpp.s
 
 TexiCenter.o: TexiCenter.cpp.o
 
@@ -700,35 +790,35 @@ Trip.cpp.s:
 	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/Trip.cpp.s
 .PHONY : Trip.cpp.s
 
-Udp.o: Udp.cpp.o
+TripMap.o: TripMap.cpp.o
 
-.PHONY : Udp.o
+.PHONY : TripMap.o
 
 # target to build an object file
-Udp.cpp.o:
-	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/Udp.cpp.o
-	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/Udp.cpp.o
-.PHONY : Udp.cpp.o
+TripMap.cpp.o:
+	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/TripMap.cpp.o
+	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/TripMap.cpp.o
+.PHONY : TripMap.cpp.o
 
-Udp.i: Udp.cpp.i
+TripMap.i: TripMap.cpp.i
 
-.PHONY : Udp.i
+.PHONY : TripMap.i
 
 # target to preprocess a source file
-Udp.cpp.i:
-	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/Udp.cpp.i
-	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/Udp.cpp.i
-.PHONY : Udp.cpp.i
+TripMap.cpp.i:
+	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/TripMap.cpp.i
+	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/TripMap.cpp.i
+.PHONY : TripMap.cpp.i
 
-Udp.s: Udp.cpp.s
+TripMap.s: TripMap.cpp.s
 
-.PHONY : Udp.s
+.PHONY : TripMap.s
 
 # target to generate assembly for a file
-Udp.cpp.s:
-	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/Udp.cpp.s
-	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/Udp.cpp.s
-.PHONY : Udp.cpp.s
+TripMap.cpp.s:
+	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/TripMap.cpp.s
+	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/TripMap.cpp.s
+.PHONY : TripMap.cpp.s
 
 # Help Target
 help:
@@ -743,6 +833,9 @@ help:
 	@echo "... Bfs.o"
 	@echo "... Bfs.i"
 	@echo "... Bfs.s"
+	@echo "... BooleanToDescriptor.o"
+	@echo "... BooleanToDescriptor.i"
+	@echo "... BooleanToDescriptor.s"
 	@echo "... CabBase.o"
 	@echo "... CabBase.i"
 	@echo "... CabBase.s"
@@ -752,6 +845,9 @@ help:
 	@echo "... ClockTime.o"
 	@echo "... ClockTime.i"
 	@echo "... ClockTime.s"
+	@echo "... ConnectionClients.o"
+	@echo "... ConnectionClients.i"
+	@echo "... ConnectionClients.s"
 	@echo "... Driver.o"
 	@echo "... Driver.i"
 	@echo "... Driver.s"
@@ -761,9 +857,6 @@ help:
 	@echo "... Grid.o"
 	@echo "... Grid.i"
 	@echo "... Grid.s"
-	@echo "... InfoTaxi.o"
-	@echo "... InfoTaxi.i"
-	@echo "... InfoTaxi.s"
 	@echo "... LuxuryCab.o"
 	@echo "... LuxuryCab.i"
 	@echo "... LuxuryCab.s"
@@ -788,18 +881,24 @@ help:
 	@echo "... Socket.o"
 	@echo "... Socket.i"
 	@echo "... Socket.s"
+	@echo "... SocketToDriver.o"
+	@echo "... SocketToDriver.i"
+	@echo "... SocketToDriver.s"
 	@echo "... StandartCab.o"
 	@echo "... StandartCab.i"
 	@echo "... StandartCab.s"
+	@echo "... Tcp.o"
+	@echo "... Tcp.i"
+	@echo "... Tcp.s"
 	@echo "... TexiCenter.o"
 	@echo "... TexiCenter.i"
 	@echo "... TexiCenter.s"
 	@echo "... Trip.o"
 	@echo "... Trip.i"
 	@echo "... Trip.s"
-	@echo "... Udp.o"
-	@echo "... Udp.i"
-	@echo "... Udp.s"
+	@echo "... TripMap.o"
+	@echo "... TripMap.i"
+	@echo "... TripMap.s"
 .PHONY : help
 
 

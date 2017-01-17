@@ -36,7 +36,9 @@ void Driver::setStatisfication(int rate) {
 }
 
 void Driver::setTrip(Trip* trip) {
-    myTrip = trip;
+    if (myTrip == NULL) {
+        myTrip = trip;
+    }
 }
 
 int Driver::getId() {

@@ -6,13 +6,16 @@
 #define MISSION2_TRIP_H
 
 #include <vector>
-#include <boost/serialization/access.hpp>
+//#include <boost/serialization/access.hpp>
 #include <boost/serialization/vector.hpp>
-#include "Point.h"
+//#include "Point.h"
 #include "Node.h"
 #include "Matrix2d.h"
 
+
+
 using namespace std;
+using namespace boost::archive;
 /**
  * in this class we create trip object that the driver get each time
  */
@@ -31,7 +34,7 @@ class Trip {
         ar & myPassengerNumber;
         ar & myTariff;
         ar & myTime;
-        ar & myPath;
+       // ar & myPath;
     }
 private:
     int myRideId;
@@ -44,6 +47,9 @@ private:
     double myTariff;
     int myTime;
     vector<Node> myPath;
+    bool isTripTaken = false;
+    pthread_mutex_t bfsFirst;
+
 
 public:
     //constructors
@@ -112,6 +118,10 @@ public:
      */
     int getTime();
 
+    void setIsTaken ();
+
+    bool getIsTaken();
+    vector<Node> getMyPath();
 };
 
 #endif //MISSION2_TRIP_H

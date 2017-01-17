@@ -7,6 +7,7 @@
 
 
 #include "TexiCenter.h"
+#include <pthread.h>
 
 class ConnectionClients {
 private:
@@ -15,6 +16,7 @@ private:
 
 public:
     ConnectionClients();
+    ~ConnectionClients() {}
     static void* runClients (void* socketToDriver);
 
     /**

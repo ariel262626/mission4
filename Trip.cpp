@@ -1,10 +1,10 @@
 //
 // Created by ariel on 29/11/16.
 //
-#include "Point.h"
-#include "Node.h"
+//#include "Point.h"
+//#include "Node.h"
 #include "Bfs.h"
-#include "Matrix2d.h"
+//#include "Matrix2d.h"
 #include "Trip.h"
 
 Trip::Trip(int rideId, int xStart, int yStart, int xEnd, int yEnd, int passengerNumber, double tarrif, int time){
@@ -36,6 +36,7 @@ vector<Node*> Trip::getPathOfTrip(Matrix2d map) {
 }
 
 vector<Node> Trip::getPathOfTripClone(Matrix2d map) {
+    pthread_mutex_lock(&bfsFirst);
     vector<Node*> listOfNodeInTrip;
     vector<Node> listOfNodeInTripclone;
     Node startNode = Node(Point(myXstart, myYstart), false);
@@ -47,6 +48,7 @@ vector<Node> Trip::getPathOfTripClone(Matrix2d map) {
         listOfNodeInTripclone.push_back(*listOfNodeInTrip.at(i));
     }
     myPath = listOfNodeInTripclone;
+    pthread_mutex_unlock(&bfsFirst);
     return listOfNodeInTripclone;
 }
 
@@ -86,3 +88,14 @@ int Trip::getTime() {
     return myTime;
 }
 
+void Trip:: setIsTaken() {
+    isTripTaken = !isTripTaken;
+}
+
+bool Trip:: getIsTaken(){
+    return isTripTaken;
+}
+
+vector<Node> Trip:: getMyPath(){
+    return myPath;
+}
