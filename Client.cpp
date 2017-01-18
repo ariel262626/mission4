@@ -78,18 +78,20 @@ int main(int argc, char *argv[]) {
     ia >> cabBase;
     int integerSend1 = -1;
     int integerSend2 = -1;
-//get trip end the trip and wait for the next trip if there is one
-while(true) {
-
+    int integerSend3 = -1;
     //serialize the int of '-1' for the flow
     string serial_str1;
-    boost::iostreams::back_insert_device<string> inserter(serial_str1);
-    boost::iostreams::stream<boost::iostreams::back_insert_device<string> > s5(inserter);
-    boost::archive::binary_oarchive oa(s5);
-    oa << integerSend1;
+    boost::iostreams::back_insert_device<string> inserter1(serial_str1);
+    boost::iostreams::stream<boost::iostreams::back_insert_device<string> > s5(inserter1);
+    boost::archive::binary_oarchive oa1(s5);
+    oa1 << integerSend3;
     s5.flush();
     tcp->sendData(serial_str1, socketServer);
     cout<<"send dummy1 from client"<<endl; /////////////////////////////////////////////////////////
+
+//get trip end the trip and wait for the next trip if there is one
+while(true) {
+
 
 
     //client get the trip from the server
@@ -121,16 +123,18 @@ while(true) {
     // only in case the driver finish the last trip)
     driver->setTrip(trip);
 
-//move one step and wait for the next move one step until you end the trip
-while(true) {
+    //serialize the int of '-1' for the flow
     string serial_str2;
     boost::iostreams::back_insert_device<string> inserter(serial_str2);
-    boost::iostreams::stream<boost::iostreams::back_insert_device<string> > s6(inserter);
-    boost::archive::binary_oarchive oa(s6);
-    oa << integerSend2;
-    s6.flush();
+    boost::iostreams::stream<boost::iostreams::back_insert_device<string> > s10(inserter);
+    boost::archive::binary_oarchive oa(s10);
+    oa << integerSend1;
+    s10.flush();
     tcp->sendData(serial_str2, socketServer);
-    cout<<"send dummy2 from client"<<endl; /////////////////////////////////////////////////////////
+    cout<<"send dummy1 from client"<<endl; /////////////////////////////////////////////////////////
+
+//move one step and wait for the next move one step until you end the trip
+while(true) {
 
 
     //here the client get the 'go' word from the server and move one step
@@ -147,6 +151,16 @@ while(true) {
     ia2 >> newLocation;
     //update the new location to the driver position
     driver->setLocation(newLocation);
+
+    string serial_str2;
+    boost::iostreams::back_insert_device<string> inserter(serial_str2);
+    boost::iostreams::stream<boost::iostreams::back_insert_device<string> > s6(inserter);
+    boost::archive::binary_oarchive oa(s6);
+    oa << integerSend2;
+    s6.flush();
+    tcp->sendData(serial_str2, socketServer);
+    cout<<"send dummy2 from client"<<endl; /////////////////////////////////////////////////////////
+
     //we end the trip so we get back to while to wait for the next trip
     Point p1 = driver->getMyTrip()->getEndPointOfTrip();
     Point p2 = driver->getLocation();

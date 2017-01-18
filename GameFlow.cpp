@@ -68,7 +68,7 @@ GameFlow::GameFlow() {}
                  myBoolList[i].setIsMovedToFalse();
              }
          }
-         switch (localChoose) {
+         switch(localChoose) {
              case 1: {
                  listSocketToDriver = getDriversFromClients();
                  for (int i = 0; i < texiCenter->getMyCabBaseList().size(); i++) {
@@ -82,6 +82,7 @@ GameFlow::GameFlow() {}
                  break;
              }
              case 2: {
+
                  choose = 2;
                  getNewRide();
                  break;
@@ -95,6 +96,7 @@ GameFlow::GameFlow() {}
                  break;
              }
              case 4: {
+                 sleep(0.1);
                  choose = 4;
                  printCurrentLocation();
                  break;
@@ -109,10 +111,9 @@ GameFlow::GameFlow() {}
                  return;
              }
              case 9: {
-                 //pthread_mutex_lock(&chooseLock);
-                 sleep(0.5);
+                 sleep(0.1);
                  choose = 9;
-                 //pthread_mutex_unlock(&chooseLock);
+                 sleep(0.1);
                  // update the clock
                  clockTime.setTime();
              }

@@ -56,8 +56,7 @@ void* ConnectionClients:: runClients (void* socketToDriver) {
                             return 0;
                         case 9:
                             ///////////////////////////////////////////
-                            cout<<"case 9:"<<endl;
-                            cout<<"clocke time is:";
+                            cout<<" case 9---clocke time is:";
                             cout<<clockTime.getTime()<<endl;
                             ////////////////////////////////////////////
 
@@ -70,6 +69,7 @@ void* ConnectionClients:: runClients (void* socketToDriver) {
                             cout << socketToDriver1->getMyDescriptor() << endl;
                             stepClients(socketToDriver1);
                             firstNine = false;
+                            //choose=0;
                             break;
                         default:
                             break;
@@ -220,19 +220,7 @@ void ConnectionClients::sendTripToClient(SocketToDriver* socketToDriver) {
                 // make sure we have trip in te list
                 if (!socketToDriver->getMyTexiCenter()->getMyTripList().empty()) {
                     // de-serialize for the flow
-                    //for de-serializa we need put buffer to string
-                    char buffer[1024];
-                    socketToDriver->getMyTexiCenter()->getMyTcp()->reciveData(buffer, sizeof(buffer), socketToDriver->getMyDescriptor());
-                    string bufferRecivedAdvance = bufferrrToString(buffer, sizeof(buffer));
-                    //make instance of cab
-                    int intFlow1;
-                    //de serialize
-                    boost::iostreams::basic_array_source<char> device2(bufferRecivedAdvance.c_str(),
-                                                                       bufferRecivedAdvance.size());
-                    boost::iostreams::stream<boost::iostreams::basic_array_source<char> > s7(device2);
-                    boost::archive::binary_iarchive ia2(s7);
-                    ia2 >> intFlow1;
-                    cout << "after deserialize first dummy" << endl;
+
 
                     //send the next trip by serialization
                     std::string serial_str1;
@@ -247,6 +235,19 @@ void ConnectionClients::sendTripToClient(SocketToDriver* socketToDriver) {
                                                                             socketToDriver->getMyDescriptor());
                     cout<<"send trip from server"<<endl; /////////////////////////////////////////////////////////
 
+                    //for de-serializa we need put buffer to string
+                    char buffer[1024];
+                    socketToDriver->getMyTexiCenter()->getMyTcp()->reciveData(buffer, sizeof(buffer), socketToDriver->getMyDescriptor());
+                    string bufferRecivedAdvance = bufferrrToString(buffer, sizeof(buffer));
+                    //make instance of cab
+                    int intFlow1;
+                    //de serialize
+                    boost::iostreams::basic_array_source<char> device2(bufferRecivedAdvance.c_str(),
+                                                                       bufferRecivedAdvance.size());
+                    boost::iostreams::stream<boost::iostreams::basic_array_source<char> > s7(device2);
+                    boost::archive::binary_iarchive ia2(s7);
+                    ia2 >> intFlow1;
+                    cout << "after deserialize first dummy" << endl;
                 }
             }
         }
@@ -276,7 +277,21 @@ void ConnectionClients::moveClient(SocketToDriver* socketToDriver) {
                 socketToDriver->getMyDriver()->moveStep(path, clockTime.getTime());
                 // get the new location of the driver
                 newPosition = socketToDriver->getMyDriver()->getLocation();
-                cout<<"in moveClient 555555"<<endl; //////////////////////////////////////////////////////////////////////////////////
+
+
+                cout<<"in moveClient 666666"<<endl; //////////////////////////////////////////////////////////////////////////////////
+                //serialize the point and send to client
+                std::string serial_str;
+                boost::iostreams::back_insert_device<std::string> inserter(serial_str);
+                boost::iostreams::stream<boost::iostreams::back_insert_device<std::string> > s(inserter);
+                boost::archive::binary_oarchive oa(s);
+                oa << newPosition;
+                s.flush();
+                //here we sent back the 'go' for move one step
+                socketToDriver->getMyTexiCenter()->getMyTcp()->sendData(serial_str, socketToDriver->getMyDescriptor());
+                cout<<"send newposition from server"<<endl; /////////////////////////////////////////////////////////
+
+                cout<<"in moveClient 77777"<<endl; //////////////////////////////////////////////////////////////////////////////////
                 char buffer[1024];
                 // de-serialize for the flow
                 socketToDriver->getMyTexiCenter()->getMyTcp()->reciveData(buffer, sizeof(buffer), socketToDriver->getMyDescriptor());
@@ -291,19 +306,6 @@ void ConnectionClients::moveClient(SocketToDriver* socketToDriver) {
                 boost::iostreams::stream<boost::iostreams::basic_array_source<char> > s8(device2);
                 boost::archive::binary_iarchive ia2(s8);
                 ia2 >> intFlow1;
-
-                cout<<"in moveClient 666666"<<endl; //////////////////////////////////////////////////////////////////////////////////
-                //serialize the point and send to client
-                std::string serial_str;
-                boost::iostreams::back_insert_device<std::string> inserter(serial_str);
-                boost::iostreams::stream<boost::iostreams::back_insert_device<std::string> > s(inserter);
-                boost::archive::binary_oarchive oa(s);
-                oa << newPosition;
-                s.flush();
-                //here we sent back the 'go' for move one step
-                socketToDriver->getMyTexiCenter()->getMyTcp()->sendData(serial_str, socketToDriver->getMyDescriptor());
-                cout<<"send newposition from server"<<endl; /////////////////////////////////////////////////////////
-
 
                 //after we end trip
                 if (socketToDriver->getMyDriver()->getMyTrip()->getEndPointOfTrip() == newPosition) {
