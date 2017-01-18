@@ -98,7 +98,7 @@ GameFlow::GameFlow() {}
              case 7: {
                  // the allocate memory which placed in taxi center will be deleted when the program finish.
                  // now, call function that send special trip to shut down the program
-                 sleep(10);
+                 sleep(2);
                  //delete myTcp;
                  return;
              }

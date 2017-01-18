@@ -76,9 +76,21 @@ int main(int argc, char *argv[]) {
     boost::iostreams::stream<boost::iostreams::basic_array_source<char> > s2(device);
     boost::archive::binary_iarchive ia(s2);
     ia >> cabBase;
-
+    int integerSend1 = -1;
+    int integerSend2 = -1;
 //get trip end the trip and wait for the next trip if there is one
 while(true) {
+
+    //serialize the int of '-1' for the flow
+    string serial_str1;
+    boost::iostreams::back_insert_device<string> inserter(serial_str1);
+    boost::iostreams::stream<boost::iostreams::back_insert_device<string> > s5(inserter);
+    boost::archive::binary_oarchive oa(s5);
+    oa << integerSend1;
+    s5.flush();
+    tcp->sendData(serial_str1, socketServer);
+
+
     //client get the trip from the server
     tcp->reciveData(buffer, sizeof(buffer), socketServer);
     //for de-serializa we need put buffer to string
@@ -110,6 +122,16 @@ while(true) {
 
 //move one step and wait for the next move one step until you end the trip
 while(true) {
+
+    string serial_str2;
+    boost::iostreams::back_insert_device<string> inserter(serial_str2);
+    boost::iostreams::stream<boost::iostreams::back_insert_device<string> > s6(inserter);
+    boost::archive::binary_oarchive oa(s6);
+    oa << integerSend2;
+    s6.flush();
+    tcp->sendData(serial_str2, socketServer);
+
+
     //here the client get the 'go' word from the server and move one step
     tcp->reciveData(buffer, sizeof(buffer), socketServer);
     //for de-serializa we need put buffer to string

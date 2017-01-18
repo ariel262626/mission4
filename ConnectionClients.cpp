@@ -29,7 +29,12 @@ pthread_mutex_t first;
 bool iFirst = true;
 // in this class we have no ant members-> it's static. all members we will need will be global
 
-ConnectionClients::ConnectionClients() {
+ConnectionClients::ConnectionClients() {}
+
+string bufferrrToString(char* buffer, int bufflen)
+{
+    std::string ret(buffer, bufflen);
+    return ret;
 }
 
 void* ConnectionClients:: runClients (void* socketToDriver) {
@@ -146,7 +151,7 @@ void ConnectionClients::stepClients(SocketToDriver* socketToDriver) {
         cout<<"put next case"<<endl;
 }
 
-
+/*
 bool ConnectionClients::tripListNotEmpty(SocketToDriver* socketToDriver) {
     if(socketToDriver->getMyTexiCenter()->getMyTripList().empty()) {
         // update the clock
@@ -154,7 +159,7 @@ bool ConnectionClients::tripListNotEmpty(SocketToDriver* socketToDriver) {
         return false;
     }
     return true;
-}
+}*/
 
 void ConnectionClients::sendTripToClient(SocketToDriver* socketToDriver) {
     cout << "in sendTripToClient" << endl;
@@ -195,6 +200,22 @@ void ConnectionClients::sendTripToClient(SocketToDriver* socketToDriver) {
             if (driverLocation == startOfTrip) {
                 // make sure we have trip in te list
                 if (!socketToDriver->getMyTexiCenter()->getMyTripList().empty()) {
+
+                    // de-serialize for the flow
+                    //for de-serializa we need put buffer to string
+                    char buffer[1024];
+                    socketToDriver->getMyTexiCenter()->getMyTcp()->reciveData(buffer, sizeof(buffer), socketToDriver->getMyDescriptor());
+                    string bufferRecivedAdvance = bufferrrToString(buffer, sizeof(buffer));
+                    //make instance of cab
+                    int intFlow1;
+                    //de serialize
+                    boost::iostreams::basic_array_source<char> device2(bufferRecivedAdvance.c_str(),
+                                                                       bufferRecivedAdvance.size());
+                    boost::iostreams::stream<boost::iostreams::basic_array_source<char> > s7(device2);
+                    boost::archive::binary_iarchive ia2(s7);
+                    ia2 >> intFlow1;
+
+
                     //send the next trip by serialization
                     std::string serial_str1;
                     boost::iostreams::back_insert_device<std::string> inserter1(serial_str1);
@@ -230,6 +251,23 @@ void ConnectionClients::moveClient(SocketToDriver* socketToDriver) {
                 socketToDriver->getMyDriver()->moveStep(path, clockTime.getTime());
                 // get the new location of the driver
                 newPosition = socketToDriver->getMyDriver()->getLocation();
+
+                char buffer[1024];
+                // de-serialize for the flow
+                socketToDriver->getMyTexiCenter()->getMyTcp()->reciveData(buffer, sizeof(buffer), socketToDriver->getMyDescriptor());
+                //for de-serializa we need put buffer to string
+
+                string bufferRecivedAdvance = bufferrrToString(buffer, sizeof(buffer));
+                //make instance of cab
+                int intFlow1;
+                //de serialize
+                boost::iostreams::basic_array_source<char> device2(bufferRecivedAdvance.c_str(),
+                                                                   bufferRecivedAdvance.size());
+                boost::iostreams::stream<boost::iostreams::basic_array_source<char> > s8(device2);
+                boost::archive::binary_iarchive ia2(s8);
+                ia2 >> intFlow1;
+
+
                 //serialize the point and send to client
                 std::string serial_str;
                 boost::iostreams::back_insert_device<std::string> inserter(serial_str);
