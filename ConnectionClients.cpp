@@ -21,7 +21,7 @@
 #include "BooleanToDescriptor.h"
 
 using namespace std;
-int choose = 0;
+int choose;
 ClockTime clockTime;
 pthread_t treadOfTrip;
 vector <BooleanToDescriptor> myBoolList;
@@ -39,6 +39,7 @@ string bufferrrToString(char* buffer, int bufflen)
 }
 
 void* ConnectionClients:: runClients (void* socketToDriver) {
+    cout<<"in run clients in cinnection clients"<<endl;
     // casting to instance of SocketToDriver
     SocketToDriver *socketToDriver1 = (SocketToDriver *) socketToDriver;
     while (true) {
@@ -53,7 +54,6 @@ void* ConnectionClients:: runClients (void* socketToDriver) {
                             tripToCloseClient(socketToDriver1);
                             return 0;
                         case 9:
-
                             ///////////////////////////////////////////
                             cout<<"case 9:"<<endl;
                             cout<<"clocke time is:";
@@ -91,7 +91,9 @@ void ConnectionClients::tripToCloseClient(SocketToDriver* socketToDriver) {
     s1.flush();
     //here we sent back the right trip
     socketToDriver->getMyTexiCenter()->getMyTcp()->sendData(serial_str1,
-                                                            socketToDriver->getMyDescriptor());    // delete tripClose
+                                                            socketToDriver->getMyDescriptor());
+    cout<<"send trip close from server"<<endl; /////////////////////////////////////////////////////////
+    // delete tripClose
     delete tripClose;
 }
 
@@ -149,12 +151,14 @@ void ConnectionClients::stepClients(SocketToDriver* socketToDriver) {
     // for case we have advance without trip
         cout<<"in step client"<<endl;
         sendTripToClient(socketToDriver);
-        cout<<"after sendTripToClient"<<endl;
-        if(!firstNine) {
+        cout<<"after send trip from server"<<endl;
+        if(!firstNine)
+            cout << "before move client in connectionClients"<< endl;
             moveClient(socketToDriver);
             cout << "put next case" << endl;
+            cout<<"myLocation:";
+            cout<<socketToDriver->getMyDriver()->getLocation()<<endl;
         }
-}
 
 /*
 bool ConnectionClients::tripListNotEmpty(SocketToDriver* socketToDriver) {
@@ -206,7 +210,6 @@ void ConnectionClients::sendTripToClient(SocketToDriver* socketToDriver) {
             if (driverLocation == startOfTrip) {
                 // make sure we have trip in te list
                 if (!socketToDriver->getMyTexiCenter()->getMyTripList().empty()) {
-
                     // de-serialize for the flow
                     //for de-serializa we need put buffer to string
                     char buffer[1024];
@@ -233,6 +236,8 @@ void ConnectionClients::sendTripToClient(SocketToDriver* socketToDriver) {
                     //here we sent back the right trip
                     socketToDriver->getMyTexiCenter()->getMyTcp()->sendData(serial_str1,
                                                                             socketToDriver->getMyDescriptor());
+                    cout<<"send trip from server"<<endl; /////////////////////////////////////////////////////////
+
                 }
             }
         }
@@ -283,6 +288,8 @@ void ConnectionClients::moveClient(SocketToDriver* socketToDriver) {
                 s.flush();
                 //here we sent back the 'go' for move one step
                 socketToDriver->getMyTexiCenter()->getMyTcp()->sendData(serial_str, socketToDriver->getMyDescriptor());
+                cout<<"send newposition from server"<<endl; /////////////////////////////////////////////////////////
+
 
                 //after we end trip
                 if (socketToDriver->getMyDriver()->getMyTrip()->getEndPointOfTrip() == newPosition) {
@@ -290,6 +297,7 @@ void ConnectionClients::moveClient(SocketToDriver* socketToDriver) {
                     Trip *temp = socketToDriver->getMyDriver()->getMyTrip();
                     socketToDriver->getMyTexiCenter()->eraseTripWithId(temp->getRideId());
                     socketToDriver->getMyDriver()->initializeMyTripToNull();
+                    firstNine = true;
                 }
             }
         }

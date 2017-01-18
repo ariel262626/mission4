@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
      * texi and returns this texi*/
     //send the driver to server
     tcp->sendData(serial_str, socketServer);
-
+    cout<<"send driver from client"<<endl; /////////////////////////////////////////////////////////
     //here the client get the texi fron the server
     tcp->reciveData(buffer, sizeof(buffer), socketServer);
 
@@ -89,6 +89,7 @@ while(true) {
     oa << integerSend1;
     s5.flush();
     tcp->sendData(serial_str1, socketServer);
+    cout<<"send dummy1 from client"<<endl; /////////////////////////////////////////////////////////
 
 
     //client get the trip from the server
@@ -122,7 +123,6 @@ while(true) {
 
 //move one step and wait for the next move one step until you end the trip
 while(true) {
-
     string serial_str2;
     boost::iostreams::back_insert_device<string> inserter(serial_str2);
     boost::iostreams::stream<boost::iostreams::back_insert_device<string> > s6(inserter);
@@ -130,6 +130,7 @@ while(true) {
     oa << integerSend2;
     s6.flush();
     tcp->sendData(serial_str2, socketServer);
+    cout<<"send dummy2 from client"<<endl; /////////////////////////////////////////////////////////
 
 
     //here the client get the 'go' word from the server and move one step

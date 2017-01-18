@@ -29,9 +29,10 @@ GameFlow:: GameFlow (Socket* tcp){
 GameFlow::GameFlow() {}
 
  void GameFlow:: run() {
-
+     pthread_mutex_t chooseLock;
      // here we will put the all information
      extern int choose;
+     int localChoose;
      extern ClockTime clockTime;
      extern vector <BooleanToDescriptor> myBoolList;
      //int countDriver = 0;
@@ -61,13 +62,13 @@ GameFlow::GameFlow() {}
      // therefor we return on it until the user enter 7 (end of mission).
      while (true) {
          // choose mission to perform
-         cin >> choose;
+         cin >> localChoose;
          if (!myBoolList.empty()) {
              for (int i = 0; i < texiCenter->getMyDriverList().size(); i++) {
                  myBoolList[i].setIsMovedToFalse();
              }
          }
-         switch (choose) {
+         switch (localChoose) {
              case 1: {
                  listSocketToDriver = getDriversFromClients();
                  for (int i = 0; i < texiCenter->getMyCabBaseList().size(); i++) {
@@ -103,10 +104,13 @@ GameFlow::GameFlow() {}
                  return;
              }
              case 9: {
+                 pthread_mutex_lock(&chooseLock);
+                 choose = 9;
                  // update the clock
                  clockTime.setTime();
              }
          }
+         pthread_mutex_unlock(&chooseLock);
      }
  }
 
