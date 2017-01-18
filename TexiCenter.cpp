@@ -230,7 +230,10 @@ Trip* TexiCenter::getTripInIndex(int i) {
 }
 //get the next trip that not taken yet
 Trip* TexiCenter::getFreeTrip() {
+    cout<<"my trip number: ";
+    cout<<myTripList.size()<<endl;
     for (int i = 1; i < getMyTripList().size(); i++){
+        cout<<"my trip number: 11111";
         if(!getMyTripList().at(i)->getIsTaken()) {
             getMyTripList()[i]->setIsTakenTrue();
             return getMyTripList()[i];
@@ -238,6 +241,10 @@ Trip* TexiCenter::getFreeTrip() {
     }
     if (getMyTripList().size() == 1){
         return getMyTripList()[0];
+    }
+    if(getMyTripList().size() == 0) {
+        cout<<"my trip number after was 0: ";
+        cout<<myTripList.size()<<endl;
     }
 }
 

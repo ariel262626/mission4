@@ -49,6 +49,7 @@ void* ConnectionClients:: runClients (void* socketToDriver) {
 
                     switch (choose) {
                         case 7:
+                            cout<<"ConnectionClient----case 7 "<<endl;
                             // the allocate memory which placed in taxi center will be deleted when the program finish.
                             // now, call function that send special trip to shut down the program
                             tripToCloseClient(socketToDriver1);
@@ -172,15 +173,20 @@ bool ConnectionClients::tripListNotEmpty(SocketToDriver* socketToDriver) {
 
 void ConnectionClients::sendTripToClient(SocketToDriver* socketToDriver) {
     cout << "in sendTripToClient" << endl;
-    Trip* trip;
+    Trip* trip = NULL;
+    cout << "in sendTripToClient 11111" << endl;
     pthread_mutex_lock(&first);
-    if (socketToDriver->getMyDriver()->getMyTrip() == NULL) {
+    if (socketToDriver->getMyDriver()->getMyTrip() == NULL) { //&& (!socketToDriver->getMyTexiCenter()->getMyTripList().empty())) {
+        cout << "in sendTripToClient 22222" << endl;
         trip = socketToDriver->getMyTexiCenter()->getFreeTrip();
+        cout << "in sendTripToClient 22222333333" << endl;
     } else {
+        cout << "in sendTripToClient 33333" << endl;
         trip = socketToDriver->getMyDriver()->getMyTrip();
     }
     //pthread_mutex_unlock(&first);
         if (clockTime.getTime() != trip->getTime()) {
+            cout << "in sendTripToClient 444444" << endl;
             trip->setIsTakenFalse();
         }
         //after we get trip we finding who is the right sockettodriver for him
@@ -194,15 +200,18 @@ void ConnectionClients::sendTripToClient(SocketToDriver* socketToDriver) {
             if((iFirst) &&
                     (socketToDriver->getMyTexiCenter()->getMySocketToDriverList().at(0)->getMyDriver()->getId()
                      == socketToDriver->getMyDriver()->getId())) {
+                cout << "in sendTripToClient 55555" << endl;
                 Trip* firstTrip = socketToDriver->getMyTexiCenter()->getMyTripList().at(0);
                 socketToDriver->getMyDriver()->setTrip(firstTrip);
                 iFirst = false;
 
             } else {
                 if(clockTime.getTime() == trip->getTime()) {
+                    cout << "in sendTripToClient 66666" << endl;
                     socketToDriver->getMyDriver()->setTrip(trip);
                 }
             }
+            cout << "before deserialize first dummy" << endl;
             // check if the location of the driver in the same point as start of the trip.
             // if yes-> we in new trip and therefor send it to client
             Point startOfTrip = trip->getStartPointOfTrip();
@@ -223,7 +232,7 @@ void ConnectionClients::sendTripToClient(SocketToDriver* socketToDriver) {
                     boost::iostreams::stream<boost::iostreams::basic_array_source<char> > s7(device2);
                     boost::archive::binary_iarchive ia2(s7);
                     ia2 >> intFlow1;
-
+                    cout << "after deserialize first dummy" << endl;
 
                     //send the next trip by serialization
                     std::string serial_str1;
@@ -245,24 +254,29 @@ void ConnectionClients::sendTripToClient(SocketToDriver* socketToDriver) {
 }
 
 void ConnectionClients::moveClient(SocketToDriver* socketToDriver) {
+    cout<<"in moveClient lalalalal"<<endl; //////////////////////////////////////////////////////////////////////////////////
     // get the first trip from the list. if we will finish the trip, we will erase it from the list
     Trip *trip = socketToDriver->getMyDriver()->getMyTrip();
     // update the clock for each movement
     // make advance only in case the time at least such us the time of the trip
+    cout<<"in moveClient 1111111"<<endl; //////////////////////////////////////////////////////////////////////////////////
     if (trip != NULL) {
+        cout<<"in moveClient 2222222"<<endl; //////////////////////////////////////////////////////////////////////////////////
         if (trip->getTime() <= clockTime.getTime()) {
+            cout<<"in moveClient 333333"<<endl; //////////////////////////////////////////////////////////////////////////////////
             vector<Node> path;
             Point newPosition;
             // get the path of the grid. we use clone for not delete the path
             //path = trip->getPathOfTripClone(*socketToDriver->getMyTexiCenter()->getMap());
             if (socketToDriver->getMyDriver()->getMyTrip() != NULL) {
+                cout<<"in moveClient 444444"<<endl; //////////////////////////////////////////////////////////////////////////////////
                 pthread_join(treadOfTrip, NULL);
                 path = trip->getMyPath();
                 // move one or two steps on the grid
                 socketToDriver->getMyDriver()->moveStep(path, clockTime.getTime());
                 // get the new location of the driver
                 newPosition = socketToDriver->getMyDriver()->getLocation();
-
+                cout<<"in moveClient 555555"<<endl; //////////////////////////////////////////////////////////////////////////////////
                 char buffer[1024];
                 // de-serialize for the flow
                 socketToDriver->getMyTexiCenter()->getMyTcp()->reciveData(buffer, sizeof(buffer), socketToDriver->getMyDescriptor());
@@ -278,7 +292,7 @@ void ConnectionClients::moveClient(SocketToDriver* socketToDriver) {
                 boost::archive::binary_iarchive ia2(s8);
                 ia2 >> intFlow1;
 
-
+                cout<<"in moveClient 666666"<<endl; //////////////////////////////////////////////////////////////////////////////////
                 //serialize the point and send to client
                 std::string serial_str;
                 boost::iostreams::back_insert_device<std::string> inserter(serial_str);
@@ -295,7 +309,9 @@ void ConnectionClients::moveClient(SocketToDriver* socketToDriver) {
                 if (socketToDriver->getMyDriver()->getMyTrip()->getEndPointOfTrip() == newPosition) {
                     // delete trip
                     Trip *temp = socketToDriver->getMyDriver()->getMyTrip();
+                    cout<< "before delete trip in connectionClients" << endl;
                     socketToDriver->getMyTexiCenter()->eraseTripWithId(temp->getRideId());
+                    cout<< "after delete trip in connectionClients" << endl;
                     socketToDriver->getMyDriver()->initializeMyTripToNull();
                     firstNine = true;
                 }

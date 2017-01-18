@@ -151,7 +151,9 @@ while(true) {
     Point p1 = driver->getMyTrip()->getEndPointOfTrip();
     Point p2 = driver->getLocation();
     if (p1 == p2) {
+        cout<< "delete trip in client.cpp1" << endl;
         delete trip;
+        cout<< "delete trip in client.cpp2" << endl;
         // back to get new trip or finish the program
         break;
     }

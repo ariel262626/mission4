@@ -82,10 +82,12 @@ GameFlow::GameFlow() {}
                  break;
              }
              case 2: {
+                 choose = 2;
                  getNewRide();
                  break;
              }
              case 3: {
+                 choose = 3;
                  getNewCab();
                  //setMyCabBase();
                  //count how much cabs we have
@@ -93,24 +95,28 @@ GameFlow::GameFlow() {}
                  break;
              }
              case 4: {
+                 choose = 4;
                  printCurrentLocation();
                  break;
              }
              case 7: {
+                 cout<<" GameFlow ----in case 7"<<endl;
                  // the allocate memory which placed in taxi center will be deleted when the program finish.
                  // now, call function that send special trip to shut down the program
-                 sleep(2);
+                 sleep(0.1);
+                 choose = 7;
                  //delete myTcp;
                  return;
              }
              case 9: {
-                 pthread_mutex_lock(&chooseLock);
+                 //pthread_mutex_lock(&chooseLock);
+                 sleep(0.5);
                  choose = 9;
+                 //pthread_mutex_unlock(&chooseLock);
                  // update the clock
                  clockTime.setTime();
              }
          }
-         pthread_mutex_unlock(&chooseLock);
      }
  }
 
