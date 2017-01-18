@@ -236,6 +236,9 @@ Trip* TexiCenter::getFreeTrip() {
             return getMyTripList()[i];
         }
     }
+    if (getMyTripList().size() == 1){
+        return getMyTripList()[0];
+    }
 }
 
 CabBase* TexiCenter::getCabWithId(int id) {

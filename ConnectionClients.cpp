@@ -27,6 +27,7 @@ pthread_t treadOfTrip;
 vector <BooleanToDescriptor> myBoolList;
 pthread_mutex_t first;
 bool iFirst = true;
+bool firstNine = true;
 // in this class we have no ant members-> it's static. all members we will need will be global
 
 ConnectionClients::ConnectionClients() {}
@@ -52,6 +53,7 @@ void* ConnectionClients:: runClients (void* socketToDriver) {
                             tripToCloseClient(socketToDriver1);
                             return 0;
                         case 9:
+
                             ///////////////////////////////////////////
                             cout<<"case 9:"<<endl;
                             cout<<"clocke time is:";
@@ -66,6 +68,7 @@ void* ConnectionClients:: runClients (void* socketToDriver) {
                             cout << "tread number descriptor" << endl;
                             cout << socketToDriver1->getMyDescriptor() << endl;
                             stepClients(socketToDriver1);
+                            firstNine = false;
                             break;
                         default:
                             break;
@@ -147,8 +150,10 @@ void ConnectionClients::stepClients(SocketToDriver* socketToDriver) {
         cout<<"in step client"<<endl;
         sendTripToClient(socketToDriver);
         cout<<"after sendTripToClient"<<endl;
-        moveClient(socketToDriver);
-        cout<<"put next case"<<endl;
+        if(!firstNine) {
+            moveClient(socketToDriver);
+            cout << "put next case" << endl;
+        }
 }
 
 /*
@@ -188,6 +193,7 @@ void ConnectionClients::sendTripToClient(SocketToDriver* socketToDriver) {
                 Trip* firstTrip = socketToDriver->getMyTexiCenter()->getMyTripList().at(0);
                 socketToDriver->getMyDriver()->setTrip(firstTrip);
                 iFirst = false;
+
             } else {
                 if(clockTime.getTime() == trip->getTime()) {
                     socketToDriver->getMyDriver()->setTrip(trip);
