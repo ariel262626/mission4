@@ -88,8 +88,12 @@ int Trip::getTime() {
     return myTime;
 }
 
-void Trip:: setIsTaken() {
-    isTripTaken = !isTripTaken;
+void Trip:: setIsTakenTrue() {
+    isTripTaken = true;
+}
+
+void Trip:: setIsTakenFalse() {
+    isTripTaken = false;
 }
 
 bool Trip:: getIsTaken(){

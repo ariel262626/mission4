@@ -118,7 +118,8 @@ public:
      */
     int getTime();
 
-    void setIsTaken ();
+    void setIsTakenTrue ();
+    void setIsTakenFalse ();
 
     bool getIsTaken();
     vector<Node> getMyPath();

@@ -94,13 +94,15 @@ while(true) {
     ia1 >> trip;
 
     //if we get "-1" instead of trip shutdown the socket and return
-    if(trip->getRideId() == -1) {
-        // close socket and delete all the allocate memory
-        delete cabBase;
-        delete driver;
-        delete trip;
-        delete tcp;
-        return 0;
+    if(trip != NULL) {
+        if (trip->getRideId() == -1) {
+            // close socket and delete all the allocate memory
+            delete cabBase;
+            delete driver;
+            delete trip;
+            delete tcp;
+            return 0;
+        }
     }
     // update the trip to driver for each time we get new trip (we get the new trip
     // only in case the driver finish the last trip)

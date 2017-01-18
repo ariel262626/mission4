@@ -41,6 +41,10 @@ void Driver::setTrip(Trip* trip) {
     }
 }
 
+void Driver::initializeMyTripToNull() {
+        myTrip = NULL;
+    }
+
 int Driver::getId() {
     return myId;
 }

@@ -118,6 +118,7 @@ public:
      */
     void setCab(CabBase* newCab);
     CabBase* getCab();
+    void initializeMyTripToNull();
 
     };
 

@@ -98,8 +98,8 @@ GameFlow::GameFlow() {}
              case 7: {
                  // the allocate memory which placed in taxi center will be deleted when the program finish.
                  // now, call function that send special trip to shut down the program
-                 tripToCloseClient();
-                 delete myTcp;
+                 sleep(10);
+                 //delete myTcp;
                  return;
              }
              case 9: {
@@ -138,23 +138,6 @@ void GameFlow::setMyDriver() {
 Driver* GameFlow::getMyDriver() {
     return texiCenter->getDriverInIndex(0);
 }
-
-void GameFlow::tripToCloseClient() {
-    //create special trip and send ir the client in order to know when shut down the process
-    Trip* tripClose = new Trip(-1, 0, 0, 0, 0, 0, 0, 0);
-    //send the close trip
-    std::string serial_str1;
-    boost::iostreams::back_insert_device<std::string> inserter1(serial_str1);
-    boost::iostreams::stream<boost::iostreams::back_insert_device<std::string> > s1(inserter1);
-    boost::archive::binary_oarchive oa1(s1);
-    oa1 << tripClose;
-    s1.flush();
-    //here we sent back the right trip
-     myTcp->sendData(serial_str1, -1);
-    // delete tripClose
-    delete tripClose;
-}
-
 
 void GameFlow::getNewCab() {
     // get new cab from the user
@@ -199,7 +182,7 @@ vector <SocketToDriver*> GameFlow::getDriversFromClients() {
         int socketDescriptorClient = myTcp->accpetFromClient();
         //here we get the driver from clientDriver
         myTcp->reciveData(buffer, sizeof(buffer), socketDescriptorClient);
-        //for de-serializa we need put buffer to string
+        //for de-serializa we need put buffer to string.
         string bufferRecivedDr = bufferToString(buffer, sizeof(buffer));
         //de serialize
         boost::iostreams::basic_array_source<char> device(bufferRecivedDr.c_str(),

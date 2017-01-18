@@ -37,7 +37,7 @@ public:
 
     static SocketToDriver* findSocketToDriver(Driver* driver, TexiCenter* texiCenter);
 
-
+    static void tripToCloseClient(SocketToDriver* socketToDriver);
     };
 
 
