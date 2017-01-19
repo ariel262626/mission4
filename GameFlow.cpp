@@ -112,7 +112,7 @@ GameFlow::GameFlow() {}
                  for (int j = 0; j < texiCenter->getMyDriverList().size(); ++j) {
                      pthread_join(treadsOfDrivers.at(j), NULL);
                  }
-                 cout<<" GameFlow ----in case 7 333333"<<endl;
+                 cout<<" GameFlow ----in case 7 33333"<<endl;
                  return;
              }
              case 9: {
