@@ -39,6 +39,11 @@ vector<Node> Trip::getPathOfTripClone(Matrix2d map) {
     pthread_mutex_lock(&bfsFirst);
     vector<Node*> listOfNodeInTrip;
     vector<Node> listOfNodeInTripclone;
+    for (int i = 999; i >= 0; i--) {
+        for (int j = 0; j < 1000; j++) {
+            map.matrix[j][i]->setFlagToFalse();
+        }
+    }
     Node startNode = Node(Point(myXstart, myYstart), false);
     Node endNode = Node(Point(myXend, myYend), true);
     Bfs bfs = Bfs(startNode, endNode, 2, &map);

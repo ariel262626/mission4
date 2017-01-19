@@ -21,6 +21,15 @@
 #include <boost/archive/binary_iarchive.hpp>
 #include <vector>
 extern pthread_t treadOfTrip;
+extern int choose;
+extern ClockTime clockTime;
+extern vector <BooleanToDescriptor> myBoolList;
+extern int countAction;
+extern bool isTripReady;
+extern bool isPrintAllready;
+vector<pthread_t> treadsOfDrivers;
+
+pthread_mutex_t lockTrip;
 GameFlow:: GameFlow (Socket* tcp){
     myTcp = tcp;
     texiCenter = new TexiCenter();
@@ -29,14 +38,9 @@ GameFlow:: GameFlow (Socket* tcp){
 GameFlow::GameFlow() {}
 
  void GameFlow:: run() {
-     pthread_mutex_t chooseLock;
+     isPrintAllready = false;
      // here we will put the all information
-     extern int choose;
      int localChoose;
-     extern ClockTime clockTime;
-     extern vector <BooleanToDescriptor> myBoolList;
-     //int countDriver = 0;
-     //int countCabs = 0;
      texiCenter->setMyTcp(myTcp);
      string stringGrid, stringObst;
      vector<Point> listObstacle;
@@ -82,7 +86,7 @@ GameFlow::GameFlow() {}
                  break;
              }
              case 2: {
-
+                 isTripReady = false;
                  choose = 2;
                  getNewRide();
                  break;
@@ -90,13 +94,10 @@ GameFlow::GameFlow() {}
              case 3: {
                  choose = 3;
                  getNewCab();
-                 //setMyCabBase();
-                 //count how much cabs we have
-                 //countCabs++;
                  break;
              }
              case 4: {
-                 sleep(0.1);
+                 isPrintAllready = false;
                  choose = 4;
                  printCurrentLocation();
                  break;
@@ -105,21 +106,46 @@ GameFlow::GameFlow() {}
                  cout<<" GameFlow ----in case 7"<<endl;
                  // the allocate memory which placed in taxi center will be deleted when the program finish.
                  // now, call function that send special trip to shut down the program
-                 sleep(0.1);
                  choose = 7;
-                 //delete myTcp;
+                 waitForMe(texiCenter->getMyDriverList().size());
+                 cout<<" GameFlow ----in case 7 222222"<<endl;
+                 for (int j = 0; j < texiCenter->getMyDriverList().size(); ++j) {
+                     pthread_join(treadsOfDrivers.at(j), NULL);
+                 }
+                 cout<<" GameFlow ----in case 7 333333"<<endl;
                  return;
              }
              case 9: {
                  sleep(0.1);
                  choose = 9;
-                 sleep(0.1);
+                 //sleep(0.1);
+                 waitForMe(texiCenter->getMyDriverList().size());
                  // update the clock
                  clockTime.setTime();
              }
          }
      }
  }
+
+//case 4
+void GameFlow::printCurrentLocation() {
+    //insert id of driver
+    int DriverId;
+    Point location;
+    cin >> DriverId;
+    // find location of the driver in the grid and print it
+    location = texiCenter->findLocationOfDriver(DriverId);
+    cout<<"im inside the print in the main of the end point of my trip be happy"<<endl;
+    cout << location << endl;
+    isPrintAllready = true;
+}
+
+void GameFlow::waitForMe(int numOfThreads) {
+    while(countAction != numOfThreads) {
+
+    }
+    countAction = 0;
+}
 
 /**
 * this function convert char* to string for the serialize
@@ -162,7 +188,9 @@ void GameFlow::getNewCab() {
 }
 
 void GameFlow::getNewRide() {
-
+    pthread_attr_t attr;
+    pthread_attr_init(&attr);
+    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
     // get new ride from the user
     string insertRide;
     cin >> insertRide;
@@ -172,12 +200,15 @@ void GameFlow::getNewRide() {
     // add trip to taxi center - we need to sort the trip list according the time
     TripMap* tripMap = new TripMap(trip, texiCenter->getMap());
     texiCenter->addTripToTripLIst(trip);
-    pthread_create(&treadOfTrip, NULL, GameFlow::path, tripMap);
+    pthread_create(&treadOfTrip, &attr, GameFlow::path, tripMap);
+    pthread_join(treadOfTrip, NULL);
+    isTripReady = true;
 }
 
 void* GameFlow::path(void* tripMap) {
     TripMap* tripMap1 = (TripMap*)tripMap;
     tripMap1->getTrip()->getPathOfTripClone(*tripMap1->getMap());
+    cout<<"trip num: " << tripMap1->getTrip()->getRideId() << " end"<<endl;
 }
 
 vector <SocketToDriver*> GameFlow::getDriversFromClients() {
@@ -186,10 +217,16 @@ vector <SocketToDriver*> GameFlow::getDriversFromClients() {
     int numberOfDrivers;
     //get from user how much drivers we need to get
     cin >> numberOfDrivers;
+    //will count my actions of thread
+    countAction = 0;
     int const amountsTreadsofClients = numberOfDrivers;
-    pthread_t treadsOfDrivers[amountsTreadsofClients];
     int socketDescriptor = myTcp->initialize();
     for (int i = 0; i < numberOfDrivers; i++) {
+        pthread_attr_t attr;
+        pthread_attr_init(&attr);
+        pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+        pthread_t p;
+        treadsOfDrivers.push_back(p);
         int socketDescriptorClient = myTcp->accpetFromClient();
         //here we get the driver from clientDriver
         myTcp->reciveData(buffer, sizeof(buffer), socketDescriptorClient);
@@ -208,7 +245,7 @@ vector <SocketToDriver*> GameFlow::getDriversFromClients() {
         texiCenter->setMySocketToDriverList(socketToDriver);
 
         // here we open new tread for each driver (client)
-        pthread_create(&treadsOfDrivers[i], NULL, ConnectionClients:: runClients, socketToDriver);
+        pthread_create(&treadsOfDrivers.at(i), &attr, ConnectionClients:: runClients, socketToDriver);
 
     }
     //set my driver to the driver we got
@@ -227,15 +264,4 @@ void GameFlow::sendCab(CabBase* cabBase, int socketDescriptor) {
     s.flush();
     //here we sent back the right texi cab
     myTcp->sendData(serial_str, socketDescriptor);
-}
-
-//case 4
-void GameFlow::printCurrentLocation() {
-    //insert id of driver
-    int DriverId;
-    Point location;
-    cin >> DriverId;
-    // find location of the driver in the grid and print it
-    location = texiCenter->findLocationOfDriver(DriverId);
-    cout << location << endl;
 }

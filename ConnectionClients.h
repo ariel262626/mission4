@@ -38,7 +38,13 @@ public:
     static SocketToDriver* findSocketToDriver(Driver* driver, TexiCenter* texiCenter);
 
     static void tripToCloseClient(SocketToDriver* socketToDriver);
-    };
+
+    static void printCurrentLocation(SocketToDriver* socketToDriver);
+
+    static void waitForTrip();
+
+    static void waitForPrint();
+};
 
 
 #endif //MISSION4_CONNECTIONCLIENTS_H

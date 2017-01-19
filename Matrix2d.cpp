@@ -10,16 +10,16 @@
 
 using namespace std;
 
-Matrix2d::Matrix2d(int high, int width, vector<Point> obstaclePoint): myObstaclePoint(obstaclePoint){
+Matrix2d::Matrix2d(int high, int width, vector<Point> obstaclePoint) {
     myHigh = high;
     myWidth = width;
     myObstaclePoint = obstaclePoint;
     //build a matrix in maximum size. if the real size is smaller-> we won't
     // refer to the rest of the nodes.
-    for (int i = 9; i >= 0; i--) {
-        for (int j = 0; j < 10; j++) {
-            Point p = Point(j, i);
-            Node n = Node(p, false);
+    for (int i = 999; i >= 0; i--) {
+        for (int j = 0; j < 1000; j++) {
+            Point p =  Point(j, i);
+            Node* n = new Node(p, false);
             matrix[j][i] = n;
         }
     }
@@ -28,9 +28,9 @@ Matrix2d::Matrix2d(int high, int width, vector<Point> obstaclePoint): myObstacle
     // pass.
     if (!getObstaclesList().empty()){
     for (int i = 0; i<getObstaclesList().size(); i++){
-        if (matrix[getObstaclesList().at(i).GetX()][getObstaclesList().at(i).GetY()].getPointOfnode() ==
+        if (matrix[getObstaclesList().at(i).GetX()][getObstaclesList().at(i).GetY()]->getPointOfnode() ==
                 getObstaclesList().at(i)){
-            matrix[getObstaclesList().at(i).GetX()][getObstaclesList().at(i).GetY()].setIsObstacle();
+            matrix[getObstaclesList().at(i).GetX()][getObstaclesList().at(i).GetY()]->setIsObstacle();
         }
     }
     }
@@ -52,9 +52,9 @@ void Matrix2d::printReal(vector<Node*> traj1){
      //9
      // check if we has neibours in left of 'currentNode'
      if ((currentNode.getPointOfnode().GetX()-1>=0)&&
-             !(matrix[currentNode.getPointOfnode().GetX()-1][currentNode.getPointOfnode().GetY()]).getIsObstacle()){
+             !(matrix[currentNode.getPointOfnode().GetX()-1][currentNode.getPointOfnode().GetY()])->getIsObstacle()){
          // insert this node  to the vector as neibour
-         Node* node1 = &matrix[currentNode.getPointOfnode().GetX() - 1]
+         Node* node1 = matrix[currentNode.getPointOfnode().GetX() - 1]
          [currentNode.getPointOfnode().GetY()];
          array_Niebours.push_back(node1);
      } else {
@@ -66,9 +66,9 @@ void Matrix2d::printReal(vector<Node*> traj1){
      //12
      // check if we has neibours in up of 'currentNode'
      if ((currentNode.getPointOfnode().GetY() + 1 < myHigh)&&
-     !(matrix[currentNode.getPointOfnode().GetX()][currentNode.getPointOfnode().GetY() + 1]).getIsObstacle()){
+     !(matrix[currentNode.getPointOfnode().GetX()][currentNode.getPointOfnode().GetY() + 1])->getIsObstacle()){
          // insert this node  to the vector as neibour
-         Node* node2 = &matrix[currentNode.getPointOfnode().GetX()]
+         Node* node2 = matrix[currentNode.getPointOfnode().GetX()]
          [currentNode.getPointOfnode().GetY() + 1];
          array_Niebours.push_back(node2);
      } else {
@@ -80,9 +80,9 @@ void Matrix2d::printReal(vector<Node*> traj1){
      //3
      // check if we has neibours in right of 'currentNode'
      if ((currentNode.getPointOfnode().GetX() + 1< myWidth)&&
-     !(matrix[currentNode.getPointOfnode().GetX() + 1][currentNode.getPointOfnode().GetY()]).getIsObstacle()){
+     !(matrix[currentNode.getPointOfnode().GetX() + 1][currentNode.getPointOfnode().GetY()])->getIsObstacle()){
          // insert this node  to the vector as neibour
-         Node* node3 = &matrix[currentNode.getPointOfnode().GetX() + 1]
+         Node* node3 = matrix[currentNode.getPointOfnode().GetX() + 1]
          [currentNode.getPointOfnode().GetY()];
          array_Niebours.push_back(node3);
      } else {
@@ -94,9 +94,9 @@ void Matrix2d::printReal(vector<Node*> traj1){
      //6
      // check if we has neibours in down of 'currentNode'
      if ((currentNode.getPointOfnode().GetY() -1>= 0)&&
-     !(matrix[currentNode.getPointOfnode().GetX()][currentNode.getPointOfnode().GetY() - 1]).getIsObstacle()){
+     !(matrix[currentNode.getPointOfnode().GetX()][currentNode.getPointOfnode().GetY() - 1])->getIsObstacle()){
          // insert this node  to the vector as neibour
-        Node* node4 = &matrix[currentNode.getPointOfnode().GetX()]
+        Node* node4 = matrix[currentNode.getPointOfnode().GetX()]
         [currentNode.getPointOfnode().GetY() - 1];
          array_Niebours.push_back(node4);
      } else{
@@ -110,7 +110,7 @@ void Matrix2d::printReal(vector<Node*> traj1){
 
     void Matrix2d::setNodeInMatrix(Node *n) {
       // set node in the matrix -> change the matrix
-      matrix[n->getPointOfnode().GetX()][n->getPointOfnode().GetY()] = *n;
+      matrix[n->getPointOfnode().GetX()][n->getPointOfnode().GetY()] = n;
     }
 
 int Matrix2d::getHigh() {

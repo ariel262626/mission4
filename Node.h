@@ -101,6 +101,8 @@ public:
      * overloading operator of == for nodes.
      */
     bool operator==(Node &otherNode);
+
+    void setFlagToFalse();
 };
 
 #endif //MISSION1_NODE_H

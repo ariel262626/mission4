@@ -86,7 +86,7 @@ void Bfs:: manageQueue(queue<Node*> &queue1, stack<Node*> &stack1, Node *current
             //set the flag when it's come to queue and update the matrix
             neighbours[i]->setFlag();
             Node *neig = neighbours[i];
-            (*myMatrix).setNodeInMatrix(neig);
+            myMatrix->setNodeInMatrix(neig);
             //push the node to queue and stack.
             queue1.push(neighbours[i]);
             stack1.push(neighbours[i]);

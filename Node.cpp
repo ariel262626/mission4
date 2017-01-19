@@ -29,6 +29,10 @@ void Node::setFlag() {
     flag = !flag;
 }
 
+void Node::setFlagToFalse() {
+    flag = false;
+}
+
 bool Node::getFlag() {
     return flag;
 }

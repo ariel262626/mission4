@@ -135,8 +135,6 @@ while(true) {
 
 //move one step and wait for the next move one step until you end the trip
 while(true) {
-
-
     //here the client get the 'go' word from the server and move one step
     tcp->reciveData(buffer, sizeof(buffer), socketServer);
     //for de-serializa we need put buffer to string
@@ -149,6 +147,19 @@ while(true) {
     boost::iostreams::stream<boost::iostreams::basic_array_source<char> > s4(device2);
     boost::archive::binary_iarchive ia2(s4);
     ia2 >> newLocation;
+    Point closePoint = Point (-1,-1);
+    cout<< "----------------before closing-----------------"<< endl;
+    cout << newLocation << endl;
+    if (newLocation == closePoint){
+        cout<< "----------------1before closing11111-----------------"<< endl;
+        // close socket and delete all the allocate memory
+        delete cabBase;
+        delete driver;
+        delete trip;
+        delete tcp;
+        return 0;
+    }
+    cout<< "----------------after closing-----------------"<< endl;
     //update the new location to the driver position
     driver->setLocation(newLocation);
 

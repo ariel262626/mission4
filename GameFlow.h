@@ -91,7 +91,9 @@ public:
     void printCurrentLocation();
 
     static void* path(void* tripMap);
-    };
+
+    void waitForMe(int numOfThreads);
+};
 
 
 #endif //MISSION2_GAMEFLOW_H
