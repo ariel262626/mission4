@@ -29,7 +29,7 @@ private:
     int myHigh;
     vector<Point> myObstaclePoint;
 public:
-    Node matrix[10][10];
+    Node matrix[1000][1000];
 
     //constracturs.
     Matrix2d(int high, int width, vector<Point> obstaclePoint);

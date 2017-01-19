@@ -16,9 +16,10 @@ Matrix2d::Matrix2d(int high, int width, vector<Point> obstaclePoint): myObstacle
     myObstaclePoint = obstaclePoint;
     //build a matrix in maximum size. if the real size is smaller-> we won't
     // refer to the rest of the nodes.
-    for (int i = 9; i >= 0; i--) {
-        for (int j = 0; j < 10; j++) {
+    for (int i = 999; i >= 0; i--) {
+        for (int j = 0; j < 1000; j++) {
             Point p = Point(j, i);
+            //TODO: change to new!!!!!!!!!!!
             Node n = Node(p, false);
             matrix[j][i] = n;
         }

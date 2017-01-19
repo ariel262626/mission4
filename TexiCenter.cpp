@@ -293,9 +293,7 @@ vector<Driver*> TexiCenter:: getMyDriverList (){
 }
 
 vector<Trip*> TexiCenter:: getMyTripList (){
-    if(!myTripList.empty()) {
         return myTripList;
-    }
 }
 
 vector<CabBase*> TexiCenter:: getMyCabBaseList (){

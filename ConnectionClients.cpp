@@ -26,8 +26,12 @@ ClockTime clockTime;
 pthread_t treadOfTrip;
 vector <BooleanToDescriptor> myBoolList;
 pthread_mutex_t first;
+pthread_mutex_t lockCounter;
 bool iFirst = true;
 bool firstNine = true;
+int countAction;
+bool isTripReady;
+bool isPrintAllready;
 // in this class we have no ant members-> it's static. all members we will need will be global
 
 ConnectionClients::ConnectionClients() {}
@@ -47,11 +51,22 @@ void* ConnectionClients:: runClients (void* socketToDriver) {
             if (myBoolList[i].getMyDescriptor() == socketToDriver1->getMyDescriptor()) {
                 if (myBoolList[i].getIsMoved() == false) {
 
-                    switch (choose) {
+                    switch(choose) {
+                        case 2: {
+                            cout<<"case 2 in connection client!!!!!!!!"<<endl;
+                            waitForTrip();
+                            break;
+                        }
+                        case 4:
+                            waitForPrint();
+                            break;
                         case 7:
                             cout<<"ConnectionClient----case 7 "<<endl;
                             // the allocate memory which placed in taxi center will be deleted when the program finish.
                             // now, call function that send special trip to shut down the program
+//                            pthread_mutex_lock(&lockCounter);
+//                            countAction++;
+//                            pthread_mutex_unlock(&lockCounter);
                             tripToCloseClient(socketToDriver1);
                             return 0;
                         case 9:
@@ -59,17 +74,18 @@ void* ConnectionClients:: runClients (void* socketToDriver) {
                             cout<<" case 9---clocke time is:";
                             cout<<clockTime.getTime()<<endl;
                             ////////////////////////////////////////////
-
                             for (int j = 0; j < myBoolList.size(); ++j) {
                                 if (myBoolList[j].getMyDescriptor() == socketToDriver1->getMyDescriptor()) {
                                     myBoolList[j].setIsMovedToTrue();
                                 }
                             }
-                            cout << "tread number descriptor" << endl;
+                            cout << "tread number descriptor: ";
                             cout << socketToDriver1->getMyDescriptor() << endl;
                             stepClients(socketToDriver1);
                             firstNine = false;
-                            //choose=0;
+                            pthread_mutex_lock(&lockCounter);
+                            countAction++;
+                            pthread_mutex_unlock(&lockCounter);
                             break;
                         default:
                             break;
@@ -80,7 +96,35 @@ void* ConnectionClients:: runClients (void* socketToDriver) {
     }
 }
 
+void ConnectionClients::waitForPrint() {
+    while(!isPrintAllready) {
+
+    }
+    cout<<"print is ready"<<endl;
+}
+
+void ConnectionClients::waitForTrip() {
+    while(!isTripReady) {
+
+    }
+    cout<<"trip is ready"<<endl;
+}
+
+
+////case 4
+//void ConnectionClients::printCurrentLocation(SocketToDriver* socketToDriver) {
+//    //insert id of driver
+//    int DriverId;
+//    Point location;
+//    cin >> DriverId;
+//    // find location of the driver in the grid and print it
+//    location = socketToDriver->getMyTexiCenter()->findLocationOfDriver(DriverId);
+//    cout<<"im inside the print of the end point of my trip be happy"<<endl;
+//    cout << location << endl;
+//}
+
 void ConnectionClients::tripToCloseClient(SocketToDriver* socketToDriver) {
+    cout<<"im in close trip be happy"<<endl;
     //create special trip and send ir the client in order to know when shut down the process
     Trip* tripClose = new Trip(-1, 0, 0, 0, 0, 0, 0, 0);
     //send the close trip
@@ -161,52 +205,42 @@ void ConnectionClients::stepClients(SocketToDriver* socketToDriver) {
             cout<<socketToDriver->getMyDriver()->getLocation()<<endl;
         }
 
-/*
-bool ConnectionClients::tripListNotEmpty(SocketToDriver* socketToDriver) {
-    if(socketToDriver->getMyTexiCenter()->getMyTripList().empty()) {
-        // update the clock
-       // socketToDriver->getMyTexiCenter()->getMyClockTime().setTime();
-        return false;
-    }
-    return true;
-}*/
-
 void ConnectionClients::sendTripToClient(SocketToDriver* socketToDriver) {
-    cout << "in sendTripToClient" << endl;
-    Trip* trip = NULL;
-    cout << "in sendTripToClient 11111" << endl;
-    pthread_mutex_lock(&first);
-    if (socketToDriver->getMyDriver()->getMyTrip() == NULL) { //&& (!socketToDriver->getMyTexiCenter()->getMyTripList().empty())) {
-        cout << "in sendTripToClient 22222" << endl;
-        trip = socketToDriver->getMyTexiCenter()->getFreeTrip();
-        cout << "in sendTripToClient 22222333333" << endl;
-    } else {
-        cout << "in sendTripToClient 33333" << endl;
-        trip = socketToDriver->getMyDriver()->getMyTrip();
-    }
-    //pthread_mutex_unlock(&first);
+    if (!socketToDriver->getMyTexiCenter()->getMyTripList().empty()) {
+        cout << "in sendTripToClient" << endl;
+        Trip *trip = NULL;
+        cout << "in sendTripToClient 11111" << endl;
+        pthread_mutex_lock(&first);
+        if (socketToDriver->getMyDriver()->getMyTrip() == NULL) {
+            cout << "in sendTripToClient 22222" << endl;
+            trip = socketToDriver->getMyTexiCenter()->getFreeTrip();
+            cout << "in sendTripToClient 22222333333" << endl;
+        } else {
+            cout << "in sendTripToClient 33333" << endl;
+            trip = socketToDriver->getMyDriver()->getMyTrip();
+        }
         if (clockTime.getTime() != trip->getTime()) {
             cout << "in sendTripToClient 444444" << endl;
             trip->setIsTakenFalse();
         }
         //after we get trip we finding who is the right sockettodriver for him
-    //  SocketToDriver *socketToUpdate =
-    //         findCurrectDriverToTrip(socketToDriver->getMyTexiCenter(), trip);
-    // update the trip to driver and send the trip to client only once, when the time is comming.
-    // if the time isn't comming-> just update the clock
-    //flag if i the first driver and get the first trip at the first time
+        // update the trip to driver and send the trip to client only once, when the time is comming.
+        // if the time isn't comming-> just update the clock
+        //flag if i the first driver and get the first trip at the first time
+
         if ((clockTime.getTime() == trip->getTime()) ||
-    ((socketToDriver->getMyTexiCenter()->getMyTripList().at(0)->getTime() == clockTime.getTime()) && (iFirst))) {
-            if((iFirst) &&
-                    (socketToDriver->getMyTexiCenter()->getMySocketToDriverList().at(0)->getMyDriver()->getId()
-                     == socketToDriver->getMyDriver()->getId())) {
+            ((socketToDriver->getMyTexiCenter()->getMyTripList().at(0)->getTime() == clockTime.getTime()) &&
+             (iFirst))) {
+            if ((iFirst) &&
+                (socketToDriver->getMyTexiCenter()->getMySocketToDriverList().at(0)->getMyDriver()->getId()
+                 == socketToDriver->getMyDriver()->getId())) {
                 cout << "in sendTripToClient 55555" << endl;
-                Trip* firstTrip = socketToDriver->getMyTexiCenter()->getMyTripList().at(0);
+                Trip *firstTrip = socketToDriver->getMyTexiCenter()->getMyTripList().at(0);
                 socketToDriver->getMyDriver()->setTrip(firstTrip);
                 iFirst = false;
 
             } else {
-                if(clockTime.getTime() == trip->getTime()) {
+                if (clockTime.getTime() == trip->getTime()) {
                     cout << "in sendTripToClient 66666" << endl;
                     socketToDriver->getMyDriver()->setTrip(trip);
                 }
@@ -219,9 +253,6 @@ void ConnectionClients::sendTripToClient(SocketToDriver* socketToDriver) {
             if (driverLocation == startOfTrip) {
                 // make sure we have trip in te list
                 if (!socketToDriver->getMyTexiCenter()->getMyTripList().empty()) {
-                    // de-serialize for the flow
-
-
                     //send the next trip by serialization
                     std::string serial_str1;
                     boost::iostreams::back_insert_device<std::string> inserter1(serial_str1);
@@ -233,11 +264,12 @@ void ConnectionClients::sendTripToClient(SocketToDriver* socketToDriver) {
                     //here we sent back the right trip
                     socketToDriver->getMyTexiCenter()->getMyTcp()->sendData(serial_str1,
                                                                             socketToDriver->getMyDescriptor());
-                    cout<<"send trip from server"<<endl; /////////////////////////////////////////////////////////
+                    cout << "send trip from server" << endl; /////////////////////////////////////////////////////////
 
                     //for de-serializa we need put buffer to string
                     char buffer[1024];
-                    socketToDriver->getMyTexiCenter()->getMyTcp()->reciveData(buffer, sizeof(buffer), socketToDriver->getMyDescriptor());
+                    socketToDriver->getMyTexiCenter()->getMyTcp()->reciveData(buffer, sizeof(buffer),
+                                                                              socketToDriver->getMyDescriptor());
                     string bufferRecivedAdvance = bufferrrToString(buffer, sizeof(buffer));
                     //make instance of cab
                     int intFlow1;
@@ -251,7 +283,8 @@ void ConnectionClients::sendTripToClient(SocketToDriver* socketToDriver) {
                 }
             }
         }
-    pthread_mutex_unlock(&first);
+        pthread_mutex_unlock(&first);
+    }
 }
 
 void ConnectionClients::moveClient(SocketToDriver* socketToDriver) {
@@ -271,7 +304,6 @@ void ConnectionClients::moveClient(SocketToDriver* socketToDriver) {
             //path = trip->getPathOfTripClone(*socketToDriver->getMyTexiCenter()->getMap());
             if (socketToDriver->getMyDriver()->getMyTrip() != NULL) {
                 cout<<"in moveClient 444444"<<endl; //////////////////////////////////////////////////////////////////////////////////
-                pthread_join(treadOfTrip, NULL);
                 path = trip->getMyPath();
                 // move one or two steps on the grid
                 socketToDriver->getMyDriver()->moveStep(path, clockTime.getTime());
@@ -290,7 +322,7 @@ void ConnectionClients::moveClient(SocketToDriver* socketToDriver) {
                 //here we sent back the 'go' for move one step
                 socketToDriver->getMyTexiCenter()->getMyTcp()->sendData(serial_str, socketToDriver->getMyDescriptor());
                 cout<<"send newposition from server"<<endl; /////////////////////////////////////////////////////////
-
+                cout<<newPosition<<endl; /////////////////////////////////////////////////////////
                 cout<<"in moveClient 77777"<<endl; //////////////////////////////////////////////////////////////////////////////////
                 char buffer[1024];
                 // de-serialize for the flow
