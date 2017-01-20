@@ -50,6 +50,7 @@ int Driver::getId() {
 }
 
 void Driver::moveStep(vector<Node> path, int currentTime) {
+    // we don't want move if the time of trip isn't arrive
     if (currentTime < myTrip->getTime()){
         return;
     }

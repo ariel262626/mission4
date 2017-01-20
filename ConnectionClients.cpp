@@ -59,11 +59,12 @@ void* ConnectionClients:: runClients (void* socketToDriver) {
                             pthread_mutex_lock(&lockCounter);
                             waitForPrint();
                             pthread_mutex_unlock(&lockCounter);
+                            isPrintAllready = false;
+                            sleep(0.1);
                             break;
                         case 7:
-                            //sleep(0.1);
-                            cout<<"ConnectionClient----case 7 "<<endl;
-                            // the allocate memory which placed in taxi center will be deleted when the program finish.
+                            // the allocate memory which placed in
+                            // taxi center will be deleted when the program finish.
                             // now, call function that send special trip to shut down the program
                             pthread_mutex_lock(&lockCounter);
                             tripToCloseClient(socketToDriver1);
@@ -72,9 +73,8 @@ void* ConnectionClients:: runClients (void* socketToDriver) {
                                 // for end the loop in the gameFlow
                                 countAction = socketToDriver1->getMyTexiCenter()->getMySocketToDriverList().size();
                             }
-                            usleep(1);
+                            usleep(0.5);
                             pthread_mutex_unlock(&lockCounter);
-                            cout << "after all deletion" << endl;
                             return 0;
                         case 9:
                             for (int j = 0; j < myBoolList.size(); ++j) {
@@ -111,10 +111,8 @@ void ConnectionClients::waitForTrip() {
 }
 
 void ConnectionClients::tripToCloseClient(SocketToDriver* socketToDriver) {
-    cout<<"im in close trip be happy"<<endl;
     //create special trip and send ir the client in order to know when shut down the process
     if (!socketToDriver->getMyTexiCenter()->getMyTripList().empty()) {
-        cout << "*********in the if************"<< endl;
         // serialize close point to client
         Point pointClose = Point(-1,-1);
         //send the close trip
@@ -127,7 +125,6 @@ void ConnectionClients::tripToCloseClient(SocketToDriver* socketToDriver) {
         //here we sent back the right trip
         socketToDriver->getMyTexiCenter()->getMyTcp()->sendData(serial_str,
                                                                 socketToDriver->getMyDescriptor());
-        cout<<"send point close from server"<<endl; /////////////////////////////////////////////////////////
     }
     Trip* tripClose = new Trip(-1, 0, 0, 0, 0, 0, 0, 0);
     //send the close trip
@@ -140,7 +137,6 @@ void ConnectionClients::tripToCloseClient(SocketToDriver* socketToDriver) {
     //here we sent back the right trip
     socketToDriver->getMyTexiCenter()->getMyTcp()->sendData(serial_str1,
                                                             socketToDriver->getMyDescriptor());
-    cout<<"send trip close from server"<<endl; /////////////////////////////////////////////////////////
     // delete tripClose
     delete tripClose;
 }
@@ -260,6 +256,7 @@ void ConnectionClients::sendTripToClient(SocketToDriver* socketToDriver) {
                     string bufferRecivedAdvance = bufferrrToString(buffer, sizeof(buffer));
                     //make instance of cab
                     int intFlow1;
+                    sleep(0.1);
                     //de serialize
                     boost::iostreams::basic_array_source<char> device2(bufferRecivedAdvance.c_str(),
                                                                        bufferRecivedAdvance.size());
@@ -290,8 +287,6 @@ void ConnectionClients::moveClient(SocketToDriver* socketToDriver) {
                 socketToDriver->getMyDriver()->moveStep(path, clockTime.getTime());
                 // get the new location of the driver
                 newPosition = socketToDriver->getMyDriver()->getLocation();
-
-
                 //serialize the point and send to client
                 std::string serial_str;
                 boost::iostreams::back_insert_device<std::string> inserter(serial_str);
@@ -302,10 +297,10 @@ void ConnectionClients::moveClient(SocketToDriver* socketToDriver) {
                 //here we sent back the 'go' for move one step
                 socketToDriver->getMyTexiCenter()->getMyTcp()->sendData(serial_str, socketToDriver->getMyDescriptor());
                 char buffer[1024];
+                sleep(0.1);
                 // de-serialize for the flow
                 socketToDriver->getMyTexiCenter()->getMyTcp()->reciveData(buffer, sizeof(buffer), socketToDriver->getMyDescriptor());
                 //for de-serializa we need put buffer to string
-
                 string bufferRecivedAdvance = bufferrrToString(buffer, sizeof(buffer));
                 //make instance of cab
                 int intFlow1;
@@ -320,9 +315,7 @@ void ConnectionClients::moveClient(SocketToDriver* socketToDriver) {
                 if (socketToDriver->getMyDriver()->getMyTrip()->getEndPointOfTrip() == newPosition) {
                     // delete trip
                     Trip *temp = socketToDriver->getMyDriver()->getMyTrip();
-                    cout<< "before delete trip in connectionClients" << endl;
                     socketToDriver->getMyTexiCenter()->eraseTripWithId(temp->getRideId());
-                    cout<< "after delete trip in connectionClients" << endl;
                     socketToDriver->getMyDriver()->initializeMyTripToNull();
                     firstNine = true;
                 }

@@ -62,7 +62,6 @@ int main(int argc, char *argv[]) {
      * texi and returns this texi*/
     //send the driver to server
     tcp->sendData(serial_str, socketServer);
-    cout<<"send driver from client"<<endl; /////////////////////////////////////////////////////////
     //here the client get the texi fron the server
     tcp->reciveData(buffer, sizeof(buffer), socketServer);
 
@@ -87,13 +86,9 @@ int main(int argc, char *argv[]) {
     oa1 << integerSend3;
     s5.flush();
     tcp->sendData(serial_str1, socketServer);
-    cout<<"send dummy1 from client"<<endl; /////////////////////////////////////////////////////////
 
 //get trip end the trip and wait for the next trip if there is one
 while(true) {
-
-
-
     //client get the trip from the server
     tcp->reciveData(buffer, sizeof(buffer), socketServer);
     //for de-serializa we need put buffer to string
@@ -122,7 +117,9 @@ while(true) {
     // update the trip to driver for each time we get new trip (we get the new trip
     // only in case the driver finish the last trip)
     driver->setTrip(trip);
-
+    if(driver->getMyTrip()->getRideId() == -1) {
+        return 0;
+    }
     //serialize the int of '-1' for the flow
     string serial_str2;
     boost::iostreams::back_insert_device<string> inserter(serial_str2);
@@ -131,7 +128,6 @@ while(true) {
     oa << integerSend1;
     s10.flush();
     tcp->sendData(serial_str2, socketServer);
-    cout<<"send dummy1 from client"<<endl; /////////////////////////////////////////////////////////
 
 //move one step and wait for the next move one step until you end the trip
 while(true) {
@@ -148,10 +144,8 @@ while(true) {
     boost::archive::binary_iarchive ia2(s4);
     ia2 >> newLocation;
     Point closePoint = Point (-1,-1);
-    cout<< "----------------before closing-----------------"<< endl;
     //cout << newLocation << endl;
     if (newLocation == closePoint){
-        cout<< "----------------1before closing11111-----------------"<< endl;
         // close socket and delete all the allocate memory
         delete cabBase;
         delete driver;
@@ -159,10 +153,11 @@ while(true) {
         delete tcp;
         return 0;
     }
-    cout<< "----------------after closing-----------------"<< endl;
     //update the new location to the driver position
     driver->setLocation(newLocation);
-
+    if(driver->getLocation().GetX() == -1) {
+        return 0;
+    }
     string serial_str2;
     boost::iostreams::back_insert_device<string> inserter(serial_str2);
     boost::iostreams::stream<boost::iostreams::back_insert_device<string> > s6(inserter);
@@ -170,15 +165,12 @@ while(true) {
     oa << integerSend2;
     s6.flush();
     tcp->sendData(serial_str2, socketServer);
-    cout<<"send dummy2 from client"<<endl; /////////////////////////////////////////////////////////
-
+    sleep(0.1);
     //we end the trip so we get back to while to wait for the next trip
     Point p1 = driver->getMyTrip()->getEndPointOfTrip();
     Point p2 = driver->getLocation();
     if (p1 == p2) {
-        cout<< "delete trip in client.cpp1" << endl;
         delete trip;
-        cout<< "delete trip in client.cpp2" << endl;
         // back to get new trip or finish the program
         break;
     }

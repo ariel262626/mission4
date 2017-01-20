@@ -105,38 +105,7 @@ void TexiCenter::startDriving() {
         }
     }
 }
-/**
- * here we will find the closest driver of the passenger location.
- * we will iterate on the list of the driver and check their location.
- * @param passenger
- * @return the close driver
- */
-//Driver TexiCenter::findDriver(Passenger passenger) {
-//    //save the closest driver to the passenger
-//    Driver closestDriver;
-//    //initialize (max 10X10)
-//    long minDistance = 100;
-//    vector<Node*> listOfNodeInTrip;
-//    //check all the drivers
-//    for(int i = 0; i < myDriversList.size(); i++) {
-//        //get the driver location
-//        Node driverLocation =  Node(myDriversList[i]->getLocation(), false);
-//        //get the passenger location
-//        Node passengerLocation = Node(passenger.getStartPoint(), true);
-//        Matrix2d* mapCopy = myMap;
-//        myBfs = Bfs(driverLocation, passengerLocation, 2, mapCopy);
-//        //for each driver we need to calculate his path
-//        listOfNodeInTrip = myBfs.runBfs(&driverLocation, &passengerLocation);
-//        //check whos path is the shortest
-//        if(minDistance > listOfNodeInTrip.size())
-//        minDistance = listOfNodeInTrip.size();
-//        //update closest driver
-//        closestDriver = *(myDriversList[i]);
-//        //because he is the closest set him this trip
-//        closestDriver.setTrip(myTripList.at(i));
-//    }
-//    return closestDriver;
-//}
+
 /**
  * here we get id drier and find the right driver in the vector
  * @param idDriverToFind: get index id driver
@@ -188,7 +157,7 @@ void TexiCenter::addTripToTripLIst(Trip* addTrip) {
     }
     }
 }
-
+/*
 void TexiCenter::setDriverList(vector<Driver*> driversList) {
         myDriversList.swap(driversList);
 }
@@ -205,11 +174,8 @@ void TexiCenter::setBaseCabeList(vector<CabBase*> baseCabList) {
 void TexiCenter::setTripList(vector<Trip*> tripsList) {
     myTripList.swap(tripsList);
 }
-
+*/
 void TexiCenter::setMap(Matrix2d* map) {
-   // myMap->setHigh(map->getHigh());
-   // myMap->setWidth(map->getWidth());
-   // myMap->setobstaclePoint(map->getObstaclesList());
     myMap = map;
 }
 
@@ -225,26 +191,18 @@ CabBase* TexiCenter::getCabInIndex(int i) {
     return myStandartCabList.at(i);
 }
 
-Trip* TexiCenter::getTripInIndex(int i) {
-    return myTripList.at(i);
-}
-//get the next trip that not taken yet
 Trip* TexiCenter::getFreeTrip() {
-    cout<<"my trip number: ";
-    cout<<myTripList.size()<<endl;
+    //get the next trip that not taken yet
     for (int i = 1; i < getMyTripList().size(); i++){
-        cout<<"my trip number: 11111";
+        // check if trip is already was taken by another client
         if(!getMyTripList().at(i)->getIsTaken()) {
             getMyTripList()[i]->setIsTakenTrue();
             return getMyTripList()[i];
         }
     }
     if (getMyTripList().size() == 1){
+        // we have one trip in the list
         return getMyTripList()[0];
-    }
-    if(getMyTripList().size() == 0) {
-        cout<<"my trip number after was 0: ";
-        cout<<myTripList.size()<<endl;
     }
 }
 
@@ -305,10 +263,6 @@ void TexiCenter::setCabToDriver(Driver* driver) {
     int cabId = driver->getMyCabId();
     CabBase* cabBase = getCabWithId(cabId);
     driver->setCab(cabBase);
-}
-
-ClockTime TexiCenter::getMyClockTime() {
-    return myClockTime;
 }
 
 Socket* TexiCenter::getMyTcp() {

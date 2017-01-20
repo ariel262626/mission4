@@ -117,9 +117,17 @@ public:
      * @param newCab  - the cab to set
      */
     void setCab(CabBase* newCab);
-    CabBase* getCab();
-    void initializeMyTripToNull();
 
+    /**
+     * get my cab
+     * @return cab of driver
+     */
+    CabBase* getCab();
+
+    /**
+     * function which initialize trip of driver
+     */
+    void initializeMyTripToNull();
     };
 
 
