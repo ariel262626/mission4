@@ -7,6 +7,7 @@
 
 BooleanToDescriptor:: BooleanToDescriptor (int descriptor){
     myDescriptor = descriptor;
+    isMoved = false;
 }
 void BooleanToDescriptor:: setMyDescriptor(int descriptor){
     myDescriptor = descriptor;

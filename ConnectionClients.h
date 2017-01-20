@@ -44,7 +44,10 @@ public:
     static void waitForTrip();
 
     static void waitForPrint();
-};
+
+    static void waitForM(int numOfThreads);
+
+    };
 
 
 #endif //MISSION4_CONNECTIONCLIENTS_H

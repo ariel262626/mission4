@@ -61,13 +61,20 @@ void* ConnectionClients:: runClients (void* socketToDriver) {
                             pthread_mutex_unlock(&lockCounter);
                             break;
                         case 7:
+                            //sleep(0.1);
                             cout<<"ConnectionClient----case 7 "<<endl;
                             // the allocate memory which placed in taxi center will be deleted when the program finish.
                             // now, call function that send special trip to shut down the program
                             pthread_mutex_lock(&lockCounter);
-                            countAction++;
                             tripToCloseClient(socketToDriver1);
+                            countAction++;
+                            if (countAction > socketToDriver1->getMyTexiCenter()->getMySocketToDriverList().size()){
+                                // for end the loop in the gameFlow
+                                countAction = socketToDriver1->getMyTexiCenter()->getMySocketToDriverList().size();
+                            }
+                            usleep(1);
                             pthread_mutex_unlock(&lockCounter);
+                            cout << "after all deletion" << endl;
                             return 0;
                         case 9:
                             for (int j = 0; j < myBoolList.size(); ++j) {
@@ -75,9 +82,8 @@ void* ConnectionClients:: runClients (void* socketToDriver) {
                                     myBoolList[j].setIsMovedToTrue();
                                 }
                             }
-                            sleep(0.1);
-                            stepClients(socketToDriver1);
                             firstNine = false;
+                            stepClients(socketToDriver1);
                             pthread_mutex_lock(&lockCounter);
                             countAction++;
                             pthread_mutex_unlock(&lockCounter);
@@ -95,6 +101,7 @@ void ConnectionClients::waitForPrint() {
     while(!isPrintAllready) {
 
     }
+    //countAction = 0;
 }
 
 void ConnectionClients::waitForTrip() {
@@ -105,8 +112,6 @@ void ConnectionClients::waitForTrip() {
 
 void ConnectionClients::tripToCloseClient(SocketToDriver* socketToDriver) {
     cout<<"im in close trip be happy"<<endl;
-    cout<<socketToDriver->getMyTexiCenter()->getMyTripList().size()<<endl;
-
     //create special trip and send ir the client in order to know when shut down the process
     if (!socketToDriver->getMyTexiCenter()->getMyTripList().empty()) {
         cout << "*********in the if************"<< endl;

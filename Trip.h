@@ -47,7 +47,7 @@ private:
     double myTariff;
     int myTime;
     vector<Node> myPath;
-    bool isTripTaken = false;
+    bool isTripTaken;
     pthread_mutex_t bfsFirst;
 
 

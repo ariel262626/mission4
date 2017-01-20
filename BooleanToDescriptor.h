@@ -9,7 +9,7 @@
 class BooleanToDescriptor {
 private:
     int myDescriptor;
-    bool isMoved = false;
+    bool isMoved;
 
 public:
     BooleanToDescriptor (int descriptor);

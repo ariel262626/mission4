@@ -37,7 +37,16 @@ Matrix2d::Matrix2d(int high, int width, vector<Point> obstaclePoint) {
 }
 
 
-Matrix2d::~Matrix2d() {}
+Matrix2d::~Matrix2d() {
+    // delete allocate nodes from the matrix
+ /*   for (int i = 999; i >= 0; i--) {
+        for (int j = 0; j < 1000; j++) {
+            delete matrix[j][i];
+        }
+    }*/
+}
+
+
 void Matrix2d::printReal(vector<Node*> traj1){
     // run the all vector from the end to begin end print. that's the way of the driver
     // in the grid acording to the bfs algorithm

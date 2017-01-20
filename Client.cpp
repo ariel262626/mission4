@@ -149,7 +149,7 @@ while(true) {
     ia2 >> newLocation;
     Point closePoint = Point (-1,-1);
     cout<< "----------------before closing-----------------"<< endl;
-    cout << newLocation << endl;
+    //cout << newLocation << endl;
     if (newLocation == closePoint){
         cout<< "----------------1before closing11111-----------------"<< endl;
         // close socket and delete all the allocate memory

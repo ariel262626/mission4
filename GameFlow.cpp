@@ -107,18 +107,19 @@ GameFlow::GameFlow() {}
                  // the allocate memory which placed in taxi center will be deleted when the program finish.
                  // now, call function that send special trip to shut down the program
                  choose = 7;
+
+                 cout<<" GameFlow ----in case 7 1112222"<<endl;
                  waitForMe(texiCenter->getMyDriverList().size());
                  cout<<" GameFlow ----in case 7 222222"<<endl;
                  for (int j = 0; j < texiCenter->getMyDriverList().size(); ++j) {
                      pthread_join(treadsOfDrivers.at(j), NULL);
                  }
                  cout<<" GameFlow ----in case 7 33333"<<endl;
+                 delete texiCenter;
                  return;
              }
              case 9: {
-                 sleep(0.1);
                  choose = 9;
-                 //sleep(0.1);
                  waitForMe(texiCenter->getMyDriverList().size());
                  // update the clock
                  clockTime.setTime();

@@ -17,6 +17,8 @@ Node::Node(Point myNode, bool myFlag) : currentPoint(0,0)
 
 Node::Node() : currentPoint(0,0) {}
 
+//Node:: ~Node(){}
+
 bool Node::getIsObstacle() {
     return isObstacle;
 }
