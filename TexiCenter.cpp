@@ -228,7 +228,7 @@ Driver* TexiCenter::getDriverWithId(int id) {
 }
 
 void TexiCenter::eraseTripWithId(int rideId) {
-    Trip *trip;
+    Trip *trip = NULL;
     for(int i = 0; i < myTripList.size(); i++) {
         if(rideId == myTripList.at(i)->getRideId()) {
             int index = getTripWithId(rideId);

@@ -56,10 +56,12 @@ void* ConnectionClients:: runClients (void* socketToDriver) {
                             break;
                         }
                         case 4:
+                            //printCurrentLocation(socketToDriver1);
+
+
                             pthread_mutex_lock(&lockCounter);
                             waitForPrint();
                             pthread_mutex_unlock(&lockCounter);
-                            isPrintAllready = false;
                             break;
                         case 7:
                             // the allocate memory which placed in taxi center will be deleted when the program finish.
@@ -99,7 +101,6 @@ void ConnectionClients::waitForPrint() {
     while(!isPrintAllready) {
 
     }
-    //countAction = 0;
 }
 
 void ConnectionClients::waitForTrip() {
@@ -312,6 +313,8 @@ void ConnectionClients::moveClient(SocketToDriver* socketToDriver) {
                 ia2 >> intFlow1;
 
                 //after we end trip
+                // lock
+                pthread_mutex_lock(&first);
                 if (socketToDriver->getMyDriver()->getMyTrip()->getEndPointOfTrip() == newPosition) {
                     // delete trip
                     Trip *temp = socketToDriver->getMyDriver()->getMyTrip();
@@ -319,7 +322,20 @@ void ConnectionClients::moveClient(SocketToDriver* socketToDriver) {
                     socketToDriver->getMyDriver()->initializeMyTripToNull();
                     firstNine = true;
                 }
+                pthread_mutex_unlock(&first);
             }
         }
     }
 }
+/*
+//case 4
+void ConnectionClients::printCurrentLocation(SocketToDriver* socketToDriver) {
+    //insert id of driver
+    int DriverId;
+    Point location;
+    cin >> DriverId;
+    // find location of the driver in the grid and print it
+    location = socketToDriver->getMyTexiCenter()->findLocationOfDriver(DriverId);
+    cout << location << endl;
+    isPrintAllready = true;
+}*/

@@ -45,7 +45,8 @@ public:
 
     static void waitForPrint();
 
-    static void waitForM(int numOfThreads);
+    static void waitForMe(int numOfThreads);
+
 
     };
 

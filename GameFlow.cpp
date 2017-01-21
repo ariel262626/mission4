@@ -100,9 +100,11 @@ GameFlow::GameFlow() {}
                  isPrintAllready = false;
                  choose = 4;
                  printCurrentLocation();
+                 isPrintAllready = false;
                  break;
              }
              case 7: {
+                 isPrintAllready = true;
                  // the allocate memory which placed in taxi center will be deleted when the program finish.
                  // now, call function that send special trip to shut down the program
                  choose = 7;
@@ -152,24 +154,6 @@ void GameFlow::waitForMe(int numOfThreads) {
 string bufferToString(char* buffer, int bufflen) {
     std::string ret(buffer, bufflen);
     return ret;
-}
-
-CabBase* GameFlow::getMyCabBase() {
-    return myCabBase;
-}
-
-
-Trip* GameFlow::getCurrentTrip() {
-    return texiCenter->getTripInIndex(0);
-}
-
-
-void GameFlow::setMyDriver() {
-    myDriver = texiCenter->getDriverInIndex(0);
-}
-
-Driver* GameFlow::getMyDriver() {
-    return texiCenter->getDriverInIndex(0);
 }
 
 void GameFlow::getNewCab() {
