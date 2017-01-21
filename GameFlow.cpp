@@ -103,18 +103,14 @@ GameFlow::GameFlow() {}
                  break;
              }
              case 7: {
-                 cout<<" GameFlow ----in case 7"<<endl;
                  // the allocate memory which placed in taxi center will be deleted when the program finish.
                  // now, call function that send special trip to shut down the program
                  choose = 7;
 
-                 cout<<" GameFlow ----in case 7 1112222"<<endl;
                  waitForMe(texiCenter->getMyDriverList().size());
-                 cout<<" GameFlow ----in case 7 222222"<<endl;
                  for (int j = 0; j < texiCenter->getMyDriverList().size(); ++j) {
                      pthread_join(treadsOfDrivers.at(j), NULL);
                  }
-                 cout<<" GameFlow ----in case 7 33333"<<endl;
                  delete texiCenter;
                  return;
              }
@@ -136,7 +132,6 @@ void GameFlow::printCurrentLocation() {
     cin >> DriverId;
     // find location of the driver in the grid and print it
     location = texiCenter->findLocationOfDriver(DriverId);
-    cout<<"im inside the print in the main of the end point of my trip be happy"<<endl;
     cout << location << endl;
     isPrintAllready = true;
 }
@@ -209,7 +204,6 @@ void GameFlow::getNewRide() {
 void* GameFlow::path(void* tripMap) {
     TripMap* tripMap1 = (TripMap*)tripMap;
     tripMap1->getTrip()->getPathOfTripClone(*tripMap1->getMap());
-    cout<<"trip num: " << tripMap1->getTrip()->getRideId() << " end"<<endl;
 }
 
 vector <SocketToDriver*> GameFlow::getDriversFromClients() {

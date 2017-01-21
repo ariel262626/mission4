@@ -59,10 +59,9 @@ void* ConnectionClients:: runClients (void* socketToDriver) {
                             pthread_mutex_lock(&lockCounter);
                             waitForPrint();
                             pthread_mutex_unlock(&lockCounter);
+                            isPrintAllready = false;
                             break;
                         case 7:
-                            //sleep(0.1);
-                            cout<<"ConnectionClient----case 7 "<<endl;
                             // the allocate memory which placed in taxi center will be deleted when the program finish.
                             // now, call function that send special trip to shut down the program
                             pthread_mutex_lock(&lockCounter);
@@ -74,7 +73,6 @@ void* ConnectionClients:: runClients (void* socketToDriver) {
                             }
                             usleep(1);
                             pthread_mutex_unlock(&lockCounter);
-                            cout << "after all deletion" << endl;
                             return 0;
                         case 9:
                             for (int j = 0; j < myBoolList.size(); ++j) {
@@ -111,10 +109,8 @@ void ConnectionClients::waitForTrip() {
 }
 
 void ConnectionClients::tripToCloseClient(SocketToDriver* socketToDriver) {
-    cout<<"im in close trip be happy"<<endl;
     //create special trip and send ir the client in order to know when shut down the process
     if (!socketToDriver->getMyTexiCenter()->getMyTripList().empty()) {
-        cout << "*********in the if************"<< endl;
         // serialize close point to client
         Point pointClose = Point(-1,-1);
         //send the close trip
@@ -127,7 +123,6 @@ void ConnectionClients::tripToCloseClient(SocketToDriver* socketToDriver) {
         //here we sent back the right trip
         socketToDriver->getMyTexiCenter()->getMyTcp()->sendData(serial_str,
                                                                 socketToDriver->getMyDescriptor());
-        cout<<"send point close from server"<<endl; /////////////////////////////////////////////////////////
     }
     Trip* tripClose = new Trip(-1, 0, 0, 0, 0, 0, 0, 0);
     //send the close trip
@@ -140,7 +135,6 @@ void ConnectionClients::tripToCloseClient(SocketToDriver* socketToDriver) {
     //here we sent back the right trip
     socketToDriver->getMyTexiCenter()->getMyTcp()->sendData(serial_str1,
                                                             socketToDriver->getMyDescriptor());
-    cout<<"send trip close from server"<<endl; /////////////////////////////////////////////////////////
     // delete tripClose
     delete tripClose;
 }
@@ -198,6 +192,7 @@ vector<Driver*> ConnectionClients::getAllDriversAtThisPoint(vector<Driver*> myDr
 void ConnectionClients::stepClients(SocketToDriver* socketToDriver) {
     // for case we have advance without trip
         sendTripToClient(socketToDriver);
+    // in first time we get 9 from user we need only put the trip to driver and we must'nt step over
         if(!firstNine)
             moveClient(socketToDriver);
         }
@@ -320,9 +315,7 @@ void ConnectionClients::moveClient(SocketToDriver* socketToDriver) {
                 if (socketToDriver->getMyDriver()->getMyTrip()->getEndPointOfTrip() == newPosition) {
                     // delete trip
                     Trip *temp = socketToDriver->getMyDriver()->getMyTrip();
-                    cout<< "before delete trip in connectionClients" << endl;
                     socketToDriver->getMyTexiCenter()->eraseTripWithId(temp->getRideId());
-                    cout<< "after delete trip in connectionClients" << endl;
                     socketToDriver->getMyDriver()->initializeMyTripToNull();
                     firstNine = true;
                 }
