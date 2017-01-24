@@ -24,6 +24,7 @@ public:
      * @param map
      */
     TripMap(Trip* trip, Matrix2d* map);
+    ~TripMap(){ }
 
     /**
      * get my trip

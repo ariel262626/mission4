@@ -28,6 +28,8 @@ vector <BooleanToDescriptor> myBoolList;
 pthread_mutex_t first;
 pthread_mutex_t lockCounter;
 bool iFirst = true;
+/* in first press of 9, we need only to set trip to driver without move.
+ therefor we create a boolean that give us indicate for that */
 bool firstNine = true;
 int countAction;
 bool isTripReady;
@@ -56,12 +58,10 @@ void* ConnectionClients:: runClients (void* socketToDriver) {
                             break;
                         }
                         case 4:
-                            //printCurrentLocation(socketToDriver1);
-
-
                             pthread_mutex_lock(&lockCounter);
                             waitForPrint();
                             pthread_mutex_unlock(&lockCounter);
+                            usleep (0.5);
                             break;
                         case 7:
                             // the allocate memory which placed in taxi center will be deleted when the program finish.
@@ -77,16 +77,19 @@ void* ConnectionClients:: runClients (void* socketToDriver) {
                             pthread_mutex_unlock(&lockCounter);
                             return 0;
                         case 9:
+                            // check if the current thread is actually need to move or it's already move before
                             for (int j = 0; j < myBoolList.size(); ++j) {
                                 if (myBoolList[j].getMyDescriptor() == socketToDriver1->getMyDescriptor()) {
                                     myBoolList[j].setIsMovedToTrue();
                                 }
                             }
+                            // after the first enter of us to case 9, we will change the boolean to false
                             firstNine = false;
                             stepClients(socketToDriver1);
                             pthread_mutex_lock(&lockCounter);
                             countAction++;
                             pthread_mutex_unlock(&lockCounter);
+                            usleep (0.1);
                             break;
                         default:
                             break;
@@ -99,13 +102,11 @@ void* ConnectionClients:: runClients (void* socketToDriver) {
 
 void ConnectionClients::waitForPrint() {
     while(!isPrintAllready) {
-
     }
 }
 
 void ConnectionClients::waitForTrip() {
     while(!isTripReady) {
-
     }
 }
 
@@ -327,15 +328,3 @@ void ConnectionClients::moveClient(SocketToDriver* socketToDriver) {
         }
     }
 }
-/*
-//case 4
-void ConnectionClients::printCurrentLocation(SocketToDriver* socketToDriver) {
-    //insert id of driver
-    int DriverId;
-    Point location;
-    cin >> DriverId;
-    // find location of the driver in the grid and print it
-    location = socketToDriver->getMyTexiCenter()->findLocationOfDriver(DriverId);
-    cout << location << endl;
-    isPrintAllready = true;
-}*/

@@ -31,9 +31,16 @@ TexiCenter::TexiCenter() {}
 
 TexiCenter::~TexiCenter() {
     // delete the all new allocation memory before the object of taxi center is over
+    // delete allocate nodes from the matrix
+    for (int i = 999; i >= 0; i--) {
+        for (int j = 0; j < 1000; j++) {
+            delete this->getMap()->matrix[j][i];
+        }
+    }
     delete myMap;
     for (int i = 0; i < myDriversList.size(); i++) {
         delete getDriverInIndex(i);
+        delete getMySocketToDriverList().at(i);
     }
     for (int i = 0; i < myStandartCabList.size(); i++) {
         delete getCabInIndex(i);

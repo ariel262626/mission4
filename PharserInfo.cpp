@@ -24,6 +24,12 @@ Matrix2d* PharserInfo:: createGrid (){
     //split the coordinates for the program and pharse them to int
     int width=stoi(str1);
     int high=stoi(str2);
+
+    if (high <= 0 || width<= 0){
+        cin.clear();
+
+    }
+
     //now erase str1, str2
     str1 = str1.erase(0,index);
     str2 = str2.erase(0,index);
@@ -74,7 +80,7 @@ CabBase* PharserInfo:: createVehicle (){
     char color = getOneElementchar();
 
     //create new cab
-    CabBase *vehicle = new CabBase(vehicleId, cabType, manufacturer, color,/* NULL,*/ NULL);
+    CabBase *vehicle = new CabBase(vehicleId, cabType, manufacturer, color, NULL);
     return vehicle;
 }
 

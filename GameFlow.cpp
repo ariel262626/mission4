@@ -29,7 +29,6 @@ extern bool isTripReady;
 extern bool isPrintAllready;
 vector<pthread_t> treadsOfDrivers;
 
-pthread_mutex_t lockTrip;
 GameFlow:: GameFlow (Socket* tcp){
     myTcp = tcp;
     texiCenter = new TexiCenter();
@@ -45,7 +44,7 @@ GameFlow::GameFlow() {}
      string stringGrid, stringObst;
      vector<Point> listObstacle;
      Driver *driver;
-     ConnectionClients connectionClients = ConnectionClients();
+    // ConnectionClients connectionClients = ConnectionClients();
      vector<SocketToDriver *> listSocketToDriver;
      //find high and width -> use in class of pharser for translate the data
      getline(cin, stringGrid);
@@ -114,6 +113,7 @@ GameFlow::GameFlow() {}
                      pthread_join(treadsOfDrivers.at(j), NULL);
                  }
                  delete texiCenter;
+                 delete myTcp;
                  return;
              }
              case 9: {
@@ -182,6 +182,7 @@ void GameFlow::getNewRide() {
     texiCenter->addTripToTripLIst(trip);
     pthread_create(&treadOfTrip, &attr, GameFlow::path, tripMap);
     pthread_join(treadOfTrip, NULL);
+    delete tripMap;
     isTripReady = true;
 }
 

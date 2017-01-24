@@ -120,8 +120,10 @@ while(true) {
     // update the trip to driver for each time we get new trip (we get the new trip
     // only in case the driver finish the last trip)
     driver->setTrip(trip);
-    if (driver->getMyTrip()->getRideId() == -1){
-        return 0;
+    if (driver->getMyTrip() != NULL) {
+        if (driver->getMyTrip()->getRideId() == -1) {
+            return 0;
+        }
     }
 
     //serialize the int of '-1' for the flow
