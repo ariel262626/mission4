@@ -5,6 +5,7 @@
 #include <cstring>
 #include "Driver.h"
 #include "PharserInfo.h"
+bool isargumentValid;
 
 /**
 this class charge to pharse the input of the user and create corresponding objgects.
@@ -25,10 +26,18 @@ Matrix2d* PharserInfo:: createGrid (){
     int width=stoi(str1);
     int high=stoi(str2);
 
-    if (high <= 0 || width<= 0){
-        cin.clear();
+    while (high <= 0 || width <= 0) {
+        getline(cin, myInput);
+        //find the " " in the input of the user
+        index = myInput.find(" ");
+        //enter each of the strings to str.
+        str1 = myInput.substr(0,index);
+        str2 = myInput.erase(0,index+1);
 
-    }
+        //split the coordinates for the program and pharse them to int
+        width=stoi(str1);
+        high=stoi(str2);
+        }
 
     //now erase str1, str2
     str1 = str1.erase(0,index);
@@ -85,18 +94,31 @@ CabBase* PharserInfo:: createVehicle (){
 }
 
 vector <Point> PharserInfo:: obstaclePoints (){
-    int index1,index2;
-    string str1, str2, p;
     vector <Point> listObstacle;
     // take the string of the user and pharse it to integer
     int numOfObstaclePoints = stoi(myInput);
+    // check if number of obstacles is valid
+    if (numOfObstaclePoints < 0) {
+        isargumentValid = false;
+        return listObstacle;
+    }
     // if 0 -> we won't expect from the user to insert obstacle points
     if (numOfObstaclePoints == 0){
         return listObstacle;
     }
+
+    listObstacle = getMyListObstacles (numOfObstaclePoints);
+    return listObstacle;
+}
+
+vector <Point> PharserInfo:: getMyListObstacles (int numOfObstaclePoints){
+    int index1,index2;
+    string str1, str2, p;
+    vector <Point> listObstacle;
     // iterate on number of obstacle and request the user to enter the obstacles
     for (int i = 0; i < numOfObstaclePoints; i++) {
         cin >> p;
+        isargumentValid = checkIfObstaclesValid (p);
         // pharse the data
         int middleIndex = p.find(",");
         str1 = p.substr(0, middleIndex);
@@ -108,9 +130,19 @@ vector <Point> PharserInfo:: obstaclePoints (){
         // enter the points into the vector
         listObstacle.push_back(obstacle);
     }
-    return listObstacle;
 }
 
+bool PharserInfo:: checkIfObstaclesValid(string point){
+    int middleIndex = point.find(",");
+    if (middleIndex <= 0){
+        return false;
+    }
+    string str1 = point.substr(0, middleIndex);
+    string str2 = point.erase(0, middleIndex + 1);
+    if (str2.find(",") >= 0){
+        return false;
+    }
+}
 
 int PharserInfo:: getOneElementInt (){
     int index;

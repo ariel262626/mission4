@@ -27,6 +27,7 @@ extern vector <BooleanToDescriptor> myBoolList;
 extern int countAction;
 extern bool isTripReady;
 extern bool isPrintAllready;
+extern bool isargumentValid;
 vector<pthread_t> treadsOfDrivers;
 
 GameFlow:: GameFlow (Socket* tcp){
@@ -38,25 +39,29 @@ GameFlow::GameFlow() {}
 
  void GameFlow:: run() {
      isPrintAllready = false;
+     isargumentValid = true;
      // here we will put the all information
      int localChoose;
      texiCenter->setMyTcp(myTcp);
      string stringGrid, stringObst;
      vector<Point> listObstacle;
      Driver *driver;
+     Matrix2d *newMap;
     // ConnectionClients connectionClients = ConnectionClients();
      vector<SocketToDriver *> listSocketToDriver;
-     //find high and width -> use in class of pharser for translate the data
-     getline(cin, stringGrid);
-     PharserInfo pharseGrid = PharserInfo(stringGrid);
-     //create map
-     Matrix2d *newMap = pharseGrid.createGrid();
-     // insert obstacle points
-     cin >> stringObst;
-     // insert obstacles,if the number is big from zero, the function request from the user
-     // to insert the obstacle points.
-     PharserInfo pharseObstacles = PharserInfo(stringObst);
-     listObstacle = pharseObstacles.obstaclePoints();
+     do {
+         //find high and width -> use in class of pharser for translate the data
+         getline(cin, stringGrid);
+         PharserInfo pharseGrid = PharserInfo(stringGrid);
+         //create map
+         newMap = pharseGrid.createGrid();
+         // insert obstacle points
+         cin >> stringObst;
+         // insert obstacles,if the number is big from zero, the function request from the user
+         // to insert the obstacle points.
+         PharserInfo pharseObstacles = PharserInfo(stringObst);
+         listObstacle = pharseObstacles.obstaclePoints();
+     } while (isargumentValid == false);
      // insert the list of obstacles to the map (grid)
      newMap->setobstaclePoint(listObstacle);
      // insert the map to taxi center, because the taxi center is in charge of all the programm actualy
@@ -122,6 +127,8 @@ GameFlow::GameFlow() {}
                  // update the clock
                  clockTime.setTime();
              }
+             default:
+                 cout<< "-1" << endl;
          }
      }
  }

@@ -81,5 +81,11 @@ public:
      */
     void eraseComma (int index);
 
+    vector <Point> getMyListObstacles (int numOfObstaclePoints);
+
+    bool checkIfObstaclesValid();
+
+    bool checkIfObstaclesValid(string point);
+
 };
 #endif //MISSION2_PHARSERINFO_H
