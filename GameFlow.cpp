@@ -27,7 +27,7 @@ extern vector <BooleanToDescriptor> myBoolList;
 extern int countAction;
 extern bool isTripReady;
 extern bool isPrintAllready;
-extern bool isargumentValid;
+extern bool isArgumentValid;
 vector<pthread_t> treadsOfDrivers;
 
 GameFlow:: GameFlow (Socket* tcp){
@@ -39,7 +39,7 @@ GameFlow::GameFlow() {}
 
  void GameFlow:: run() {
      isPrintAllready = false;
-     isargumentValid = true;
+     isArgumentValid = true;
      // here we will put the all information
      int localChoose;
      texiCenter->setMyTcp(myTcp);
@@ -61,7 +61,14 @@ GameFlow::GameFlow() {}
          // to insert the obstacle points.
          PharserInfo pharseObstacles = PharserInfo(stringObst);
          listObstacle = pharseObstacles.obstaclePoints();
-     } while (isargumentValid == false);
+         // for the next getLine()
+         //cin.ignore();
+         //cin.clear();
+         // if the input not valid and we need another input, first delete the map from heap.
+         if (!isArgumentValid){
+             delete newMap;
+         }
+     } while (!isArgumentValid);
      // insert the list of obstacles to the map (grid)
      newMap->setobstaclePoint(listObstacle);
      // insert the map to taxi center, because the taxi center is in charge of all the programm actualy
