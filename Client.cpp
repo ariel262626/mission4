@@ -33,6 +33,17 @@ string bufferrToString(char* buffer, int bufflen)
 }
 
 int main(int argc, char *argv[]) {
+    // get data of driver from the user
+    string insertdriver;
+    getline(cin, insertdriver);
+    // send the string of user to class of parser
+    PharserInfo pharser = PharserInfo(insertdriver);
+    // we will get now new driver
+    Driver *driver = pharser.createDriver();
+    //if the driver is not valid.
+    if(driver->getId() == -1) {
+        return 0;
+    }
     //argv[2] = the port of the server
     Socket* tcp = new Tcp(0, stoi(argv[2]));
     //bind the server if fail do fail argv[1] = ip
@@ -40,14 +51,6 @@ int main(int argc, char *argv[]) {
     int socketServer = tcp->initialize();
     //for serialization create buffer
     char buffer[1024];
-
-    // get data of driver from the user
-    string insertdriver;
-    cin >> insertdriver;
-    // send the string of user to class of parser
-    PharserInfo pharser = PharserInfo(insertdriver);
-    // we will get now new driver
-    Driver *driver = pharser.createDriver();
 
 
     //serialize the driver for send it to server

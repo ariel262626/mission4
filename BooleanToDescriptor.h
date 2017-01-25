@@ -13,6 +13,7 @@ private:
 
 public:
     BooleanToDescriptor (int descriptor);
+    void setMyDescriptor(int descriptor);
     int getMyDescriptor();
     void setIsMovedToFalse ();
     void setIsMovedToTrue ();

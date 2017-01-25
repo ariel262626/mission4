@@ -16,29 +16,18 @@ class GameFlow {
 private:
     Socket* myTcp;
     TexiCenter* texiCenter;
+    Driver* myDriver;
+    CabBase* myCabBase;
 public:
-    /**
-     * constructor
-     * @param socket
-     */
     GameFlow (Socket* socket);
-
-    /**
-     * default constructor
-     */
     GameFlow();
-
-    /**
-     * function which in charge to run the flow of the game. it's handle with
-     * any order that come from the console
-     */
     void run();
 
     /**
      * get the driver from client
      * @return driver
      */
-    vector <SocketToDriver*> getDriversFromClients();
+    vector <SocketToDriver*> getDriversFromClients(int numberOfDrivers);
 
 
     /**
@@ -57,25 +46,61 @@ public:
      */
     void getNewCab();
 
+
+
     /**
-     * print my location
+     * sent close to client
      */
+    void tripToCloseClient();
+
+
+    /**
+     * sent trip to client
+     */
+    void sendTripToClient();
+
+    /**
+     * get mydriver
+     * @return mydriver
+     */
+    Driver* getMyDriver();
+
+    /**
+     * set mydriver
+     */
+    void setMyDriver();
+
+    /**
+     * set mycab
+     */
+   // void setMyCabBase();
+
+
+    /**
+     * get current trip
+     * @return our trip
+     */
+    Trip* getCurrentTrip();
+
+    /**
+     * get my cabBase
+     * @return mycabBase
+     */
+    CabBase* getMyCabBase();
+
     void printCurrentLocation();
 
-    /**
-     * static function. each trip we get from user, we open thread for this, and
-     * calculate the trip (with the bfs)
-     * @param tripMap
-     * @return the path that calculated by bfs
-     */
     static void* path(void* tripMap);
 
-    /**
-     *
-     * @param numOfThreads of drivers
-     */
     void waitForMe(int numOfThreads);
-};
+
+    void waitForExit();
+
+    void waitForAllToEXit();
+
+    bool checkIsOneNumber(string myInput);
+
+    };
 
 
 #endif //MISSION2_GAMEFLOW_H

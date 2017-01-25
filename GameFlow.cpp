@@ -1,7 +1,7 @@
 //
 // Created by ariel on 30/11/16.
 //
-
+#include <cstring>
 #include "SocketToDriver.h"
 #include "GameFlow.h"
 #include "PharserInfo.h"
@@ -28,6 +28,7 @@ extern int countAction;
 extern bool isTripReady;
 extern bool isPrintAllready;
 extern bool isArgumentValid;
+//bool isValid;
 vector<pthread_t> treadsOfDrivers;
 
 GameFlow:: GameFlow (Socket* tcp){
@@ -40,6 +41,7 @@ GameFlow::GameFlow() {}
  void GameFlow:: run() {
      isPrintAllready = false;
      isArgumentValid = true;
+     bool switchCaseValid = true;
      // here we will put the all information
      int localChoose;
      texiCenter->setMyTcp(myTcp);
@@ -85,7 +87,19 @@ GameFlow::GameFlow() {}
          }
          switch(localChoose) {
              case 1: {
-                 listSocketToDriver = getDriversFromClients();
+                 int numOfDrivers;
+                 string myInput;
+                 //enter dummy of cin
+                 cin.ignore();
+                 //get from user how much drivers we need to get
+                 getline(cin, myInput);
+                 cout<<myInput<<endl;
+                 //valid check
+                 if(!checkIsOneNumber(myInput)) {
+                     cout<< "-1" << endl;
+                     break;
+                 }
+                 listSocketToDriver = getDriversFromClients(numOfDrivers);
                  for (int i = 0; i < texiCenter->getMyCabBaseList().size(); i++) {
                      driver = texiCenter->getDriverInIndex(i);
                      texiCenter->setCabToDriver(driver);
@@ -100,6 +114,10 @@ GameFlow::GameFlow() {}
                  isTripReady = false;
                  choose = 2;
                  getNewRide();
+                 if(!isArgumentValid) {
+                     cout<< "-1" << endl;
+                     break;
+                 }
                  break;
              }
              case 3: {
@@ -139,6 +157,23 @@ GameFlow::GameFlow() {}
          }
      }
  }
+//valid Inputs
+bool GameFlow::checkIsOneNumber(string myInput) {
+    int numDrivers;
+    if(myInput.length() > 1) {
+        return false;
+    }
+    if(!isdigit(myInput[0])) {
+        return false;
+    } else {
+        numDrivers = stoi(myInput);
+    }
+    if(numDrivers < 0) {
+        return false;
+    }
+    return true;
+}
+
 
 //case 4
 void GameFlow::printCurrentLocation() {
@@ -173,10 +208,14 @@ string bufferToString(char* buffer, int bufflen) {
 void GameFlow::getNewCab() {
     // get new cab from the user
     string insertVehicle;
-    cin >> insertVehicle;
+    //cin >> insertVehicle;
+    getline(cin, insertVehicle);
     // use in the pharser class to handle the data
     PharserInfo pharser = PharserInfo(insertVehicle);
     CabBase* vehicle = pharser.createVehicle();
+    if(vehicle->getCabId() == -1) {
+        return;
+    }
     // add cab to taxi center
     texiCenter->addCabToCabsLIst(vehicle);
 }
@@ -187,15 +226,24 @@ void GameFlow::getNewRide() {
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
     // get new ride from the user
     string insertRide;
-    cin >> insertRide;
+    //cin >> insertRide;
+    getline(cin, insertRide);
     // use in the pharser class to handle the data
     PharserInfo pharser = PharserInfo(insertRide);
     Trip* trip = pharser.createNewRide();
+    if(trip->getRideId() == -1) {
+        return;
+    }
     // add trip to taxi center - we need to sort the trip list according the time
     TripMap* tripMap = new TripMap(trip, texiCenter->getMap());
     texiCenter->addTripToTripLIst(trip);
     pthread_create(&treadOfTrip, &attr, GameFlow::path, tripMap);
     pthread_join(treadOfTrip, NULL);
+    //path is not valid
+    if(trip->getMyPath().empty()) {
+        int TripToRemoveId = trip->getRideId();
+        texiCenter->eraseTripWithId(TripToRemoveId);
+    }
     delete tripMap;
     isTripReady = true;
 }
@@ -205,12 +253,10 @@ void* GameFlow::path(void* tripMap) {
     tripMap1->getTrip()->getPathOfTripClone(*tripMap1->getMap());
 }
 
-vector <SocketToDriver*> GameFlow::getDriversFromClients() {
+vector <SocketToDriver*> GameFlow::getDriversFromClients(int numberOfDrivers) {
     Driver *driver;
     char buffer[1024];
-    int numberOfDrivers;
-    //get from user how much drivers we need to get
-    cin >> numberOfDrivers;
+    //int numberOfDrivers;
     //will count my actions of thread
     countAction = 0;
     int const amountsTreadsofClients = numberOfDrivers;

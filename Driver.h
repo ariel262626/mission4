@@ -91,6 +91,11 @@ public:
      */
     int getId();
     /**
+    * set id of the driver
+    *  id of the driver
+    */
+    void setId(int id);
+    /**
      * set how many trip
      */
     void setCountTrips();
@@ -117,17 +122,9 @@ public:
      * @param newCab  - the cab to set
      */
     void setCab(CabBase* newCab);
-
-    /**
-     * get my cab
-     * @return cab of driver
-     */
     CabBase* getCab();
-
-    /**
-     * function which initialize trip of driver
-     */
     void initializeMyTripToNull();
+
     };
 
 

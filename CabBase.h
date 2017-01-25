@@ -94,6 +94,11 @@ public:
      */
     void setMap(Matrix2d* map);
 
+    /**
+    * set id
+    * @param  id
+    */
+    void setCabID(int id);
     };
 
 #endif //MISSION2_CABBASE_H

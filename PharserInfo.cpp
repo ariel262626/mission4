@@ -71,8 +71,14 @@ Matrix2d* PharserInfo:: createGrid (){
     return map;
 }
 
-Driver* PharserInfo:: createDriver (){
-// get from the user: id, age status, experience and cabId of the driver
+Driver* PharserInfo::createDriver () {
+    Driver* driver;
+    if(!checkIfDriverValid(myInput)) {
+        driver->setId(-1);
+        isArgumentValid = false;
+        return driver;
+    }
+    // get from the user: id, age status, experience and cabId of the driver
     // use in methods to translate the data
     int driverId = getOneElementInt();
     int driverAge = getOneElementInt();
@@ -82,14 +88,19 @@ Driver* PharserInfo:: createDriver (){
 
     // create new driver and return it to the main
     CabBase cab = CabBase();
-    Driver *driver = new Driver(driverId, driverAge, driverStatus, driverExperience, driverVehicleId, &cab);
+    driver = new Driver(driverId, driverAge, driverStatus, driverExperience, driverVehicleId, &cab);
     return driver;
 }
 
-Trip* PharserInfo:: createNewRide (){
+Trip* PharserInfo::createNewRide (){
+    Trip* trip;
 // get from the user: ridr id, start point, end point, number of passengers and tarrif
 // of the cab to create ride
-
+    if(!checkIfTripValid(myInput)) {
+        trip->setRideId(-1);
+        isArgumentValid = false;
+        return trip;
+    }
     int rideId = getOneElementInt();
     int startX = getOneElementInt();
     int startY = getOneElementInt();
@@ -99,21 +110,34 @@ Trip* PharserInfo:: createNewRide (){
     double tariff = getOneElementDouble();
     int time = getOneElementInt();
     // create trip with the data of we got from the user
-    Trip* trip = new Trip(rideId, startX, startY, endX, endY, numPassenger, tariff, time);
+    trip = new Trip(rideId, startX, startY, endX, endY, numPassenger, tariff, time);
     return trip;
 }
 
-CabBase* PharserInfo:: createVehicle (){
-
+CabBase* PharserInfo::createVehicle (){
+    CabBase* cabBase;
+    if(!checkIfCabBaseValid(myInput)) {
+        cabBase->setCabID(-1);
+        isArgumentValid = false;
+        return cabBase;
+    }
     // pharser the data by the functions
     int vehicleId = getOneElementInt();
     int cabType = getOneElementInt();
     char manufacturer = getOneElementchar();
     char color = getOneElementchar();
-
     //create new cab
     CabBase *vehicle = new CabBase(vehicleId, cabType, manufacturer, color, NULL);
     return vehicle;
+}
+
+bool PharserInfo::checkStringIfDigit(string myInput) {
+    for (int i = 0; i < myInput.size(); i++) {
+        if (!isdigit(myInput[i])) {
+            isArgumentValid = false;
+            cout << "-1" << endl;
+        }
+    }
 }
 
 vector <Point> PharserInfo:: obstaclePoints (){
@@ -174,6 +198,95 @@ vector <Point> PharserInfo:: getMyListObstacles (int numOfObstaclePoints){
     }
 }
 
+bool PharserInfo::checkIfDriverValid(string myInput) {
+    int driverId = getOneElementInt();
+    if((driverId < 0) || (!isArgumentValid)) {
+        return false;
+    }
+    int driverAge = getOneElementInt();
+    if((driverAge < 0)|| (!isArgumentValid)) {
+        return false;
+    }
+    char driverStatus = getOneElementchar();
+    if((driverStatus != 'S')&&(driverStatus != 'M')&&(driverStatus != 'D')&&(driverStatus != 'W')) {
+        return false;
+    }
+    int driverExperience = getOneElementInt();
+    if((driverExperience < 0)||(!isArgumentValid)) {
+        return false;
+    }
+    int driverVehicleId = getOneElementInt();
+    if((driverVehicleId < 0)||(!isArgumentValid)) {
+        return false;
+    }
+    //to many arguments
+    if(myInput.length() > 0) {
+        return false;
+    }
+}
+
+bool PharserInfo::checkIfCabBaseValid(string myInput) {
+    int vehicleId = getOneElementInt();
+    if((vehicleId < 0)||(!isArgumentValid)) {
+        return false;
+    }
+    int cabType = getOneElementInt();
+    if((cabType < 0)||(cabType != 1)&&(cabType != 2)||(!isArgumentValid)) {
+        return false;
+    }
+    char manufacturer = getOneElementchar();
+    if((manufacturer != 'H')&&(manufacturer != 'S')&&(manufacturer != 'T')&&(manufacturer != 'F')) {
+        return false;
+    }
+    char color = getOneElementchar();
+    if((color != 'R')&&(color != 'B')&&(color != 'G')&&(color != 'P')&&(color != 'W')) {
+        return false;
+    }
+    //to many arguments
+    if(myInput.length() > 0) {
+        return false;
+    }
+}
+
+bool PharserInfo::checkIfTripValid(string myInput) {
+    int rideId = getOneElementInt();
+    if((rideId < 0)||(!isArgumentValid)) {
+        return false;
+    }
+    int startX = getOneElementInt();
+    if((startX < 0)||(!isArgumentValid)) {
+        return false;
+    }
+    int startY = getOneElementInt();
+    if((startY < 0)||(!isArgumentValid)) {
+        return false;
+    }
+    int endX = getOneElementInt();
+    if((endX  < 0)||(!isArgumentValid)) {
+        return false;
+    }
+    int endY = getOneElementInt();
+    if((endY  < 0)||(!isArgumentValid)) {
+        return false;
+    }
+    int numPassenger = getOneElementInt();
+    if((numPassenger  < 0)||(!isArgumentValid)) {
+        return false;
+    }
+    double tariff = getOneElementDouble();
+    if(tariff  < 0) {
+        return false;
+    }
+    int time = getOneElementInt();
+    if((time  < 0)||(!isArgumentValid)) {
+        return false;
+    }
+    //to many arguments
+    if(myInput.length() > 0) {
+        return false;
+    }
+}
+
 bool PharserInfo:: checkIfObstaclesValid(string point){
     int middleIndex = point.find(",");
     if (middleIndex <= 0){
@@ -194,7 +307,6 @@ bool PharserInfo:: checkIfObstaclesValid(string point){
             return false;
         }
     }
-
     int index1 = stoi(str1);
     int index2 = stoi(str2);
     if (index1 < 0 || index2 < 0){
@@ -204,11 +316,15 @@ bool PharserInfo:: checkIfObstaclesValid(string point){
 
 }
 
-int PharserInfo:: getOneElementInt (){
+int PharserInfo:: getOneElementInt() {
     int index;
     string str1;
     index = myInput.find(",");
     str1 = myInput.substr(0, index);
+    if(!checkStringIfDigit(str1)) {
+        isArgumentValid = false;
+        return 0;
+    }
     int elm = stoi(str1);
     // delete from start to ','
     eraseComma(index);

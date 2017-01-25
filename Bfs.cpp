@@ -8,7 +8,7 @@
 #include "Bfs.h"
 
 using namespace std;
-
+bool pathIsBlocked = false;
 //constructor
 Bfs::Bfs(Node start, Node end, int dimention, Grid *matrix)
 {
@@ -42,6 +42,11 @@ vector<Node*> Bfs:: runBfs(Node* myStarts, Node* myEndS) {
     manageQueue(trip_queue, trip_stack, myStarts);
     //until the queue is not empty
     while (!trip_queue.empty()) {
+        //if the path is blocked the bool is on and we return an empty path.
+        if(pathIsBlocked) {
+            vector<Node *> emptyPath;
+            return emptyPath;
+        }
         Node* last_in_q = trip_queue.front();
         //if the last node we pushed to the stack is the destination node-print.
         if (*last_in_q == *myEndS) {
@@ -54,6 +59,7 @@ vector<Node*> Bfs:: runBfs(Node* myStarts, Node* myEndS) {
             }
             return trajectory;
         }
+
         //pop the last node we check.
         trip_queue.pop();
         Node* next_node = trip_queue.front();
@@ -77,6 +83,14 @@ vector<Node*> Bfs:: runBfs(Node* myStarts, Node* myEndS) {
 void Bfs:: manageQueue(queue<Node*> &queue1, stack<Node*> &stack1, Node *currentNode) {
     //return array of neibours.
     vector<Node*> neighbours = myMatrix->getNiebours(*currentNode);
+    //if the path is blocked we cant find path.
+    for(int i = 0; i < numOfNeibours; i++) {
+        if((neighbours[i]->getPointOfnode().GetX() == -1)||(neighbours[i]->getFlag())
+           ||(neighbours[i]->getIsObstacle())){
+            pathIsBlocked = true;
+            return;
+        }
+    }
     for (int i = 0; i < numOfNeibours; i++) {
         //put in the neibours array the right neibours.
         // if the neighbour is exist...not -1 -1

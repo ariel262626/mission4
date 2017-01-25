@@ -87,5 +87,12 @@ public:
 
     bool checkIfObstaclesValid(string point);
 
-};
+    bool checkIfTripValid(string myInput);
+
+    bool checkIfCabBaseValid(string myInput);
+
+    bool checkIfDriverValid(string myInput);
+
+    bool checkStringIfDigit(string myInput);
+    };
 #endif //MISSION2_PHARSERINFO_H

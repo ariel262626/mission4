@@ -26,6 +26,10 @@ int CabBase::getCabId() {
     return myId;
 }
 
+void CabBase::setCabID(int id) {
+    myId = id;
+}
+
 int CabBase::getKilometersOfCab() {
     return myKilometers;
 }

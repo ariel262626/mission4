@@ -55,8 +55,6 @@ public:
     //constructors
     Trip(int rideId, int xStart, int yStart, int xEnd, int yEnd, int passengerNumber, double tarrif, int time);
     Trip();
-
-    //destructor
     ~Trip(){ };
 
     /**
@@ -115,33 +113,20 @@ public:
     void setTime();
 
     /**
+    * set rideId of the trip
+    */
+    void setRideId(int id);
+
+    /**
      * get time of the trip
      * @return
      */
     int getTime();
 
-    /**
-     * if the trip is taken-> update the flag
-     */
     void setIsTakenTrue ();
-
-    /**
-     * if the time of trip not arrive and we take it-> return
-     * the flag back to false
-     */
     void setIsTakenFalse ();
 
-    /**
-     * return my boolean 'is trip taken'
-     * @return boolean
-     */
     bool getIsTaken();
-
-    /**
-     * we calculate the bfs when we create the thread in class trip, and here
-     * we return thr path
-     * @return path of bfs
-     */
     vector<Node> getMyPath();
 };
 

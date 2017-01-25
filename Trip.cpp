@@ -50,6 +50,11 @@ vector<Node> Trip::getPathOfTripClone(Matrix2d map) {
     Bfs bfs = Bfs(startNode, endNode, 2, &map);
     //we get all the points of the trip. run the bfs for that
     listOfNodeInTrip = bfs.runBfs(&startNode, &endNode);
+    //if the path is empty
+    if(listOfNodeInTrip.empty()) {
+        vector<Node> emptyPath;
+        myPath = emptyPath;
+    }
     for (int i = 0; i < listOfNodeInTrip.size(); ++i) {
         listOfNodeInTripclone.push_back(*listOfNodeInTrip.at(i));
     }
@@ -88,6 +93,10 @@ void Trip::setPassengersNumber(int x) {
 
 void Trip::setTime() {
     myTime++;
+}
+
+void Trip::setRideId(int id) {
+    myRideId = id;
 }
 
 int Trip::getTime() {
