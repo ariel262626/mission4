@@ -88,19 +88,41 @@ public:
      */
     CabBase* getMyCabBase();
 
+    /**
+     * print current location
+     */
     void printCurrentLocation();
 
+    /**
+     * get path
+     * @param tripMap
+     * @return void*
+     */
     static void* path(void* tripMap);
 
+    /**
+     * wait for me to end
+     * @param numOfThreads-t
+     */
     void waitForMe(int numOfThreads);
 
+    /**
+     * wait before exit
+     */
     void waitForExit();
 
+    /**
+     * wait for all to exit
+     */
     void waitForAllToEXit();
 
+    /**
+     * check if my input is one number
+     * @param myInput
+     * @return bool
+     */
     bool checkIsOneNumber(string myInput);
 
     };
-
 
 #endif //MISSION2_GAMEFLOW_H

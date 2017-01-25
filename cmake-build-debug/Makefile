@@ -760,6 +760,36 @@ TexiCenter.cpp.s:
 	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/TexiCenter.cpp.s
 .PHONY : TexiCenter.cpp.s
 
+ThreadPoolTrips.o: ThreadPoolTrips.cpp.o
+
+.PHONY : ThreadPoolTrips.o
+
+# target to build an object file
+ThreadPoolTrips.cpp.o:
+	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/ThreadPoolTrips.cpp.o
+	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/ThreadPoolTrips.cpp.o
+.PHONY : ThreadPoolTrips.cpp.o
+
+ThreadPoolTrips.i: ThreadPoolTrips.cpp.i
+
+.PHONY : ThreadPoolTrips.i
+
+# target to preprocess a source file
+ThreadPoolTrips.cpp.i:
+	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/ThreadPoolTrips.cpp.i
+	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/ThreadPoolTrips.cpp.i
+.PHONY : ThreadPoolTrips.cpp.i
+
+ThreadPoolTrips.s: ThreadPoolTrips.cpp.s
+
+.PHONY : ThreadPoolTrips.s
+
+# target to generate assembly for a file
+ThreadPoolTrips.cpp.s:
+	$(MAKE) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/ThreadPoolTrips.cpp.s
+	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/ThreadPoolTrips.cpp.s
+.PHONY : ThreadPoolTrips.cpp.s
+
 Trip.o: Trip.cpp.o
 
 .PHONY : Trip.o
@@ -893,6 +923,9 @@ help:
 	@echo "... TexiCenter.o"
 	@echo "... TexiCenter.i"
 	@echo "... TexiCenter.s"
+	@echo "... ThreadPoolTrips.o"
+	@echo "... ThreadPoolTrips.i"
+	@echo "... ThreadPoolTrips.s"
 	@echo "... Trip.o"
 	@echo "... Trip.i"
 	@echo "... Trip.s"

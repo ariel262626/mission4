@@ -72,12 +72,15 @@ Matrix2d* PharserInfo:: createGrid (){
 }
 
 Driver* PharserInfo::createDriver () {
-    if(!checkIfDriverValid(myInput)) {
+    isArgumentValid = true;
+    string temp = myInput;
+    if(!checkIfDriverValid()) {
         Driver* driver = new Driver ();
         driver->setId(-1);
         isArgumentValid = false;
         return driver;
     }
+    myInput = temp;
     // get from the user: id, age status, experience and cabId of the driver
     // use in methods to translate the data
     int driverId = getOneElementInt();
@@ -93,14 +96,17 @@ Driver* PharserInfo::createDriver () {
 }
 
 Trip* PharserInfo::createNewRide (){
+    isArgumentValid = true;
+    string temp = myInput;
 // get from the user: ridr id, start point, end point, number of passengers and tarrif
 // of the cab to create ride
-    if(!checkIfTripValid(myInput)) {
+    if(!checkIfTripValid()) {
         Trip* trip = new Trip();
         trip->setRideId(-1);
         isArgumentValid = false;
         return trip;
     }
+    myInput = temp;
     int rideId = getOneElementInt();
     int startX = getOneElementInt();
     int startY = getOneElementInt();
@@ -115,12 +121,15 @@ Trip* PharserInfo::createNewRide (){
 }
 
 CabBase* PharserInfo::createVehicle (){
-    if(!checkIfCabBaseValid(myInput)) {
+    isArgumentValid = true;
+    string temp = myInput;
+    if(!checkIfCabBaseValid()) {
         CabBase* cabBase = new CabBase();
         cabBase->setCabID(-1);
         isArgumentValid = false;
         return cabBase;
     }
+    myInput = temp;
     // pharser the data by the functions
     int vehicleId = getOneElementInt();
     int cabType = getOneElementInt();
@@ -135,7 +144,6 @@ bool PharserInfo::checkStringIfDigit(string myInput) {
     for (int i = 0; i < myInput.size(); i++) {
         if (!isdigit(myInput[i])) {
             isArgumentValid = false;
-            cout << "-1" << endl;
         }
     }
     return true;
@@ -199,7 +207,7 @@ vector <Point> PharserInfo:: getMyListObstacles (int numOfObstaclePoints, Matrix
     }
 }
 
-bool PharserInfo::checkIfDriverValid(string myInput) {
+bool PharserInfo::checkIfDriverValid() {
     int driverId = getOneElementInt();
     // check id driver
     if((driverId < 0) || (!isArgumentValid)) {
@@ -225,9 +233,10 @@ bool PharserInfo::checkIfDriverValid(string myInput) {
     if(myInput.length() > 0) {
         return false;
     }
+    return true;
 }
 
-bool PharserInfo::checkIfCabBaseValid(string myInput) {
+bool PharserInfo::checkIfCabBaseValid() {
     int vehicleId = getOneElementInt();
     if((vehicleId < 0)||(!isArgumentValid)) {
         return false;
@@ -251,9 +260,10 @@ bool PharserInfo::checkIfCabBaseValid(string myInput) {
     if(myInput.length() > 0) {
         return false;
     }
+    return true;
 }
 
-bool PharserInfo::checkIfTripValid(string myInput) {
+bool PharserInfo::checkIfTripValid() {
     int rideId = getOneElementInt();
     if((rideId < 0)||(!isArgumentValid)) {
         return false;
@@ -290,6 +300,7 @@ bool PharserInfo::checkIfTripValid(string myInput) {
     if(myInput.length() > 0) {
         return false;
     }
+    return true;
 }
 
 bool PharserInfo:: checkIfObstaclesValid(string point, Matrix2d* map){

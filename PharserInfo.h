@@ -87,11 +87,11 @@ public:
 
     bool checkIfObstaclesValid(string point, Matrix2d* map);
 
-    bool checkIfTripValid(string myInput);
+    bool checkIfTripValid();
 
-    bool checkIfCabBaseValid(string myInput);
+    bool checkIfCabBaseValid();
 
-    bool checkIfDriverValid(string myInput);
+    bool checkIfDriverValid();
 
     bool checkStringIfDigit(string myInput);
     };

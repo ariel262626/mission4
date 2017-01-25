@@ -10,14 +10,23 @@ ThreadPoolTrips::ThreadPoolTrips(int pool_size, Matrix2d* map) : m_pool_size(poo
     isThreadPoolOver = false;
     for (int i = 0; i < m_pool_size; i++) {
         pthread_t tid;
-        int ret = pthread_create(&tid, NULL, execute_thread, (void*) this);
+        int ret = pthread_create(&tid, NULL, execute_thread, (void*)this);
         if (ret != 0) { /* error handling */ }
         threadsOfTrips.push_back(tid);
     }
     cout << m_pool_size << " threads created by the thread pool" << endl;
 }
 
-ThreadPoolTrips:: ThreadPoolTrips (int numOfThreads){ }
+ThreadPoolTrips:: ThreadPoolTrips (int numOfThreads): m_pool_size(numOfThreads){
+    isThreadPoolOver = false;
+    for (int i = 0; i < m_pool_size; i++) {
+        pthread_t tid;
+        int ret = pthread_create(&tid, NULL, execute_thread, (void*)this);
+        if (ret != 0) { /* error handling */ }
+        threadsOfTrips.push_back(tid);
+    }
+    cout << m_pool_size << " threads created by the thread pool" << endl;
+}
 
 //destructor
 ThreadPoolTrips::~ThreadPoolTrips()
@@ -28,17 +37,18 @@ ThreadPoolTrips::~ThreadPoolTrips()
     cout << m_pool_size << " threads exited from the thread pool" << endl;
 }
 
-void* ThreadPoolTrips::execute_thread()
+void* ThreadPoolTrips::execute_thread(void* threadPool)
 {
+    ThreadPoolTrips* tp = (ThreadPoolTrips*) threadPool;
     Trip* taskTrip = NULL;
     while(true) {
-        while (tripDeque.empty()) {
+        while (tp->tripDeque.empty()) {
             sleep(1);
         }
-        taskTrip = tripDeque.front();
-        tripDeque.pop_front();
-        taskTrip->getPathOfTripClone(*myMap);
-        if (isThreadPoolOver){
+        taskTrip = tp->tripDeque.front();
+        tp->tripDeque.pop_front();
+        taskTrip->getPathOfTripClone(*tp->myMap);
+        if (tp->isThreadPoolOver){
             return NULL;
         }
     }

@@ -48,6 +48,7 @@ private:
     int myTime;
     vector<Node> myPath;
     bool isTripTaken;
+    bool isPathReady;
     pthread_mutex_t bfsFirst;
 
 
@@ -123,11 +124,32 @@ public:
      */
     int getTime();
 
+    /**
+    * set bool is taken trip true
+    */
     void setIsTakenTrue ();
+
+    /**
+    * set bool is taken trip false
+    */
     void setIsTakenFalse ();
 
+    /**
+     * get if this trip taken
+     * @return bool
+     */
     bool getIsTaken();
+
+    /**
+     * get my path of the trip (the vector of the path)
+     * @return vector with nodes from stsrt to end point
+     */
     vector<Node> getMyPath();
-};
+
+    /**
+     * my join - wait till path is calculated
+     */
+    void joinTrip();
+    };
 
 #endif //MISSION2_TRIP_H

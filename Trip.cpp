@@ -18,6 +18,7 @@ Trip::Trip(int rideId, int xStart, int yStart, int xEnd, int yEnd, int passenger
     myTariff = tarrif;
     myTime = time;
     isTripTaken = false;
+    isPathReady = false;
 }
 
 Trip::Trip() { }
@@ -59,6 +60,7 @@ vector<Node> Trip::getPathOfTripClone(Matrix2d map) {
         listOfNodeInTripclone.push_back(*listOfNodeInTrip.at(i));
     }
     myPath = listOfNodeInTripclone;
+    isPathReady = true;
     pthread_mutex_unlock(&bfsFirst);
     return listOfNodeInTripclone;
 }
@@ -117,4 +119,10 @@ bool Trip:: getIsTaken(){
 
 vector<Node> Trip:: getMyPath(){
     return myPath;
+}
+
+void Trip::joinTrip(){
+    while(!isPathReady) {
+        sleep(1);
+    }
 }

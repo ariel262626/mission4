@@ -28,6 +28,7 @@ extern int countAction;
 extern bool isTripReady;
 extern bool isPrintAllready;
 extern bool isArgumentValid;
+bool isThreadPoolOver;
 //bool isValid;
 vector<pthread_t> treadsOfDrivers;
 
@@ -86,18 +87,17 @@ GameFlow::GameFlow() {}
          }
          switch(localChoose) {
              case 1: {
-                 int numOfDrivers;
                  string myInput;
                  //enter dummy of cin
                  cin.ignore();
                  //get from user how much drivers we need to get
                  getline(cin, myInput);
-                 cout<<myInput<<endl;
                  //valid check
                  if(!checkIsOneNumber(myInput)) {
                      cout<< "-1" << endl;
                      break;
                  }
+                 int numOfDrivers = stoi(myInput);
                  listSocketToDriver = getDriversFromClients(numOfDrivers);
                  for (int i = 0; i < texiCenter->getMyCabBaseList().size(); i++) {
                      driver = texiCenter->getDriverInIndex(i);
@@ -133,6 +133,7 @@ GameFlow::GameFlow() {}
              }
              case 7: {
                  isPrintAllready = true;
+                 isThreadPoolOver = true;
                  // the allocate memory which placed in taxi center will be deleted when the program finish.
                  // now, call function that send special trip to shut down the program
                  choose = 7;
@@ -150,6 +151,7 @@ GameFlow::GameFlow() {}
                  waitForMe(texiCenter->getMyDriverList().size());
                  // update the clock
                  clockTime.setTime();
+                 break;
              }
              default:
                  cout<< "-1" << endl;
@@ -240,11 +242,10 @@ void GameFlow::getNewRide() {
     TripMap* tripMap = new TripMap(trip, texiCenter->getMap());
     texiCenter->addTripToTripLIst(trip);
     myThreadPoolTrips->add_task(trip);
-
-
     //pthread_create(&treadOfTrip, &attr, path, tripMap);
     //pthread_join(treadOfTrip, NULL);
     //path is not valid
+    trip->joinTrip();
     if(trip->getMyPath().empty()) {
         int TripToRemoveId = trip->getRideId();
         texiCenter->eraseTripWithId(TripToRemoveId);

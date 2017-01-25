@@ -15,7 +15,9 @@ private:
     //TexiCenter myTexiCenter;
 
 public:
+    //constructor
     ConnectionClients();
+    //destructor
     ~ConnectionClients() {}
     static void* runClients (void* socketToDriver);
 

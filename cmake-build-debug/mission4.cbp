@@ -288,6 +288,14 @@
 			<Option target="Client"/>
 			<Option target="Server"/>
 		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/ThreadPoolTrips.cpp">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/ariel/ClionProjects/mission4/ThreadPoolTrips.h">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
 		<Unit filename="/home/ariel/ClionProjects/mission4/Trip.cpp">
 			<Option target="Client"/>
 			<Option target="Server"/>

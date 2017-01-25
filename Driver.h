@@ -122,7 +122,16 @@ public:
      * @param newCab  - the cab to set
      */
     void setCab(CabBase* newCab);
+
+    /**
+     * get cab of driver
+     * @return cab*
+     */
     CabBase* getCab();
+
+    /**
+     * trip not exist
+     */
     void initializeMyTripToNull();
 
     };
