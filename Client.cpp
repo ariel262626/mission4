@@ -42,6 +42,7 @@ int main(int argc, char *argv[]) {
     Driver *driver = pharser.createDriver();
     //if the driver is not valid.
     if(driver->getId() == -1) {
+        delete driver;
         return 0;
     }
     //argv[2] = the port of the server

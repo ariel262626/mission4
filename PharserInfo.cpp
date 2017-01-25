@@ -72,8 +72,8 @@ Matrix2d* PharserInfo:: createGrid (){
 }
 
 Driver* PharserInfo::createDriver () {
-    Driver* driver;
     if(!checkIfDriverValid(myInput)) {
+        Driver* driver = new Driver ();
         driver->setId(-1);
         isArgumentValid = false;
         return driver;
@@ -88,15 +88,15 @@ Driver* PharserInfo::createDriver () {
 
     // create new driver and return it to the main
     CabBase cab = CabBase();
-    driver = new Driver(driverId, driverAge, driverStatus, driverExperience, driverVehicleId, &cab);
+    Driver* driver = new Driver(driverId, driverAge, driverStatus, driverExperience, driverVehicleId, &cab);
     return driver;
 }
 
 Trip* PharserInfo::createNewRide (){
-    Trip* trip;
 // get from the user: ridr id, start point, end point, number of passengers and tarrif
 // of the cab to create ride
     if(!checkIfTripValid(myInput)) {
+        Trip* trip = new Trip();
         trip->setRideId(-1);
         isArgumentValid = false;
         return trip;
@@ -110,13 +110,13 @@ Trip* PharserInfo::createNewRide (){
     double tariff = getOneElementDouble();
     int time = getOneElementInt();
     // create trip with the data of we got from the user
-    trip = new Trip(rideId, startX, startY, endX, endY, numPassenger, tariff, time);
+    Trip* trip = new Trip(rideId, startX, startY, endX, endY, numPassenger, tariff, time);
     return trip;
 }
 
 CabBase* PharserInfo::createVehicle (){
-    CabBase* cabBase;
     if(!checkIfCabBaseValid(myInput)) {
+        CabBase* cabBase = new CabBase();
         cabBase->setCabID(-1);
         isArgumentValid = false;
         return cabBase;
@@ -138,9 +138,10 @@ bool PharserInfo::checkStringIfDigit(string myInput) {
             cout << "-1" << endl;
         }
     }
+    return true;
 }
 
-vector <Point> PharserInfo:: obstaclePoints (){
+vector <Point> PharserInfo:: obstaclePoints (Matrix2d* map){
     vector <Point> listObstacle;
 
     // if the input not a number..
@@ -165,21 +166,21 @@ vector <Point> PharserInfo:: obstaclePoints (){
         return listObstacle;
     }
 
-    listObstacle = getMyListObstacles (numOfObstaclePoints);
+    listObstacle = getMyListObstacles (numOfObstaclePoints, map);
     return listObstacle;
 }
 
-vector <Point> PharserInfo:: getMyListObstacles (int numOfObstaclePoints){
+vector <Point> PharserInfo:: getMyListObstacles (int numOfObstaclePoints, Matrix2d* map){
     isArgumentValid = true;
     int index1,index2;
     string str1, str2, p;
     vector <Point> listObstacle;
     // iterate on number of obstacle and request the user to enter the obstacles
     for (int i = 0; i < numOfObstaclePoints; i++) {
-        cin.ignore();
+        //cin.ignore();
         getline(cin , p);// >> p;
         // if the point not valid-> end the function
-        if (!checkIfObstaclesValid (p)){
+        if (!checkIfObstaclesValid (p, map)){
             cout<< "-1" << endl;
             // update our boolean element
             isArgumentValid = false;
@@ -200,6 +201,7 @@ vector <Point> PharserInfo:: getMyListObstacles (int numOfObstaclePoints){
 
 bool PharserInfo::checkIfDriverValid(string myInput) {
     int driverId = getOneElementInt();
+    // check id driver
     if((driverId < 0) || (!isArgumentValid)) {
         return false;
     }
@@ -230,14 +232,17 @@ bool PharserInfo::checkIfCabBaseValid(string myInput) {
     if((vehicleId < 0)||(!isArgumentValid)) {
         return false;
     }
+    // check type of cab
     int cabType = getOneElementInt();
     if((cabType < 0)||(cabType != 1)&&(cabType != 2)||(!isArgumentValid)) {
         return false;
     }
+    // check manufacturer
     char manufacturer = getOneElementchar();
     if((manufacturer != 'H')&&(manufacturer != 'S')&&(manufacturer != 'T')&&(manufacturer != 'F')) {
         return false;
     }
+    // check color
     char color = getOneElementchar();
     if((color != 'R')&&(color != 'B')&&(color != 'G')&&(color != 'P')&&(color != 'W')) {
         return false;
@@ -287,7 +292,7 @@ bool PharserInfo::checkIfTripValid(string myInput) {
     }
 }
 
-bool PharserInfo:: checkIfObstaclesValid(string point){
+bool PharserInfo:: checkIfObstaclesValid(string point, Matrix2d* map){
     int middleIndex = point.find(",");
     if (middleIndex <= 0){
         return false;
@@ -307,9 +312,12 @@ bool PharserInfo:: checkIfObstaclesValid(string point){
             return false;
         }
     }
-    int index1 = stoi(str1);
-    int index2 = stoi(str2);
-    if (index1 < 0 || index2 < 0){
+    int width = stoi(str1); // width
+    int high = stoi(str2); // high
+    if (width < 0 || high < 0){
+        return false;
+    }
+    if (width >= map->getWidth() || high >= map->getHigh()){
         return false;
     }
     return true;

@@ -44,7 +44,7 @@ public:
      * points according to his input
      * @return list of obstacle points
      */
-    vector <Point> obstaclePoints ();
+    vector <Point> obstaclePoints (Matrix2d* map);
     /**
      * this method take the input of the user and create new grid according to
      * his input
@@ -81,11 +81,11 @@ public:
      */
     void eraseComma (int index);
 
-    vector <Point> getMyListObstacles (int numOfObstaclePoints);
+    vector <Point> getMyListObstacles (int numOfObstaclePoints, Matrix2d* map);
 
     bool checkIfObstaclesValid();
 
-    bool checkIfObstaclesValid(string point);
+    bool checkIfObstaclesValid(string point, Matrix2d* map);
 
     bool checkIfTripValid(string myInput);
 

@@ -10,14 +10,14 @@
 #include "TexiCenter.h"
 #include "ClockTime.h"
 #include "TripMap.h"
+#include "ThreadPoolTrips.h"
 
 class GameFlow {
 
 private:
     Socket* myTcp;
     TexiCenter* texiCenter;
-    Driver* myDriver;
-    CabBase* myCabBase;
+    ThreadPoolTrips* myThreadPoolTrips;
 public:
     GameFlow (Socket* socket);
     GameFlow();

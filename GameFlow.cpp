@@ -34,6 +34,7 @@ vector<pthread_t> treadsOfDrivers;
 GameFlow:: GameFlow (Socket* tcp){
     myTcp = tcp;
     texiCenter = new TexiCenter();
+    myThreadPoolTrips = new ThreadPoolTrips(5);
 }
 
 GameFlow::GameFlow() {}
@@ -50,7 +51,7 @@ GameFlow::GameFlow() {}
      Driver *driver;
      Matrix2d *newMap;
     // ConnectionClients connectionClients = ConnectionClients();
-     vector<SocketToDriver *> listSocketToDriver;
+     vector<SocketToDriver*> listSocketToDriver;
      do {
          //find high and width -> use in class of pharser for translate the data
          getline(cin, stringGrid);
@@ -58,14 +59,11 @@ GameFlow::GameFlow() {}
          //create map
          newMap = pharseGrid.createGrid();
          // insert obstacle points
-         cin >> stringObst;
+         getline(cin, stringObst);
          // insert obstacles,if the number is big from zero, the function request from the user
          // to insert the obstacle points.
          PharserInfo pharseObstacles = PharserInfo(stringObst);
-         listObstacle = pharseObstacles.obstaclePoints();
-         // for the next getLine()
-         //cin.ignore();
-         //cin.clear();
+         listObstacle = pharseObstacles.obstaclePoints(newMap);
          // if the input not valid and we need another input, first delete the map from heap.
          if (!isArgumentValid){
              delete newMap;
@@ -75,6 +73,7 @@ GameFlow::GameFlow() {}
      newMap->setobstaclePoint(listObstacle);
      // insert the map to taxi center, because the taxi center is in charge of all the programm actualy
      texiCenter->setMap(newMap);
+     myThreadPoolTrips->setMap(newMap);
      // request from the user mission to enter. we will expect all the time to another mission,
      // therefor we return on it until the user enter 7 (end of mission).
      while (true) {
@@ -209,11 +208,13 @@ void GameFlow::getNewCab() {
     // get new cab from the user
     string insertVehicle;
     //cin >> insertVehicle;
+    cin.ignore();
     getline(cin, insertVehicle);
     // use in the pharser class to handle the data
     PharserInfo pharser = PharserInfo(insertVehicle);
     CabBase* vehicle = pharser.createVehicle();
     if(vehicle->getCabId() == -1) {
+        delete vehicle;
         return;
     }
     // add cab to taxi center
@@ -226,19 +227,23 @@ void GameFlow::getNewRide() {
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
     // get new ride from the user
     string insertRide;
-    //cin >> insertRide;
+    cin.ignore();
     getline(cin, insertRide);
     // use in the pharser class to handle the data
     PharserInfo pharser = PharserInfo(insertRide);
-    Trip* trip = pharser.createNewRide();
+        Trip* trip = pharser.createNewRide();
     if(trip->getRideId() == -1) {
+        delete trip;
         return;
     }
     // add trip to taxi center - we need to sort the trip list according the time
     TripMap* tripMap = new TripMap(trip, texiCenter->getMap());
     texiCenter->addTripToTripLIst(trip);
-    pthread_create(&treadOfTrip, &attr, GameFlow::path, tripMap);
-    pthread_join(treadOfTrip, NULL);
+    myThreadPoolTrips->add_task(trip);
+
+
+    //pthread_create(&treadOfTrip, &attr, path, tripMap);
+    //pthread_join(treadOfTrip, NULL);
     //path is not valid
     if(trip->getMyPath().empty()) {
         int TripToRemoveId = trip->getRideId();
@@ -247,11 +252,11 @@ void GameFlow::getNewRide() {
     delete tripMap;
     isTripReady = true;
 }
-
+/*
 void* GameFlow::path(void* tripMap) {
     TripMap* tripMap1 = (TripMap*)tripMap;
     tripMap1->getTrip()->getPathOfTripClone(*tripMap1->getMap());
-}
+}*/
 
 vector <SocketToDriver*> GameFlow::getDriversFromClients(int numberOfDrivers) {
     Driver *driver;
