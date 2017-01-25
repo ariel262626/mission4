@@ -51,7 +51,7 @@ vector<Node> Trip::getPathOfTripClone(Matrix2d map) {
     Bfs bfs = Bfs(startNode, endNode, 2, &map);
     //we get all the points of the trip. run the bfs for that
     listOfNodeInTrip = bfs.runBfs(&startNode, &endNode);
-    //if the path is empty
+    //if the path is empt
     if(listOfNodeInTrip.empty()) {
         vector<Node> emptyPath;
         myPath = emptyPath;
