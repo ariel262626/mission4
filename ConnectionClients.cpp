@@ -26,6 +26,7 @@ ClockTime clockTime;
 pthread_t treadOfTrip;
 vector <BooleanToDescriptor> myBoolList;
 pthread_mutex_t first;
+pthread_mutex_t first2;
 pthread_mutex_t lockCounter;
 bool iFirst = true;
 /* in first press of 9, we need only to set trip to driver without move.
@@ -215,7 +216,6 @@ void ConnectionClients::sendTripToClient(SocketToDriver* socketToDriver) {
         // update the trip to driver and send the trip to client only once, when the time is comming.
         // if the time isn't comming-> just update the clock
         //flag if i the first driver and get the first trip at the first time
-
         if ((clockTime.getTime() == trip->getTime()) ||
             ((socketToDriver->getMyTexiCenter()->getMyTripList().at(0)->getTime() == clockTime.getTime()) &&
              (iFirst))) {
@@ -225,10 +225,12 @@ void ConnectionClients::sendTripToClient(SocketToDriver* socketToDriver) {
                 Trip *firstTrip = socketToDriver->getMyTexiCenter()->getMyTripList().at(0);
                 socketToDriver->getMyDriver()->setTrip(firstTrip);
                 iFirst = false;
-
             } else {
-                if (clockTime.getTime() == trip->getTime()) {
-                    socketToDriver->getMyDriver()->setTrip(trip);
+                if ((clockTime.getTime() == trip->getTime())&&(!iFirst)) {
+                    if(!trip->getIsTaken()) {
+                        cout<<"not goood!!!!!!"<<endl;
+                        socketToDriver->getMyDriver()->setTrip(trip);
+                    }
                 }
             }
             // check if the location of the driver in the same point as start of the trip.
@@ -315,7 +317,7 @@ void ConnectionClients::moveClient(SocketToDriver* socketToDriver) {
 
                 //after we end trip
                 // lock
-                pthread_mutex_lock(&first);
+                pthread_mutex_lock(&first2);
                 if (socketToDriver->getMyDriver()->getMyTrip()->getEndPointOfTrip() == newPosition) {
                     // delete trip
                     Trip *temp = socketToDriver->getMyDriver()->getMyTrip();
@@ -323,7 +325,7 @@ void ConnectionClients::moveClient(SocketToDriver* socketToDriver) {
                     socketToDriver->getMyDriver()->initializeMyTripToNull();
                     firstNine = true;
                 }
-                pthread_mutex_unlock(&first);
+                pthread_mutex_unlock(&first2);
             }
         }
     }

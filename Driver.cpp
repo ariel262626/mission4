@@ -36,7 +36,12 @@ void Driver::setStatisfication(int rate) {
 }
 
 void Driver::setTrip(Trip* trip) {
+    if(trip == NULL) {
+        myTrip = NULL;
+        return;
+    }
     if (myTrip == NULL) {
+        trip->setIsTakenTrue();
         myTrip = trip;
     }
 }

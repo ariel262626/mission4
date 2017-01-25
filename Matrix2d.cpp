@@ -23,17 +23,6 @@ Matrix2d::Matrix2d(int high, int width, vector<Point> obstaclePoint) {
             matrix[j][i] = n;
         }
     }
-    // run of all the obstacle list and find their posion in the matrix, after that,
-    // set each boolean 'isObstacle' to true, because we need to know where we mustn't
-    // pass.
-    if (!getObstaclesList().empty()){
-    for (int i = 0; i<getObstaclesList().size(); i++){
-        if (matrix[getObstaclesList().at(i).GetX()][getObstaclesList().at(i).GetY()]->getPointOfnode() ==
-                getObstaclesList().at(i)){
-            matrix[getObstaclesList().at(i).GetX()][getObstaclesList().at(i).GetY()]->setIsObstacle();
-        }
-    }
-    }
 }
 
 
@@ -134,6 +123,17 @@ void Matrix2d::setWidth(int width) {
 
 void Matrix2d::setobstaclePoint(vector<Point> obstacleList) {
     myObstaclePoint.swap(obstacleList);
+    // run of all the obstacle list and find their posion in the matrix, after that,
+    // set each boolean 'isObstacle' to true, because we need to know where we mustn't
+    // pass.
+    if (!getObstaclesList().empty()){
+        for (int i = 0; i<getObstaclesList().size(); i++){
+            if (matrix[getObstaclesList().at(i).GetX()][getObstaclesList().at(i).GetY()]->getPointOfnode() ==
+                getObstaclesList().at(i)){
+                matrix[getObstaclesList().at(i).GetX()][getObstaclesList().at(i).GetY()]->setIsObstacle();
+            }
+        }
+    }
 }
 
 vector<Point> Matrix2d::getObstaclesList() {

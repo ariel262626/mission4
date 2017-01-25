@@ -14,7 +14,8 @@ ThreadPoolTrips::ThreadPoolTrips(int pool_size, Matrix2d* map) : m_pool_size(poo
         if (ret != 0) { /* error handling */ }
         threadsOfTrips.push_back(tid);
     }
-    cout << m_pool_size << " threads created by the thread pool" << endl;
+    sleep(1);
+    //cout << m_pool_size << " threads created by the thread pool" << endl;
 }
 
 ThreadPoolTrips:: ThreadPoolTrips (int numOfThreads): m_pool_size(numOfThreads){
@@ -25,17 +26,19 @@ ThreadPoolTrips:: ThreadPoolTrips (int numOfThreads): m_pool_size(numOfThreads){
         if (ret != 0) { /* error handling */ }
         threadsOfTrips.push_back(tid);
     }
-    cout << m_pool_size << " threads created by the thread pool" << endl;
+    sleep(1);
+    //cout << m_pool_size << " threeeeads created by the thread pool" << endl;
 }
 
 //destructor
 ThreadPoolTrips::~ThreadPoolTrips()
-{
-    for (int i = 0; i < m_pool_size; i++) {
-        pthread_join(threadsOfTrips[i], NULL);
-    }
-    cout << m_pool_size << " threads exited from the thread pool" << endl;
-}
+{}
+//    for (int i = 0; i < m_pool_size; i++) {
+//        cout << m_pool_size << " threads exited from the thread pool" << endl;
+//        pthread_join(threadsOfTrips[i], NULL);
+//    }
+//    cout << m_pool_size << " threadeeees exited from the thread pool" << endl;
+//}
 
 void* ThreadPoolTrips::execute_thread(void* threadPool)
 {

@@ -82,14 +82,16 @@ vector<Node*> Bfs:: runBfs(Node* myStarts, Node* myEndS) {
  */
 void Bfs:: manageQueue(queue<Node*> &queue1, stack<Node*> &stack1, Node *currentNode) {
     int count = 0;
+    Point currentPoint = currentNode->getPointOfnode();
+    Point endPoint = myEnd.getPointOfnode();
     //return array of neibours.
     vector<Node*> neighbours = myMatrix->getNiebours(*currentNode);
     //if the path is blocked we cant find path.
     for(int i = 0; i < numOfNeibours; i++) {
-        if((neighbours[i]->getPointOfnode().GetX() == -1)||(neighbours[i]->getFlag())
-           ||(neighbours[i]->getIsObstacle())){
+        if((neighbours[i]->getPointOfnode().GetX() == -1)
+           ||(neighbours[i]->getFlag())){
             count++;
-            if(count == numOfNeibours) {
+            if((count == numOfNeibours)&&(!(currentPoint == endPoint))) {
                 pathIsBlocked = true;
                 return;
             }

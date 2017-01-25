@@ -143,6 +143,7 @@ GameFlow::GameFlow() {}
                      pthread_join(treadsOfDrivers.at(j), NULL);
                  }
                  delete texiCenter;
+                 delete myThreadPoolTrips;
                  delete myTcp;
                  return;
              }
